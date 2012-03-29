@@ -1,0 +1,25 @@
+message StartServerInitRequest
+{
+	optional string name = 1;
+}
+
+message StartServerInitResponse
+{
+	optional string config = 1;
+}
+
+message EndServerInitNotification
+{
+	optional string name = 1;
+}
+
+message Server
+{
+	optional string name = 1;
+	optional int32 status = 2;
+}
+
+message SynchronizeServerNotification
+{
+	repeated Server servers = 1;
+}

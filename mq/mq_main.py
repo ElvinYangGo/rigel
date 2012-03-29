@@ -5,18 +5,18 @@ if __name__ == '__main__':
 	
 	context = zmq.Context()
 	
-	frontend = context.socket(zmq.SUB)
-	frontend.bind('tcp://*:34510')
+	sub_socket = context.socket(zmq.SUB)
+	sub_socket.bind('tcp://*:34510')
 	
-	backend = context.socket(zmq.PUB)
-	backend.bind('tcp://*:34511')
+	pub_socket = context.socket(zmq.PUB)
+	pub_socket.bind('tcp://*:34511')
 	
-	frontend.setsockopt(zmq.SUBSCRIBE, '')
+	sub_socket.setsockopt(zmq.SUBSCRIBE, '')
 
 	while True:
-		message = frontend.recv()
-		more = frontend.getsocket(zmq.RCVMORE)
+		message = sub_socket.recv()
+		more = sub_socket.getsockopt(zmq.RCVMORE)
 		if more:
-			backend.send(message, zmq.SNDMORE)
+			pub_socket.send(message, zmq.SNDMORE)
 		else:
-			backend.send(message)
+			pub_socket.send(message)

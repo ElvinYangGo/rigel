@@ -1,7 +1,8 @@
 import sys
 
 if '__main__' == __name__:
-	file_name = sys.argv[1]
+	package_name = sys.argv[1]
+	file_name = sys.argv[2]
 	
 	characters = file_name.split('_')
 	class_name = ''
@@ -9,7 +10,7 @@ if '__main__' == __name__:
 		class_name += s[0].upper()
 		class_name += s[1:]
 	
-	test_file = open('test_' + file_name + '.py', 'w')
+	test_file = open(package_name + '/test_' + file_name + '.py', 'w')
 
 	test_file.write('import unittest\n')
 	test_file.write('import tests.auxiliary\n\n')
