@@ -1,6 +1,7 @@
 message StartServerInitRequest
 {
 	optional string name = 1;
+	optional int32 type = 2;
 }
 
 message StartServerInitResponse
@@ -17,6 +18,7 @@ message Server
 {
 	optional string name = 1;
 	optional int32 status = 2;
+	optional int32 type = 3;
 }
 
 message SynchronizeServerNotification

@@ -11,7 +11,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = descriptor.FileDescriptor(
   name='protocol.proto',
   package='',
-  serialized_pb='\n\x0eprotocol.proto\"&\n\x16StartServerInitRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\")\n\x17StartServerInitResponse\x12\x0e\n\x06\x63onfig\x18\x01 \x01(\t\")\n\x19\x45ndServerInitNotification\x12\x0c\n\x04name\x18\x01 \x01(\t\"&\n\x06Server\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x05\"9\n\x1dSynchronizeServerNotification\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server')
+  serialized_pb='\n\x0eprotocol.proto\"4\n\x16StartServerInitRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\x05\")\n\x17StartServerInitResponse\x12\x0e\n\x06\x63onfig\x18\x01 \x01(\t\")\n\x19\x45ndServerInitNotification\x12\x0c\n\x04name\x18\x01 \x01(\t\"4\n\x06Server\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x05\x12\x0c\n\x04type\x18\x03 \x01(\x05\"9\n\x1dSynchronizeServerNotification\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server')
 
 
 
@@ -30,6 +30,13 @@ _STARTSERVERINITREQUEST = descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    descriptor.FieldDescriptor(
+      name='type', full_name='StartServerInitRequest.type', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -40,7 +47,7 @@ _STARTSERVERINITREQUEST = descriptor.Descriptor(
   is_extendable=False,
   extension_ranges=[],
   serialized_start=18,
-  serialized_end=56,
+  serialized_end=70,
 )
 
 
@@ -67,8 +74,8 @@ _STARTSERVERINITRESPONSE = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=58,
-  serialized_end=99,
+  serialized_start=72,
+  serialized_end=113,
 )
 
 
@@ -95,8 +102,8 @@ _ENDSERVERINITNOTIFICATION = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=101,
-  serialized_end=142,
+  serialized_start=115,
+  serialized_end=156,
 )
 
 
@@ -121,6 +128,13 @@ _SERVER = descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
+    descriptor.FieldDescriptor(
+      name='type', full_name='Server.type', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
   ],
   extensions=[
   ],
@@ -130,8 +144,8 @@ _SERVER = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=144,
-  serialized_end=182,
+  serialized_start=158,
+  serialized_end=210,
 )
 
 
@@ -158,8 +172,8 @@ _SYNCHRONIZESERVERNOTIFICATION = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=184,
-  serialized_end=241,
+  serialized_start=212,
+  serialized_end=269,
 )
 
 _SYNCHRONIZESERVERNOTIFICATION.fields_by_name['servers'].message_type = _SERVER

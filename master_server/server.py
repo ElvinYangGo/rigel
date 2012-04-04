@@ -2,12 +2,16 @@ from common.server_status import ServerStatus
 import protocol.protocol_pb2
 
 class Server:
-	def __init__(self, name):
+	def __init__(self, name, type):
 		self.status = ServerStatus.SERVER_STATUS_STARTING
 		self.name = name
+		self.type = type
 		
 	def get_name(self):
 		return self.name
+	
+	def get_type(self):
+		return self.type
 	
 	def starting(self):
 		return self.compare_status(ServerStatus.SERVER_STATUS_STARTING)
@@ -28,6 +32,7 @@ class Server:
 		message = protocol.protocol_pb2.Server()
 		message.name = self.name
 		message.status = self.status
+		message.type = self.type
 		return message
 	
 	def to_net_string(self):

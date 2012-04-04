@@ -1,6 +1,6 @@
 from protocol.protocol_id import ProtocolID
-from protocol.protocol_pb2 import EndServerInitNotification 
 from network.channel_buffer import ChannelBuffer
+import protocol.protocol_pb2
 
 class StartServerInitResponseHandler:
 	def __init__(self):
@@ -12,7 +12,7 @@ class StartServerInitResponseHandler:
 		print channel_buffer
 
 		global_data.rmq.subscribe('server_status')
-		message = EndServerInitNotification()
+		message = protocol.protocol_pb2.EndServerInitNotification()
 		message.name = 'authentication_server'		
 		channel_buffer = ChannelBuffer()
 		channel_buffer.append(message.SerializeToString())

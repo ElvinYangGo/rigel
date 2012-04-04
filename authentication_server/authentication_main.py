@@ -14,8 +14,11 @@ from network.channel_buffer import ChannelBuffer
 from authentication_server.global_data import GlobalData
 from authentication_server.start_server_init_response_handler import StartServerInitResponseHandler 
 from authentication_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler 
+from authentication_server.server_manager import ServerManager
+from common.server_type import ServerType
 def init_rmq():	
 	global_data = GlobalData()
+	global_data.server_manager = ServerManager()
 	
 	server_handler_dispatcher = ServerHandlerDispatcher()
 	server_handler_dispatcher.append_handler(
@@ -28,6 +31,7 @@ from authentication_server.synchronize_server_status_notification_handler import
 		)
 	rmq = RMQ('tcp://localhost:34510', 'tcp://localhost:34511', server_handler_dispatcher)
 	rmq.subscribe('server_initialization')
+	#rmq.subscribe('server_status')
 	#rmq.subscribe('')
 	
 	global_data.rmq = rmq
@@ -39,6 +43,7 @@ from authentication_server.synchronize_server_status_notification_handler import
 def send_init_request(rmq):
 	message = StartServerInitRequest()
 	message.name = 'authentication_server'		
+	message.type = ServerType.AUTHENTICATION_SERVER
 	channel_buffer = ChannelBuffer()
 	channel_buffer.append(message.SerializeToString())
 	rmq.send(channel_buffer, 'server_initialization', ProtocolID.START_SERVER_INIT_REQUEST)

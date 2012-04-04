@@ -9,7 +9,7 @@ class ServerTest(unittest.TestCase):
 		self.server = Server('aaa', ServerType.AUTHENTICATION_SERVER, ServerStatus.SERVER_STATUS_RUNNING)
 		
 	def test_construction(self):
-		self.assertEqual(self.server.get_name(), 'aa')
+		self.assertEqual(self.server.get_name(), 'aaa')
 		self.assertEqual(self.server.get_type(), ServerType.AUTHENTICATION_SERVER)
 		self.assertEqual(self.server.get_status(), ServerStatus.SERVER_STATUS_RUNNING)
 

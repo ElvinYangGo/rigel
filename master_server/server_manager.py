@@ -5,8 +5,8 @@ class ServerManager:
 	def __init__(self):
 		self.servers = {}
 		
-	def add_server(self, server_name):
-		server = Server(server_name)
+	def add_server(self, server_name, type):
+		server = Server(server_name, type)
 		self.servers[server_name] = server
 		
 	def get_server(self, server_name):
