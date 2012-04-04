@@ -3,7 +3,7 @@ import tests.auxiliary
 from master_server.server import Server
 from common.server_status import ServerStatus
 from common.server_type import ServerType
-import protocol.protocol_pb2
+import protocol.protocol_data_pb2
 
 class ServerTest(unittest.TestCase):
 	def setUp(self):
@@ -24,7 +24,7 @@ class ServerTest(unittest.TestCase):
 	
 	def test_to_net_string(self):
 		net_string = self.server.to_net_string()
-		message = protocol.protocol_pb2.Server.FromString(net_string)
+		message = protocol.protocol_data_pb2.Server.FromString(net_string)
 		self.assertEqual(message.name, self.server.get_name())
 		self.assertEqual(message.status, self.server.status)
 

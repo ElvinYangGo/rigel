@@ -2,7 +2,7 @@ import unittest
 import tests.auxiliary
 from master_server.server_manager import ServerManager
 from master_server.server import Server
-import protocol.protocol_pb2
+import protocol.protocol_message_pb2
 from common.server_status import ServerStatus
 from common.server_type import ServerType
 
@@ -20,7 +20,7 @@ class ServerManagerTest(unittest.TestCase):
 	def test_running_server_to_net(self):
 		self.server_manager.add_server('aaa', ServerType.GATEWAY_SERVER)
 		net_string = self.server_manager.running_server_to_net()
-		message = protocol.protocol_pb2.SynchronizeServerNotification.FromString(net_string)
+		message = protocol.protocol_message_pb2.SynchronizeServerNotification.FromString(net_string)
 		self.assertEqual(len(message.servers), 1)
 		self.assertEqual(message.servers[0].name, 'aaa')
 		self.assertEqual(message.servers[0].status, ServerStatus.SERVER_STATUS_STARTING)

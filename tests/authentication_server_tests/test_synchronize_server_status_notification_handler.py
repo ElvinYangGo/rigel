@@ -3,7 +3,7 @@ import tests.auxiliary
 from authentication_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler
 from authentication_server.global_data import GlobalData
 from authentication_server.server_manager import ServerManager
-import protocol.protocol_pb2
+import protocol.protocol_message_pb2
 from common.server_type import ServerType
 from common.server_status import ServerStatus
 from network.channel_buffer import ChannelBuffer
@@ -17,7 +17,7 @@ class SynchronizeServerStatusNotificationHandlerTest(unittest.TestCase):
 		global_data = GlobalData()
 		global_data.server_manager = ServerManager()
 		
-		message_encoded = protocol.protocol_pb2.SynchronizeServerNotification()
+		message_encoded = protocol.protocol_message_pb2.SynchronizeServerNotification()
 		server_encoded = message_encoded.servers.add()
 		server_encoded.name = 'aaa'
 		server_encoded.type = ServerType.AUTHENTICATION_SERVER

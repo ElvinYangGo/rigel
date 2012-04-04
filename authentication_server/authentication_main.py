@@ -9,20 +9,20 @@ from common.handler_dispatcher import HandlerDispatcher
 from common.server_handler_dispatcher import ServerHandlerDispatcher
 from mq_client.rmq import RMQ
 from protocol.protocol_id import ProtocolID
-from protocol.protocol_pb2 import StartServerInitRequest
 from network.channel_buffer import ChannelBuffer
 from authentication_server.global_data import GlobalData
 from authentication_server.start_server_init_response_handler import StartServerInitResponseHandler 
 from authentication_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler 
 from authentication_server.server_manager import ServerManager
 from common.server_type import ServerType
+import protocol.protocol_message_pb2
 def init_rmq():	
 	global_data = GlobalData()
 	global_data.server_manager = ServerManager()
 	
 	server_handler_dispatcher = ServerHandlerDispatcher()
 	server_handler_dispatcher.append_handler(
-		ProtocolID.START_SERVER_INIT_RESPONSE, 
+		ProtocolID.START_SERVER_INIT_RESPONSE,
 		StartServerInitResponseHandler()
 		)
 	server_handler_dispatcher.append_handler(
@@ -41,7 +41,7 @@ from common.server_type import ServerType
 	send_init_request(rmq)
 
 def send_init_request(rmq):
-	message = StartServerInitRequest()
+	message = protocol.protocol_message_pb2.StartServerInitRequest()
 	message.name = 'authentication_server'		
 	message.type = ServerType.AUTHENTICATION_SERVER
 	channel_buffer = ChannelBuffer()

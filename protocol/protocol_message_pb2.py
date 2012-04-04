@@ -7,11 +7,12 @@ from google.protobuf import descriptor_pb2
 # @@protoc_insertion_point(imports)
 
 
+import protocol_data_pb2
 
 DESCRIPTOR = descriptor.FileDescriptor(
-  name='protocol.proto',
+  name='protocol_message.proto',
   package='',
-  serialized_pb='\n\x0eprotocol.proto\"4\n\x16StartServerInitRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\x05\")\n\x17StartServerInitResponse\x12\x0e\n\x06\x63onfig\x18\x01 \x01(\t\")\n\x19\x45ndServerInitNotification\x12\x0c\n\x04name\x18\x01 \x01(\t\"4\n\x06Server\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x05\x12\x0c\n\x04type\x18\x03 \x01(\x05\"9\n\x1dSynchronizeServerNotification\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server')
+  serialized_pb='\n\x16protocol_message.proto\x1a\x13protocol_data.proto\"4\n\x16StartServerInitRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\x05\")\n\x17StartServerInitResponse\x12\x0e\n\x06\x63onfig\x18\x01 \x01(\t\")\n\x19\x45ndServerInitNotification\x12\x0c\n\x04name\x18\x01 \x01(\t\"9\n\x1dSynchronizeServerNotification\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server')
 
 
 
@@ -46,8 +47,8 @@ _STARTSERVERINITREQUEST = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=18,
-  serialized_end=70,
+  serialized_start=47,
+  serialized_end=99,
 )
 
 
@@ -74,8 +75,8 @@ _STARTSERVERINITRESPONSE = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=72,
-  serialized_end=113,
+  serialized_start=101,
+  serialized_end=142,
 )
 
 
@@ -102,50 +103,8 @@ _ENDSERVERINITNOTIFICATION = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=115,
-  serialized_end=156,
-)
-
-
-_SERVER = descriptor.Descriptor(
-  name='Server',
-  full_name='Server',
-  filename=None,
-  file=DESCRIPTOR,
-  containing_type=None,
-  fields=[
-    descriptor.FieldDescriptor(
-      name='name', full_name='Server.name', index=0,
-      number=1, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    descriptor.FieldDescriptor(
-      name='status', full_name='Server.status', index=1,
-      number=2, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-    descriptor.FieldDescriptor(
-      name='type', full_name='Server.type', index=2,
-      number=3, type=5, cpp_type=1, label=1,
-      has_default_value=False, default_value=0,
-      message_type=None, enum_type=None, containing_type=None,
-      is_extension=False, extension_scope=None,
-      options=None),
-  ],
-  extensions=[
-  ],
-  nested_types=[],
-  enum_types=[
-  ],
-  options=None,
-  is_extendable=False,
-  extension_ranges=[],
-  serialized_start=158,
-  serialized_end=210,
+  serialized_start=144,
+  serialized_end=185,
 )
 
 
@@ -172,15 +131,14 @@ _SYNCHRONIZESERVERNOTIFICATION = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=212,
-  serialized_end=269,
+  serialized_start=187,
+  serialized_end=244,
 )
 
-_SYNCHRONIZESERVERNOTIFICATION.fields_by_name['servers'].message_type = _SERVER
+_SYNCHRONIZESERVERNOTIFICATION.fields_by_name['servers'].message_type = protocol_data_pb2._SERVER
 DESCRIPTOR.message_types_by_name['StartServerInitRequest'] = _STARTSERVERINITREQUEST
 DESCRIPTOR.message_types_by_name['StartServerInitResponse'] = _STARTSERVERINITRESPONSE
 DESCRIPTOR.message_types_by_name['EndServerInitNotification'] = _ENDSERVERINITNOTIFICATION
-DESCRIPTOR.message_types_by_name['Server'] = _SERVER
 DESCRIPTOR.message_types_by_name['SynchronizeServerNotification'] = _SYNCHRONIZESERVERNOTIFICATION
 
 class StartServerInitRequest(message.Message):
@@ -200,12 +158,6 @@ class EndServerInitNotification(message.Message):
   DESCRIPTOR = _ENDSERVERINITNOTIFICATION
   
   # @@protoc_insertion_point(class_scope:EndServerInitNotification)
-
-class Server(message.Message):
-  __metaclass__ = reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _SERVER
-  
-  # @@protoc_insertion_point(class_scope:Server)
 
 class SynchronizeServerNotification(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
