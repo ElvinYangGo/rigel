@@ -1,25 +1,13 @@
-import zmq
 from twisted.internet.endpoints import TCP4ServerEndpoint
 from twisted.internet import reactor
 from network.twisted_protocol_factory import TwistedProtocolFactory 
 from network.channel_pipeline_factory import ChannelPipelineFactory
 from network.buffer_head_codec import BufferHeadCodec
 from common.handler_dispatcher import HandlerDispatcher
+from authentication_server.authentication_server_initializer import AuthenticationServerInitializer
 
-from common.server_handler_dispatcher import ServerHandlerDispatcher
-from mq_client.rmq import RMQ
-from protocol.protocol_id import ProtocolID
-from network.channel_buffer import ChannelBuffer
-from authentication_server.global_data import GlobalData
-from authentication_server.start_server_init_response_handler import StartServerInitResponseHandler 
-from authentication_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler 
-from authentication_server.server_manager import ServerManager
-from common.server_type import ServerType
-import protocol.protocol_message_pb2
-def init_rmq():	
-	global_data = GlobalData()
-	global_data.server_manager = ServerManager()
-	
+"""
+def init_handler_dispatcher(self):
 	server_handler_dispatcher = ServerHandlerDispatcher()
 	server_handler_dispatcher.append_handler(
 		ProtocolID.START_SERVER_INIT_RESPONSE,
@@ -29,6 +17,14 @@ import protocol.protocol_message_pb2
 		ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION,
 		SynchronizeServerStatusNotificationHandler()
 		)
+	
+	return server_handler_dispatcher
+	def init_rmq():	
+	global_data = GlobalData()
+	global_data.server_manager = ServerManager()
+	
+	server_handler_dispatcher = init_handler_dispatcher()
+
 	rmq = RMQ('tcp://localhost:34510', 'tcp://localhost:34511', server_handler_dispatcher)
 	rmq.subscribe('server_initialization')
 	#rmq.subscribe('server_status')
@@ -47,11 +43,13 @@ def send_init_request(rmq):
 	channel_buffer = ChannelBuffer()
 	channel_buffer.append(message.SerializeToString())
 	rmq.send(channel_buffer, 'server_initialization', ProtocolID.START_SERVER_INIT_REQUEST)
+"""
 
 if __name__ == '__main__':
 	print 'started'
 	
-	init_rmq()
+	server_initializer = AuthenticationServerInitializer('tcp://localhost:34510', 'tcp://localhost:34511')
+	server_initializer.initialize()
 	
 	channel_pipeline_factory = ChannelPipelineFactory()
 	channel_pipeline_factory.append_handler('buffer_head_codec', BufferHeadCodec())
