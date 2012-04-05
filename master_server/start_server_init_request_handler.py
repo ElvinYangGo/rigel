@@ -18,6 +18,4 @@ class StartServerInitRequestHandler:
 		global_data.server_manager.add_server(message.name, message.type)
 		
 		message_to_send = protocol.protocol_message_pb2.StartServerInitResponse()
-		channel_buffer = ChannelBuffer()
-		channel_buffer.append(message_to_send.SerializeToString())
-		global_data.rmq.send_channel_buffer(channel_buffer, 'server_initialization', ProtocolID.START_SERVER_INIT_RESPONSE)
+		global_data.rmq.send_message_string(message_to_send, 'server_initialization', ProtocolID.START_SERVER_INIT_RESPONSE)

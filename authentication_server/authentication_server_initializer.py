@@ -48,7 +48,5 @@ class AuthenticationServerInitializer(ServerInitializer):
 		message = protocol.protocol_message_pb2.StartServerInitRequest()
 		message.name = 'authentication_server'		
 		message.type = ServerType.AUTHENTICATION_SERVER
-		channel_buffer = ChannelBuffer()
-		channel_buffer.append(message.SerializeToString())
-		self.rmq.send_channel_buffer(channel_buffer, 'server_initialization', ProtocolID.START_SERVER_INIT_REQUEST)
+		self.rmq.send_message_string(message, 'server_initialization', ProtocolID.START_SERVER_INIT_REQUEST)
 

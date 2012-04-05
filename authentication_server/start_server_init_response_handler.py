@@ -14,6 +14,4 @@ class StartServerInitResponseHandler:
 		global_data.rmq.subscribe('server_status')
 		message = protocol.protocol_message_pb2.EndServerInitNotification()
 		message.name = 'authentication_server'		
-		channel_buffer = ChannelBuffer()
-		channel_buffer.append(message.SerializeToString())
-		global_data.rmq.send_channel_buffer(channel_buffer, 'server_initialization', ProtocolID.END_SERVER_INIT_NOTIFICATION)
+		global_data.rmq.send_message_string(message, 'server_initialization', ProtocolID.END_SERVER_INIT_NOTIFICATION)

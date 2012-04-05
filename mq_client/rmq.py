@@ -34,6 +34,11 @@ class RMQ(threading.Thread):
 				self.server_handler_dispatcher.handle_upstream(self.global_data, channel_name, channel_buffer)
 				channel_name = ''
 				
+	def send_message_string(self, message_string, channel_name='', message_id=0):
+		channel_buffer = ChannelBuffer()
+		channel_buffer.append(message_string.SerializeToString())
+		self.rmq.send_channel_buffer(channel_buffer, channel_name, message_id)
+		
 	def send_channel_buffer(self, channel_buffer, channel_name='', message_id=0):
 		if channel_buffer is None and message_id == 0:
 			return
