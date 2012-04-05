@@ -4,15 +4,15 @@ from network.channel_buffer import ChannelBuffer
 
 class RMQ(threading.Thread):
 	def __init__(self, pub_address, sub_address, server_handler_dispatcher):
-		self.pub_address = 'tcp://' + pub_address
-		self.sub_address = 'tcp://' + sub_address
+		self.pub_address = pub_address
+		self.sub_address = sub_address
 		self.server_handler_dispatcher = server_handler_dispatcher
 		
 		context = zmq.Context()
 		self.pub_socket = context.socket(zmq.PUB)
-		self.pub_socket.connect(pub_address)
+		self.pub_socket.connect('tcp://' + self.pub_address)
 		self.sub_socket = context.socket(zmq.SUB)
-		self.sub_socket.connect(sub_address)
+		self.sub_socket.connect('tcp://' + self.sub_address)
 		
 		threading.Thread.__init__(self, name='rmq')
 		
@@ -34,7 +34,7 @@ class RMQ(threading.Thread):
 				self.server_handler_dispatcher.handle_upstream(self.global_data, channel_name, channel_buffer)
 				channel_name = ''
 				
-	def send(self, channel_buffer, channel_name='', message_id=0):
+	def send_channel_buffer(self, channel_buffer, channel_name='', message_id=0):
 		if channel_buffer is None and message_id == 0:
 			return
 		

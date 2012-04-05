@@ -16,4 +16,4 @@ class EndServerInitNotificationHandler:
 		message_string_to_send = global_data.server_manager.running_server_to_net()
 		channel_buffer = ChannelBuffer()
 		channel_buffer.append(message_string_to_send)
-		global_data.rmq.send(channel_buffer, 'server_status', ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION)
+		global_data.rmq.send_channel_buffer(channel_buffer, 'server_status', ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION)

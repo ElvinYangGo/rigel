@@ -16,4 +16,4 @@ class StartServerInitResponseHandler:
 		message.name = 'authentication_server'		
 		channel_buffer = ChannelBuffer()
 		channel_buffer.append(message.SerializeToString())
-		global_data.rmq.send(channel_buffer, 'server_initialization', ProtocolID.END_SERVER_INIT_NOTIFICATION)
+		global_data.rmq.send_channel_buffer(channel_buffer, 'server_initialization', ProtocolID.END_SERVER_INIT_NOTIFICATION)
