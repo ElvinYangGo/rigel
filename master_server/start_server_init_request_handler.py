@@ -1,7 +1,7 @@
-from network.channel_buffer import ChannelBuffer
+#from network.channel_buffer import ChannelBuffer
 import protocol.protocol_message_pb2
-from master_server.global_data import GlobalData
-from network.channel_buffer import ChannelBuffer
+#from master_server.global_data import GlobalData
+#from network.channel_buffer import ChannelBuffer
 from protocol.protocol_id import ProtocolID
 
 class StartServerInitRequestHandler:
@@ -18,4 +18,4 @@ class StartServerInitRequestHandler:
 		global_data.server_manager.add_server(message.name, message.type)
 		
 		message_to_send = protocol.protocol_message_pb2.StartServerInitResponse()
-		global_data.rmq.send_message_string(message_to_send, 'server_initialization', ProtocolID.START_SERVER_INIT_RESPONSE)
+		global_data.rmq.send_message_string(message_to_send, message.name, ProtocolID.START_SERVER_INIT_RESPONSE)

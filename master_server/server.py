@@ -13,6 +13,9 @@ class Server:
 	def get_type(self):
 		return self.type
 	
+	def get_status(self):
+		return self.status
+	
 	def starting(self):
 		return self.compare_status(ServerStatus.SERVER_STATUS_STARTING)
 	

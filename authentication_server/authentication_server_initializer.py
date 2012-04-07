@@ -7,7 +7,6 @@ from authentication_server.global_data import GlobalData
 from authentication_server.server_manager import ServerManager
 import protocol.protocol_message_pb2
 from common.server_type import ServerType
-from network.channel_buffer import ChannelBuffer
 from mq_client.rmq import RMQ
 
 class AuthenticationServerInitializer(ServerInitializer):
@@ -33,11 +32,12 @@ class AuthenticationServerInitializer(ServerInitializer):
 		def init_global_data(self):
 		self.global_data = GlobalData()
 		self.global_data.server_manager = ServerManager()
+		self.global_data.server_name = 'authentication_server'
 		return self.global_data
 	
 	def init_rmq(self):	
 		self.rmq = RMQ(self.pub_address, self.sub_address, self.server_handler_dispatcher)
-		self.rmq.subscribe('server_initialization')
+		self.rmq.subscribe(self.global_data.server_name)
 	
 		self.global_data.rmq = self.rmq
 		self.rmq.set_global_data(self.global_data)
@@ -46,7 +46,7 @@ class AuthenticationServerInitializer(ServerInitializer):
 
 	def send_init_request(self):
 		message = protocol.protocol_message_pb2.StartServerInitRequest()
-		message.name = 'authentication_server'		
+		message.name = self.global_data.server_name		
 		message.type = ServerType.AUTHENTICATION_SERVER
 		self.rmq.send_message_string(message, 'server_initialization', ProtocolID.START_SERVER_INIT_REQUEST)
 

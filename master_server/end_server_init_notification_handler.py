@@ -13,5 +13,14 @@ class EndServerInitNotificationHandler:
 		server = global_data.server_manager.get_server(message.name)
 		server.set_status(ServerStatus.SERVER_STATUS_RUNNING)
 
-		message_to_send = global_data.server_manager.running_server_to_net()
-		global_data.rmq.send_message_string(message_to_send, 'server_status', ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION)
+		self.send_other_servers_to_this_server(global_data, message.name)
+		self.send_this_server_to_other_servers(global_data, server)
+		
+	def send_other_servers_to_this_server(self, global_data, this_server_name):
+		server_list_message = global_data.server_manager.running_server_to_net()
+		global_data.rmq.send_message_string(server_list_message, this_server_name, ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION)
+
+	def send_this_server_to_other_servers(self, global_data, this_server):
+		this_server_message = protocol.protocol_message_pb2.SynchronizeServerNotification()
+		this_server_message.servers.extend([this_server.to_net()])
+		global_data.rmq.send_message_string(this_server_message, 'server_status', ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION)

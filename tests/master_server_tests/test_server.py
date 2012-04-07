@@ -12,6 +12,7 @@ class ServerTest(unittest.TestCase):
 	def test_construction(self):
 		self.assertTrue(self.server.starting())
 		self.assertEqual(self.server.get_type(), ServerType.AUTHENTICATION_SERVER)
+		self.assertEqual(self.server.get_status(), ServerStatus.SERVER_STATUS_STARTING)
 		
 	def test_set_status(self):
 		self.server.set_status(ServerStatus.SERVER_STATUS_RUNNING)
