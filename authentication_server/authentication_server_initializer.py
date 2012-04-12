@@ -32,7 +32,7 @@ class AuthenticationServerInitializer(ServerInitializer):
 		def init_global_data(self):
 		self.global_data = GlobalData()
 		self.global_data.server_manager = ServerManager()
-		self.global_data.server_name = 'authentication_server'
+		self.global_data.server_name = u'authentication_server'
 		return self.global_data
 	
 	def init_rmq(self):	
@@ -48,5 +48,5 @@ class AuthenticationServerInitializer(ServerInitializer):
 		message = protocol.protocol_message_pb2.StartServerInitRequest()
 		message.name = self.global_data.server_name		
 		message.type = ServerType.AUTHENTICATION_SERVER
-		self.rmq.send_message_string(message, 'server_initialization', ProtocolID.START_SERVER_INIT_REQUEST)
+		self.rmq.send_message_string(message, u'server_initialization', ProtocolID.START_SERVER_INIT_REQUEST)
 

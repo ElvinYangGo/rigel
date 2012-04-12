@@ -18,5 +18,5 @@ class ServerManager:
 			server_message_list.append(server.to_net())
 		synchronize_server_notification_message = protocol.protocol_message_pb2.SynchronizeServerNotification()
 		synchronize_server_notification_message.servers.extend(server_message_list)
-		return synchronize_server_notification_message.SerializeToString()
+		return synchronize_server_notification_message
 		

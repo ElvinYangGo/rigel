@@ -20,11 +20,10 @@ class ServerManagerTest(unittest.TestCase):
 	def test_running_server_to_net(self):
 		self.server_manager.add_server('aaa', ServerType.GATEWAY_SERVER)
 		net_string = self.server_manager.running_server_to_net()
-		message = protocol.protocol_message_pb2.SynchronizeServerNotification.FromString(net_string)
-		self.assertEqual(len(message.servers), 1)
-		self.assertEqual(message.servers[0].name, 'aaa')
-		self.assertEqual(message.servers[0].status, ServerStatus.SERVER_STATUS_STARTING)
-		self.assertEqual(message.servers[0].type, ServerType.GATEWAY_SERVER)
+		self.assertEqual(len(net_string.servers), 1)
+		self.assertEqual(net_string.servers[0].name, 'aaa')
+		self.assertEqual(net_string.servers[0].status, ServerStatus.SERVER_STATUS_STARTING)
+		self.assertEqual(net_string.servers[0].type, ServerType.GATEWAY_SERVER)
 
 def get_tests():
 	return unittest.makeSuite(ServerManagerTest)

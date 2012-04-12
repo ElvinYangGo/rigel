@@ -11,7 +11,7 @@ class StartServerInitResponseHandler:
 		print message_id
 		print channel_buffer
 
-		global_data.rmq.subscribe('server_status')
+		global_data.rmq.subscribe(u'server_status')
 		message = protocol.protocol_message_pb2.EndServerInitNotification()
 		message.name = global_data.server_name
-		global_data.rmq.send_message_string(message, 'server_initialization', ProtocolID.END_SERVER_INIT_NOTIFICATION)
+		global_data.rmq.send_message_string(message, u'server_initialization', ProtocolID.END_SERVER_INIT_NOTIFICATION)

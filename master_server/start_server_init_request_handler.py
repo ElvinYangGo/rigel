@@ -19,3 +19,4 @@ class StartServerInitRequestHandler:
 		
 		message_to_send = protocol.protocol_message_pb2.StartServerInitResponse()
 		global_data.rmq.send_message_string(message_to_send, message.name, ProtocolID.START_SERVER_INIT_RESPONSE)
+

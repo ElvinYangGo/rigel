@@ -1,6 +1,7 @@
 import zmq
 import threading
 from network.channel_buffer import ChannelBuffer
+import common.utf8_codec
 
 class RMQ(threading.Thread):
 	def __init__(self, pub_address, sub_address, server_handler_dispatcher):
@@ -20,7 +21,7 @@ class RMQ(threading.Thread):
 		self.global_data = global_data
 		
 	def subscribe(self, channel_name):
-		self.sub_socket.setsockopt(zmq.SUBSCRIBE, channel_name)
+		self.sub_socket.setsockopt_unicode(zmq.SUBSCRIBE, channel_name)
 	
 	def run(self):
 		while True:
@@ -28,22 +29,22 @@ class RMQ(threading.Thread):
 			print message
 			more = self.sub_socket.getsockopt(zmq.RCVMORE)
 			if more:
-				channel_name = message
+				channel_name = common.utf8_codec.utf8_decode(message)
 			else:
 				channel_buffer = ChannelBuffer(message)
 				self.server_handler_dispatcher.handle_upstream(self.global_data, channel_name, channel_buffer)
-				channel_name = ''
+				channel_name = u''
 				
-	def send_message_string(self, message_string, channel_name='', message_id=0):
+	def send_message_string(self, message_string, channel_name=u'', message_id=0):
 		channel_buffer = ChannelBuffer()
 		channel_buffer.append(message_string.SerializeToString())
-		self.rmq.send_channel_buffer(channel_buffer, channel_name, message_id)
+		self.send_channel_buffer(channel_buffer, channel_name, message_id)
 		
-	def send_channel_buffer(self, channel_buffer, channel_name='', message_id=0):
+	def send_channel_buffer(self, channel_buffer, channel_name=u'', message_id=0):
 		if channel_buffer is None and message_id == 0:
 			return
 		
-		self.pub_socket.send(channel_name, zmq.SNDMORE)
+		self.pub_socket.send_unicode(channel_name, zmq.SNDMORE)
 		buffer_to_send = None
 		if message_id != 0:
 			buffer_to_send = ChannelBuffer()

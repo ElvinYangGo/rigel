@@ -34,7 +34,7 @@ class MasterServerInitializer(ServerInitializer):
 	
 	def init_rmq(self):	
 		self.rmq = RMQ(self.pub_address, self.sub_address, self.server_handler_dispatcher)
-		self.rmq.subscribe('server_initialization')
+		self.rmq.subscribe(u'server_initialization')
 	
 		self.global_data.rmq = self.rmq
 		self.rmq.set_global_data(self.global_data)
