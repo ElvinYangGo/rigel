@@ -14,7 +14,6 @@ class ProtocolIDParser:
 		protocol_element_list = root_element[0].getElementsByTagName('protocol')
 		for protocol_element in protocol_element_list:
 			if protocol_element.hasChildNodes():
-				protocol_element.firstChild.data
 				self.id_list.append(protocol_element.firstChild.data)
 
 	def get_id_list(self):
