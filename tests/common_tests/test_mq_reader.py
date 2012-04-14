@@ -15,11 +15,11 @@ class MqReaderTest(unittest.TestCase):
 			</mq>
 		</config>
 		"""
-		mqReader = MQReader(string_content=xml_string)
-		mqReader.parse()
-		self.assertEqual(len(mqReader.get_mq_config_list()), 1)
-		self.assertEqual(mqReader.get_mq_config_list()[0].get_pub_address(), 'localhost:34510')
-		self.assertEqual(mqReader.get_mq_config_list()[0].get_sub_address(), 'localhost:34511')
+		mq_reader = MQReader(string_content=xml_string)
+		mq_reader.parse()
+		self.assertEqual(len(mq_reader.get_mq_config_list()), 1)
+		self.assertEqual(mq_reader.get_mq_config_list()[0].get_pub_address(), 'localhost:34510')
+		self.assertEqual(mq_reader.get_mq_config_list()[0].get_sub_address(), 'localhost:34511')
 
 def get_tests():
 	return unittest.makeSuite(MqReaderTest)
