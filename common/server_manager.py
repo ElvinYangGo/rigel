@@ -1,4 +1,4 @@
-from authentication_server.server import Server
+from common.server import Server
 
 class ServerManager:
 	def __init__(self):

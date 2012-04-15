@@ -1,7 +1,7 @@
 import unittest
 import tests.auxiliary
 from mock import Mock
-from authentication_server.server_manager import ServerManager
+from common.server_manager import ServerManager
 
 class ServerManagerTest(unittest.TestCase):
 	def setUp(self):

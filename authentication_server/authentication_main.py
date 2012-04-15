@@ -12,7 +12,11 @@ if __name__ == '__main__':
 	mq_reader.parse()
 	mq_config = mq_reader.get_mq_config_list()[0]
 
-	server_initializer = AuthenticationServerInitializer(mq_config.get_pub_address(), mq_config.get_sub_address())
+	server_initializer = AuthenticationServerInitializer(
+		mq_config.get_pub_address(), 
+		mq_config.get_sub_address(),
+		u'authentication_server'
+		)
 	server_initializer.initialize()
 	
 	channel_pipeline_factory = ChannelPipelineFactory()

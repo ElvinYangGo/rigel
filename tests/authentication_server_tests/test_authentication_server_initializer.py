@@ -9,7 +9,10 @@ from authentication_server.global_data import GlobalData
 
 class AuthenticationServerInitializerTest(unittest.TestCase):
 	def setUp(self):
-		self.server_initializer = AuthenticationServerInitializer('localhost:34510', 'localhost:34511')
+		self.server_initializer = AuthenticationServerInitializer(
+			'localhost:34510',
+			'localhost:34511', 
+			u'authentication_server')
 		
 	def test_construction(self):
 		self.assertEqual(self.server_initializer.pub_address, 'localhost:34510')
@@ -25,7 +28,7 @@ class AuthenticationServerInitializerTest(unittest.TestCase):
 	def test_init_global_data(self):
 		self.server_initializer.init_global_data()
 		self.assertEqual(len(self.server_initializer.global_data.server_manager.servers), 0)
-		self.assertEqual(self.server_initializer.global_data.server_name, 'authentication_server')
+		self.assertEqual(self.server_initializer.global_data.server_name, u'authentication_server')
 		
 	def test_init_rmq(self):
 		self.server_initializer.init_global_data()
@@ -39,13 +42,13 @@ class AuthenticationServerInitializerTest(unittest.TestCase):
 		self.server_initializer.rmq = Mock()
 		self.server_initializer.rmq.send_message_string = Mock()
 		self.server_initializer.global_data = GlobalData()
-		self.server_initializer.global_data.server_name = 'authentication_server'
+		self.server_initializer.global_data.server_name = u'authentication_server'
 		self.server_initializer.send_init_request()
 		
 		message = protocol.protocol_message_pb2.StartServerInitRequest()
-		message.name = 'authentication_server'		
+		message.name = u'authentication_server'		
 		message.type = ServerType.AUTHENTICATION_SERVER
-		self.server_initializer.rmq.send_message_string.assert_called_with(message, 'server_initialization', ProtocolID.START_SERVER_INIT_REQUEST)
+		self.server_initializer.rmq.send_message_string.assert_called_with(message, u'server_initialization', ProtocolID.START_SERVER_INIT_REQUEST)
 
 def get_tests():
 	return unittest.makeSuite(AuthenticationServerInitializerTest)

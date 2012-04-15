@@ -4,15 +4,16 @@ from protocol.protocol_id import ProtocolID
 from authentication_server.start_server_init_response_handler import StartServerInitResponseHandler
 from authentication_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler
 from authentication_server.global_data import GlobalData
-from authentication_server.server_manager import ServerManager
+from common.server_manager import ServerManager
 import protocol.protocol_message_pb2
 from common.server_type import ServerType
 from mq_client.rmq import RMQ
 
 class AuthenticationServerInitializer(ServerInitializer):
-	def __init__(self, pub_address, sub_address):
+	def __init__(self, pub_address, sub_address, server_name):
 		self.pub_address = pub_address
 		self.sub_address = sub_address
+		self.server_name = server_name
 		self.server_handler_dispatcher = None
 		self.global_data = None
 		self.rmq = None
@@ -32,7 +33,7 @@ class AuthenticationServerInitializer(ServerInitializer):
 		def init_global_data(self):
 		self.global_data = GlobalData()
 		self.global_data.server_manager = ServerManager()
-		self.global_data.server_name = u'authentication_server'
+		self.global_data.server_name = self.server_name
 		return self.global_data
 	
 	def init_rmq(self):	

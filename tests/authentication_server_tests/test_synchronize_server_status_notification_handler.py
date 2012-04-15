@@ -7,8 +7,8 @@ from common.server_type import ServerType
 from common.server_status import ServerStatus
 from network.channel_buffer import ChannelBuffer
 from authentication_server.global_data import GlobalData
-from authentication_server.server_manager import ServerManager
-from authentication_server.server import Server
+from common.server_manager import ServerManager
+from common.server import Server
 from mock import Mock
 
 class SynchronizeServerStatusNotificationHandlerTest(unittest.TestCase):
