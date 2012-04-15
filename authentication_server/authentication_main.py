@@ -6,7 +6,7 @@ from network.buffer_head_codec import BufferHeadCodec
 from common.handler_dispatcher import HandlerDispatcher
 from authentication_server.authentication_server_initializer import AuthenticationServerInitializer
 from common.mq_reader import MQReader
-from authentication_server.handler_register import HandlerRegister
+from authentication_server.authentication_handler_register import AuthenticationHandlerRegister
 
 if __name__ == '__main__':
 	mq_reader = MQReader('../config/mq.xml')
@@ -17,7 +17,7 @@ if __name__ == '__main__':
 		mq_config.get_pub_address(), 
 		mq_config.get_sub_address(),
 		u'authentication_server',
-		HandlerRegister()
+		AuthenticationHandlerRegister()
 		)
 	server_initializer.initialize()
 	
