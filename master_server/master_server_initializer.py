@@ -6,6 +6,7 @@ from master_server.end_server_init_notification_handler import EndServerInitNoti
 from master_server.global_data import GlobalData
 from master_server.server_manager import ServerManager
 from mq_client.rmq import RMQ
+from master_server.handler_register import HandlerRegister
 
 class MasterServerInitializer(ServerInitializer):
 	def __init__(self, pub_address, sub_address):
@@ -16,18 +17,10 @@ class MasterServerInitializer(ServerInitializer):
 		self.rmq = None
 				
 	def init_server_handler_dispatcher(self):
-		self.server_handler_dispatcher = ServerHandlerDispatcher()
-		self.server_handler_dispatcher.append_handler(
-			ProtocolID.START_SERVER_INIT_REQUEST, 
-			StartServerInitRequestHandler()
-			)
-		self.server_handler_dispatcher.append_handler(
-			ProtocolID.END_SERVER_INIT_NOTIFICATION, 
-			EndServerInitNotificationHandler()
-			)
-
+		handler_register = HandlerRegister(ServerHandlerDispatcher())
+		self.server_handler_dispatcher = handler_register.register()
 		return self.server_handler_dispatcher
-		def init_global_data(self):
+	def init_global_data(self):
 		self.global_data = GlobalData()
 		self.global_data.server_manager = ServerManager()
 		return self.global_data

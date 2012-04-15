@@ -1,13 +1,12 @@
 from common.server_initializer import ServerInitializer
 from common.server_handler_dispatcher import ServerHandlerDispatcher
 from protocol.protocol_id import ProtocolID
-from game_server.start_server_init_response_handler import StartServerInitResponseHandler
-from game_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler
 from game_server.global_data import GlobalData
 from common.server_manager import ServerManager
 import protocol.protocol_message_pb2
 from common.server_type import ServerType
 from mq_client.rmq import RMQ
+from game_server.handler_register import HandlerRegister
 
 class GameServerInitializer(ServerInitializer):
 	def __init__(self, pub_address, sub_address, server_name):
@@ -19,16 +18,8 @@ class GameServerInitializer(ServerInitializer):
 		self.rmq = None
 		
 	def init_server_handler_dispatcher(self):
-		self.server_handler_dispatcher = ServerHandlerDispatcher()
-		self.server_handler_dispatcher.append_handler(
-			ProtocolID.START_SERVER_INIT_RESPONSE,
-			StartServerInitResponseHandler()
-			)
-		self.server_handler_dispatcher.append_handler(
-			ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION,
-			SynchronizeServerStatusNotificationHandler()
-			)
-	
+		handler_register = HandlerRegister(ServerHandlerDispatcher())
+		self.server_handler_dispatcher = handler_register.register()
 		return self.server_handler_dispatcher
 		def init_global_data(self):
 		self.global_data = GlobalData()

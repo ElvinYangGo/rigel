@@ -13,4 +13,4 @@ if __name__ == '__main__':
 		)
 	server_initializer.initialize()
 
-	print u'master started'
+	print u'game started'
