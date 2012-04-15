@@ -1,7 +1,7 @@
 import unittest
 import tests.auxiliary
 from master_server.master_server_initializer import MasterServerInitializer
-from master_server.handler_register import HandlerRegister
+from master_server.master_handler_register import MasterHandlerRegister
 
 class MasterServerInitializerTest(unittest.TestCase):
 	def setUp(self):
@@ -9,7 +9,7 @@ class MasterServerInitializerTest(unittest.TestCase):
 			'localhost:34510', 
 			'localhost:34511',
 			u'master_server',
-			HandlerRegister()
+			MasterHandlerRegister()
 			)
 		
 	def test_construction(self):

@@ -6,7 +6,7 @@ from protocol.protocol_id import ProtocolID
 import protocol.protocol_message_pb2
 from common.server_type import ServerType
 from common.global_data import GlobalData
-from authentication_server.handler_register import HandlerRegister
+from authentication_server.authentication_handler_register import AuthenticationHandlerRegister
 
 class AuthenticationServerInitializerTest(unittest.TestCase):
 	def setUp(self):
@@ -14,7 +14,7 @@ class AuthenticationServerInitializerTest(unittest.TestCase):
 			'localhost:34510',
 			'localhost:34511', 
 			u'authentication_server',
-			HandlerRegister()
+			AuthenticationHandlerRegister()
 			)
 		
 	def test_construction(self):

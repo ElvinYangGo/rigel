@@ -6,7 +6,7 @@ import protocol.protocol_message_pb2
 from common.server_type import ServerType
 from game_server.game_server_initializer import GameServerInitializer
 from common.global_data import GlobalData
-from game_server.handler_register import HandlerRegister
+from game_server.game_handler_dispatcher import GameHandlerRegister
 
 class GameServerInitializerTest(unittest.TestCase):
 	def setUp(self):
@@ -14,7 +14,7 @@ class GameServerInitializerTest(unittest.TestCase):
 			'localhost:34510',
 			'localhost:34511', 
 			u'game_server',
-			HandlerRegister()
+			GameHandlerRegister()
 			)
 		
 	def test_construction(self):

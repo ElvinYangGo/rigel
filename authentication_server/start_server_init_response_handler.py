@@ -1,5 +1,4 @@
 from protocol.protocol_id import ProtocolID
-from network.channel_buffer import ChannelBuffer
 import protocol.protocol_message_pb2
 
 class StartServerInitResponseHandler:

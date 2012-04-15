@@ -1,11 +1,9 @@
 from protocol.protocol_id import ProtocolID
 from game_server.start_server_init_response_handler import StartServerInitResponseHandler
 from game_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler
+from common.handler_register import HandlerRegister
 
-class HandlerRegister:
-	def __init__(self):
-		pass
-
+class GameHandlerRegister(HandlerRegister):
 	def register(self, handler_dispatcher):
 		handler_dispatcher.append_handler(
 			ProtocolID.START_SERVER_INIT_RESPONSE,
