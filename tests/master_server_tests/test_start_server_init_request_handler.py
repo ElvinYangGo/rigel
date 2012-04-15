@@ -5,7 +5,7 @@ import protocol.protocol_message_pb2
 from common.server_type import ServerType
 from network.channel_buffer import ChannelBuffer
 from mock import Mock
-from master_server.global_data import GlobalData
+from common.global_data import GlobalData
 from master_server.server_manager import ServerManager
 from protocol.protocol_id import ProtocolID
 

@@ -5,14 +5,17 @@ from protocol.protocol_id import ProtocolID
 import protocol.protocol_message_pb2
 from common.server_type import ServerType
 from game_server.game_server_initializer import GameServerInitializer
-from game_server.global_data import GlobalData
+from common.global_data import GlobalData
+from game_server.handler_register import HandlerRegister
 
 class GameServerInitializerTest(unittest.TestCase):
 	def setUp(self):
 		self.server_initializer = GameServerInitializer(
 			'localhost:34510',
 			'localhost:34511', 
-			u'game_server')
+			u'game_server',
+			HandlerRegister()
+			)
 		
 	def test_construction(self):
 		self.assertEqual(self.server_initializer.pub_address, 'localhost:34510')

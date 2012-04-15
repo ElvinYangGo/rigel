@@ -6,7 +6,7 @@ import protocol.protocol_data_pb2
 from common.server_type import ServerType
 from common.server_status import ServerStatus
 from network.channel_buffer import ChannelBuffer
-from authentication_server.global_data import GlobalData
+from common.global_data import GlobalData
 from common.server_manager import ServerManager
 from common.server import Server
 from mock import Mock

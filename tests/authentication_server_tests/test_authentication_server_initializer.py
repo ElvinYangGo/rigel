@@ -5,14 +5,17 @@ from mock import Mock
 from protocol.protocol_id import ProtocolID
 import protocol.protocol_message_pb2
 from common.server_type import ServerType
-from authentication_server.global_data import GlobalData
+from common.global_data import GlobalData
+from authentication_server.handler_register import HandlerRegister
 
 class AuthenticationServerInitializerTest(unittest.TestCase):
 	def setUp(self):
 		self.server_initializer = AuthenticationServerInitializer(
 			'localhost:34510',
 			'localhost:34511', 
-			u'authentication_server')
+			u'authentication_server',
+			HandlerRegister()
+			)
 		
 	def test_construction(self):
 		self.assertEqual(self.server_initializer.pub_address, 'localhost:34510')

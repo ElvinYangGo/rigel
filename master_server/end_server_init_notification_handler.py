@@ -1,4 +1,3 @@
-from master_server.global_data import GlobalData
 from master_server.server_manager import ServerManager
 from master_server.server import Server
 from common.server_status import ServerStatus

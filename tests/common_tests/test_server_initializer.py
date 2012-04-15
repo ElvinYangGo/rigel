@@ -1,15 +1,18 @@
 import unittest
 import tests.auxiliary
-from master_server.master_server_initializer import MasterServerInitializer
-from master_server.handler_register import HandlerRegister
+from mock import Mock
+from common.server_initializer import ServerInitializer
+from common.global_data import GlobalData
 
-class MasterServerInitializerTest(unittest.TestCase):
+class ServerInitializerTest(unittest.TestCase):
 	def setUp(self):
-		self.server_initializer = MasterServerInitializer(
-			'localhost:34510', 
-			'localhost:34511',
-			u'master_server',
-			HandlerRegister()
+		self.handler_register = Mock()
+		self.handler_register.register = Mock()
+		self.server_initializer = ServerInitializer(
+			'localhost:34510',
+			'localhost:34511', 
+			u'authentication_server',
+			self.handler_register
 			)
 		
 	def test_construction(self):
@@ -21,14 +24,11 @@ class MasterServerInitializerTest(unittest.TestCase):
 		
 	def test_init_server_handler_dispatcher(self):
 		self.server_initializer.init_server_handler_dispatcher()
-		self.assertEqual(len(self.server_initializer.server_handler_dispatcher.handlers), 2)
-		
-	def test_init_global_data(self):
-		self.server_initializer.init_global_data()
-		self.assertEqual(len(self.server_initializer.global_data.server_manager.servers), 0)
+		self.assertTrue(self.handler_register.register.called)
 		
 	def test_init_rmq(self):
-		self.server_initializer.init_global_data()
+		self.server_initializer.global_data = GlobalData()
+		self.server_initializer.global_data.server_name = u'game_server'
 		self.server_initializer.init_rmq()
 		self.assertEqual(self.server_initializer.global_data.rmq.pub_address, 'localhost:34510')
 		self.assertEqual(self.server_initializer.global_data.rmq.sub_address, 'localhost:34511')
@@ -36,7 +36,7 @@ class MasterServerInitializerTest(unittest.TestCase):
 		self.assertEqual(self.server_initializer.rmq.global_data, self.server_initializer.global_data)
 
 def get_tests():
-	return unittest.makeSuite(MasterServerInitializerTest)
+	return unittest.makeSuite(ServerInitializerTest)
 
 if '__main__' == __name__:
 	unittest.main()

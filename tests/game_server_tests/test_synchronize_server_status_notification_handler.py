@@ -9,7 +9,7 @@ from common.server_manager import ServerManager
 from common.server import Server
 from mock import Mock
 from game_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler
-from game_server.global_data import GlobalData
+from common.global_data import GlobalData
 
 class SynchronizeServerStatusNotificationHandlerTest(unittest.TestCase):
 	def setUp(self):

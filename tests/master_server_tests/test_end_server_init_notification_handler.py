@@ -1,9 +1,8 @@
 import unittest
 import tests.auxiliary
 from master_server.end_server_init_notification_handler import EndServerInitNotificationHandler
-from master_server.global_data import GlobalData
+from common.global_data import GlobalData
 from master_server.server_manager import ServerManager
-from master_server.server import Server
 from common.server_status import ServerStatus
 from common.server_type import ServerType
 import protocol.protocol_message_pb2
