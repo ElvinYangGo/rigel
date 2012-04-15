@@ -18,8 +18,8 @@ class GameServerInitializer(ServerInitializer):
 		self.rmq = None
 		
 	def init_server_handler_dispatcher(self):
-		handler_register = HandlerRegister(ServerHandlerDispatcher())
-		self.server_handler_dispatcher = handler_register.register()
+		handler_register = HandlerRegister()
+		self.server_handler_dispatcher = handler_register.register(ServerHandlerDispatcher())
 		return self.server_handler_dispatcher
 		def init_global_data(self):
 		self.global_data = GlobalData()

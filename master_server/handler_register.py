@@ -3,18 +3,18 @@ from master_server.start_server_init_request_handler import StartServerInitReque
 from master_server.end_server_init_notification_handler import EndServerInitNotificationHandler
 
 class HandlerRegister:
-	def __init__(self, handler_dispatcher):
-		self.handler_dispatcher = handler_dispatcher
+	def __init__(self):
+		pass
 
-	def register(self):
-		self.handler_dispatcher.append_handler(
+	def register(self, handler_dispatcher):
+		handler_dispatcher.append_handler(
 			ProtocolID.START_SERVER_INIT_REQUEST, 
 			StartServerInitRequestHandler()
 			)
-		self.handler_dispatcher.append_handler(
+		handler_dispatcher.append_handler(
 			ProtocolID.END_SERVER_INIT_NOTIFICATION, 
 			EndServerInitNotificationHandler()
 			)
 
-		return self.handler_dispatcher
+		return handler_dispatcher
 		
