@@ -1,6 +1,6 @@
 from master_server.master_server_initializer import MasterServerInitializer
 from common.mq_reader import MQReader
-from master_server.handler_register import HandlerRegister
+from master_server.master_handler_register import MasterHandlerRegister
 
 if __name__ == '__main__':
 	mq_reader = MQReader('../config/mq.xml')
@@ -11,7 +11,7 @@ if __name__ == '__main__':
 		mq_config.get_pub_address(), 
 		mq_config.get_sub_address(),
 		u'master_server',
-		HandlerRegister()
+		MasterHandlerRegister()
 		)
 	server_initializer.initialize()
 

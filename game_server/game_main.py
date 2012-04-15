@@ -1,5 +1,6 @@
 from game_server.game_server_initializer import GameServerInitializer
 from common.mq_reader import MQReader
+from game_server.game_handler_dispatcher import GameHandlerRegister
 
 if __name__ == '__main__':
 	mq_reader = MQReader('../config/mq.xml')
@@ -9,7 +10,8 @@ if __name__ == '__main__':
 	server_initializer = GameServerInitializer(
 		mq_config.get_pub_address(), 
 		mq_config.get_sub_address(),
-		u'game_server'
+		u'game_server',
+		GameHandlerRegister()
 		)
 	server_initializer.initialize()
 
