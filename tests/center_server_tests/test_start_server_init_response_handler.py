@@ -3,7 +3,7 @@ import tests.auxiliary
 from mock import Mock
 import protocol.protocol_message_pb2
 from protocol.protocol_id import ProtocolID
-from game_server.start_server_init_response_handler import StartServerInitResponseHandler
+from center_server.start_server_init_response_handler import StartServerInitResponseHandler
 
 class StartServerInitResponseHandlerTest(unittest.TestCase):
 	def setUp(self):
@@ -14,10 +14,10 @@ class StartServerInitResponseHandlerTest(unittest.TestCase):
 		global_data.rmq = Mock()
 		global_data.rmq.subscribe = Mock()
 		global_data.rmq.send_message_string = Mock()
-		global_data.server_name = u'game_server'
+		global_data.server_name = u'center_server'
 		channel_buffer = Mock()
 		message = protocol.protocol_message_pb2.EndServerInitNotification()
-		message.name = u'game_server'		
+		message.name = u'center_server'		
 		
 		self.handler.handle_message(global_data, u'test_channel', ProtocolID.START_SERVER_INIT_RESPONSE, channel_buffer)
 		
