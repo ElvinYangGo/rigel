@@ -13,10 +13,10 @@ class SynchronizeServerStatusNotificationHandler:
 				self.handle_closed_server(global_data, server_net)
 				
 	def handle_running_server(self, global_data, server_net):
-		if server_net.type == ServerType.GATEWAY_SERVER:
+		if server_net.type == ServerType.GATEWAY_SERVER or server_net.type == ServerType.GAME_SERVER:
 			server = Server(server_net.name, server_net.type, server_net.status)
 			global_data.server_manager.add_server(server)
 	
 	def handle_closed_server(self, global_data, server_net):
-		if server_net.type == ServerType.GATEWAY_SERVER:
+		if server_net.type == ServerType.GATEWAY_SERVER or server_net.type == ServerType.GAME_SERVER:
 			global_data.server_manager.remove_server(server_net.name)
