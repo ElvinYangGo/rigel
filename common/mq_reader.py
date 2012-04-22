@@ -46,5 +46,5 @@ class MQReader:
 		return self.mq_config_list
 	
 if __name__ == '__main__':
-	mqReader = MQReader(file_name='../config/mq.xml')
-	mqReader.parse()
+	mq_reader = MQReader(file_name='../config/mq.xml')
+	mq_reader.parse()
