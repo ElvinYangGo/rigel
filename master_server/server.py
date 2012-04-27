@@ -6,6 +6,7 @@ class Server:
 		self.status = ServerStatus.SERVER_STATUS_STARTING
 		self.name = name
 		self.type = type
+		self.heart_beat_time = 0
 		
 	def get_name(self):
 		return self.name
@@ -40,3 +41,9 @@ class Server:
 	
 	def to_net_string(self):
 		return self.to_net().SerializeToString()
+	
+	def get_heart_beat_time(self):
+		return self.heart_beat_time
+	
+	def set_heart_beat_time(self, heart_beat_time):
+		self.heart_beat_time = heart_beat_time

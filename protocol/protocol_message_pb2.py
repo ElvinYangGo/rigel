@@ -12,7 +12,7 @@ import protocol_data_pb2
 DESCRIPTOR = descriptor.FileDescriptor(
   name='protocol_message.proto',
   package='',
-  serialized_pb='\n\x16protocol_message.proto\x1a\x13protocol_data.proto\"4\n\x16StartServerInitRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\x05\")\n\x17StartServerInitResponse\x12\x0e\n\x06\x63onfig\x18\x01 \x01(\t\")\n\x19\x45ndServerInitNotification\x12\x0c\n\x04name\x18\x01 \x01(\t\"9\n\x1dSynchronizeServerNotification\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server')
+  serialized_pb='\n\x16protocol_message.proto\x1a\x13protocol_data.proto\"4\n\x16StartServerInitRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\x05\")\n\x17StartServerInitResponse\x12\x0e\n\x06\x63onfig\x18\x01 \x01(\t\")\n\x19\x45ndServerInitNotification\x12\x0c\n\x04name\x18\x01 \x01(\t\"9\n\x1dSynchronizeServerNotification\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server\"%\n\x15HeartBeatNotification\x12\x0c\n\x04name\x18\x01 \x01(\t')
 
 
 
@@ -135,11 +135,40 @@ _SYNCHRONIZESERVERNOTIFICATION = descriptor.Descriptor(
   serialized_end=244,
 )
 
+
+_HEARTBEATNOTIFICATION = descriptor.Descriptor(
+  name='HeartBeatNotification',
+  full_name='HeartBeatNotification',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='name', full_name='HeartBeatNotification.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=246,
+  serialized_end=283,
+)
+
 _SYNCHRONIZESERVERNOTIFICATION.fields_by_name['servers'].message_type = protocol_data_pb2._SERVER
 DESCRIPTOR.message_types_by_name['StartServerInitRequest'] = _STARTSERVERINITREQUEST
 DESCRIPTOR.message_types_by_name['StartServerInitResponse'] = _STARTSERVERINITRESPONSE
 DESCRIPTOR.message_types_by_name['EndServerInitNotification'] = _ENDSERVERINITNOTIFICATION
 DESCRIPTOR.message_types_by_name['SynchronizeServerNotification'] = _SYNCHRONIZESERVERNOTIFICATION
+DESCRIPTOR.message_types_by_name['HeartBeatNotification'] = _HEARTBEATNOTIFICATION
 
 class StartServerInitRequest(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
@@ -164,5 +193,11 @@ class SynchronizeServerNotification(message.Message):
   DESCRIPTOR = _SYNCHRONIZESERVERNOTIFICATION
   
   # @@protoc_insertion_point(class_scope:SynchronizeServerNotification)
+
+class HeartBeatNotification(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _HEARTBEATNOTIFICATION
+  
+  # @@protoc_insertion_point(class_scope:HeartBeatNotification)
 
 # @@protoc_insertion_point(module_scope)

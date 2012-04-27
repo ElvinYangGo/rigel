@@ -20,3 +20,5 @@ class ServerManager:
 		synchronize_server_notification_message.servers.extend(server_message_list)
 		return synchronize_server_notification_message
 		
+	def get_all_servers(self):
+		return self.servers

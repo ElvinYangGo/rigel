@@ -4,6 +4,7 @@ from common.server_status import ServerStatus
 from network.channel_buffer import ChannelBuffer
 from protocol.protocol_id import ProtocolID
 import protocol.protocol_message_pb2
+from common.channel_name import ChannelName
 
 class EndServerInitNotificationHandler:
 	def handle_message(self, global_data, channel_name, message_id, channel_buffer):
@@ -22,4 +23,4 @@ class EndServerInitNotificationHandler:
 	def send_this_server_to_other_servers(self, global_data, this_server):
 		this_server_message = protocol.protocol_message_pb2.SynchronizeServerNotification()
 		this_server_message.servers.extend([this_server.to_net()])
-		global_data.rmq.send_message_string(this_server_message, u'server_status', ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION)
+		global_data.rmq.send_message_string(this_server_message, ChannelName.SERVER_STATUS, ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION)

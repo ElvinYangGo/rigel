@@ -2,6 +2,7 @@ import unittest
 import tests.auxiliary
 from master_server.master_server_initializer import MasterServerInitializer
 from master_server.master_handler_register import MasterHandlerRegister
+from mock import Mock
 
 class MasterServerInitializerTest(unittest.TestCase):
 	def setUp(self):
@@ -9,8 +10,10 @@ class MasterServerInitializerTest(unittest.TestCase):
 			'localhost:34510', 
 			'localhost:34511',
 			u'master_server',
-			MasterHandlerRegister()
+			MasterHandlerRegister(),
+			Mock()
 			)
+		self.server_initializer.init_heart_beat_monitor = Mock()
 		
 	def test_construction(self):
 		self.assertEqual(self.server_initializer.pub_address, 'localhost:34510')
@@ -21,11 +24,12 @@ class MasterServerInitializerTest(unittest.TestCase):
 		
 	def test_init_server_handler_dispatcher(self):
 		self.server_initializer.init_server_handler_dispatcher()
-		self.assertEqual(len(self.server_initializer.server_handler_dispatcher.handlers), 2)
+		self.assertEqual(len(self.server_initializer.server_handler_dispatcher.handlers), 3)
 		
 	def test_init_global_data(self):
 		self.server_initializer.init_global_data()
 		self.assertEqual(len(self.server_initializer.global_data.server_manager.servers), 0)
+		self.assertTrue(self.server_initializer.init_heart_beat_monitor.called)
 		
 	def test_init_rmq(self):
 		self.server_initializer.init_global_data()
