@@ -27,6 +27,10 @@ class StartServerInitResponseHandlerTest(unittest.TestCase):
 		server_option_reader = ServerOptionReader(string_content=server_option_config_string)
 		server_option_reader.parse()
 		self.assertEqual(server_option_reader.get_server_option_config().get_heart_beat_interval(), 10000)
+		
+	def test_get_server_option_reader(self):
+		server_option_reader = self.start_server_init_response_handler.get_server_option_reader(self.config)
+		self.assertEqual(server_option_reader.get_server_option_config().get_heart_beat_interval(), 10000)
 
 def get_tests():
 	return unittest.makeSuite(StartServerInitResponseHandlerTest)

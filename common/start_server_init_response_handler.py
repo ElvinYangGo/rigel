@@ -44,3 +44,10 @@ class StartServerInitResponseHandler:
 		else:
 			global_data.heart_beat.set_heart_beat_interval(heart_beat_interval)
 	
+	def get_server_option_reader(self, config):
+		server_option_string = self.get_config_string(config, u'server_option_config')
+		server_option_reader = ServerOptionReader(string_content=server_option_string)
+		server_option_reader.parse()
+		
+		return server_option_reader
+	
