@@ -8,11 +8,9 @@ class ProtocolIDWriter:
 			return
 		
 		with open(self.file_name, 'w') as f:
-			f.write('class ProtocolID:')
-			f.write('\n')
+			f.write('class ProtocolID:\n')
 			protocol_value = 1
 			for protocol_id in self.id_list:
-				f.write('\t' + protocol_id + ' = ' + str(protocol_value))
-				f.write('\n')
+				f.write('\t' + protocol_id + ' = ' + str(protocol_value) + '\n')
 				protocol_value += 1
 			f.flush()
