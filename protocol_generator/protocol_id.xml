@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<protocols>
-	<protocol>START_SERVER_INIT_REQUEST</protocol>
-	<protocol>START_SERVER_INIT_RESPONSE</protocol>
-	<protocol>END_SERVER_INIT_NOTIFICATION</protocol>
-	<protocol>SYNCHRONIZE_SERVER_STATUS_NOTIFICATION</protocol>
-	<protocol>HEART_BEAT_NOTIFICATION</protocol>
-</protocols>

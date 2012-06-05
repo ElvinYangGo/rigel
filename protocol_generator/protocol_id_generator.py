@@ -1,11 +1,11 @@
-from protocol_generator.protocol_id_parser import ProtocolIDParser
+import json
 from protocol_generator.protocol_id_writer import ProtocolIDWriter
 
 if __name__ == '__main__':
-	parser = ProtocolIDParser('protocol_id.xml')
-	parser.parse()
-	
-	writer = ProtocolIDWriter('../protocol/protocol_id.py', parser.get_id_list())
+	f = open('protocol_id.json')
+	protocol_id_list = json.load(f)
+
+	writer = ProtocolIDWriter('../protocol/protocol_id.py', protocol_id_list)
 	writer.write()
 
 	print 'finished'
