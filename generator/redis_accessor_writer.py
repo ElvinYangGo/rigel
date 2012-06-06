@@ -1,4 +1,4 @@
-from redis_generator.table_method_name import TableMethodName
+from generator.table_method_name import TableMethodName
 
 class RedisAccessorWriter(object):
 	def __init__(self, file_name, table_desc_array):
@@ -39,7 +39,7 @@ class RedisAccessorWriter(object):
 		f.write('\tdef get_' + table_desc['table_name'] + '(self, redis, id_string):\n')
 		f.write('\t\treturn redis.hgetall(self.redis_table.' + self.table_method_name.get_table_method_name(table_desc['table_name']) + '(id_string))\n\n')
 		
-		for field in table_desc['table_field']:
+		for field in table_desc['table_field'].keys():
 			f.write('\tdef get_' + table_desc['table_name'] + '_table_' + field + '(self, redis, id_string):\n')
 			f.write('\t\treturn redis.hget(\n')
 			f.write('\t\t\tself.redis_table.' + self.table_method_name.get_table_method_name(table_desc['table_name']) + '(id_string),\n')

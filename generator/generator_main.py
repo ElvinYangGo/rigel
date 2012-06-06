@@ -1,15 +1,6 @@
 import json
-from redis_generator.redis_table_writer import RedisTableWriter
-from redis_generator.redis_accessor_writer import RedisAccessorWriter
-
-"""
-friend:user_id
-
-friend:friend_id
-user_id
-user_name
-"""
-
+from generator.redis_table_writer import RedisTableWriter
+from generator.redis_accessor_writer import RedisAccessorWriter
 
 if __name__ == '__main__':
 	f = open('data.rd')

@@ -1,4 +1,4 @@
-from redis_generator.table_method_name import TableMethodName
+from generator.table_method_name import TableMethodName
 
 class RedisTableWriter(object):
 	def __init__(self, file_name, table_desc_array):
@@ -36,7 +36,7 @@ class RedisTableWriter(object):
 		f.write('\tdef ' + self.table_method_name.get_table_method_name(table_desc['table_name']) + '(self, id_string):\n')
 		f.write("\t\treturn '" + table_desc['table_name'] + ":' + id_string\n\n")
 		
-		for field in table_desc['table_field']:
+		for field in table_desc['table_field'].keys():
 			f.write('\tdef ' + self.table_method_name.get_table_field_method_name(table_desc['table_name'], field) + '(self):\n')
 			f.write("\t\treturn '" + field + "'\n\n")
 
