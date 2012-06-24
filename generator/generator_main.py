@@ -1,6 +1,7 @@
 import json
 from generator.redis_table_writer import RedisTableWriter
 from generator.redis_accessor_writer import RedisAccessorWriter
+from generator.plain_class_generator.plain_table_array_writer import PlainTableArrayWriter
 
 if __name__ == '__main__':
 	f = open('data.rd')
@@ -12,5 +13,7 @@ if __name__ == '__main__':
 	redis_table_writer.write()
 	redis_accessor_writer = RedisAccessorWriter('../redis_client/redis_accessor.py', table_desc_array)
 	redis_accessor_writer.write()
+	plain_table_array_writer = PlainTableArrayWriter('../plain_class/', table_desc_array)
+	plain_table_array_writer.write()
 
 	print 'finished'

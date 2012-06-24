@@ -8,16 +8,16 @@ class RedisAccessor(object):
 	def get_user(self, redis, id_string):
 		return redis.hgetall(self.redis_table.get_user_key(id_string))
 
-	def get_user_table_user_id(self, redis, id_string):
-		return redis.hget(
-			self.redis_table.get_user_key(id_string),
-			self.redis_table.get_user_table_user_id_field()
-			)
-
 	def get_user_table_user_name(self, redis, id_string):
 		return redis.hget(
 			self.redis_table.get_user_key(id_string),
 			self.redis_table.get_user_table_user_name_field()
+			)
+
+	def get_user_table_user_id(self, redis, id_string):
+		return redis.hget(
+			self.redis_table.get_user_key(id_string),
+			self.redis_table.get_user_table_user_id_field()
 			)
 
 	def get_item_list(self, redis, id_string):
@@ -29,16 +29,16 @@ class RedisAccessor(object):
 	def get_friend(self, redis, id_string):
 		return redis.hgetall(self.redis_table.get_friend_key(id_string))
 
-	def get_friend_table_user_id(self, redis, id_string):
-		return redis.hget(
-			self.redis_table.get_friend_key(id_string),
-			self.redis_table.get_friend_table_user_id_field()
-			)
-
 	def get_friend_table_user_name(self, redis, id_string):
 		return redis.hget(
 			self.redis_table.get_friend_key(id_string),
 			self.redis_table.get_friend_table_user_name_field()
+			)
+
+	def get_friend_table_user_id(self, redis, id_string):
+		return redis.hget(
+			self.redis_table.get_friend_key(id_string),
+			self.redis_table.get_friend_table_user_id_field()
 			)
 
 	def get_online_player_list(self, redis):
