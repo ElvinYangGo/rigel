@@ -1,4 +1,10 @@
 from generator.table_method_name import TableMethodName
+from generator.redis_accessor_generator.map_accessor_writer import MapAccessorWriter
+from generator.redis_accessor_generator.list_accessor_writer import ListAccessorWriter
+from generator.redis_accessor_generator.list_map_accessor_writer import ListMapAccessorWriter
+from generator.redis_accessor_generator.global_list_accessor_writer import GlobalListAccessorWriter
+from generator.redis_accessor_generator.global_sorted_set_accessor_writer import GlobalSortedSetAccessorWriter
+from generator.redis_accessor_generator.sorted_set_accessor_writer import SortedSetAccessorWriter
 
 class RedisAccessorWriter(object):
 	def __init__(self, file_name, table_desc_array):
@@ -23,48 +29,23 @@ class RedisAccessorWriter(object):
 		for table_desc in self.table_desc_array:
 			table_type = table_desc['table_type']
 			if table_type == 'map':
-				self.write_map_table(table_desc, f)
+				map_accessor_writer = MapAccessorWriter(table_desc, f)
+				map_accessor_writer.write()
 			elif table_type == 'list':
-				self.write_list_table(table_desc, f)
+				list_accessor_writer = ListAccessorWriter(table_desc, f)
+				list_accessor_writer.write()
 			elif table_type == 'list_map':
-				self.write_list_map_table(table_desc, f)	
+				list_map_accessor_writer = ListMapAccessorWriter(table_desc, f)
+				list_map_accessor_writer.write()
 			elif table_type == 'global_list':
-				self.write_global_list_table(table_desc, f)
+				global_list_accessor_writer = GlobalListAccessorWriter(table_desc, f)
+				global_list_accessor_writer.write()
 			elif table_type == 'global_sorted_set':
-				self.write_global_sorted_set_table(table_desc, f)
+				global_sorted_set_accessor_writer = GlobalSortedSetAccessorWriter(table_desc, f)
+				global_sorted_set_accessor_writer.write()
 			elif table_type == 'sorted_set':
-				self.write_sorted_set_table(table_desc, f)
-					
-	def write_map_table(self, table_desc, f):
-		f.write('\tdef get_' + table_desc['table_name'] + '(self, redis, id_string):\n')
-		f.write('\t\treturn redis.hgetall(self.redis_table.' + self.table_method_name.get_table_method_name(table_desc['table_name']) + '(id_string))\n\n')
-		
-		for field in table_desc['table_field'].keys():
-			f.write('\tdef get_' + table_desc['table_name'] + '_table_' + field + '(self, redis, id_string):\n')
-			f.write('\t\treturn redis.hget(\n')
-			f.write('\t\t\tself.redis_table.' + self.table_method_name.get_table_method_name(table_desc['table_name']) + '(id_string),\n')
-			f.write('\t\t\tself.redis_table.' + self.table_method_name.get_table_field_method_name(table_desc['table_name'], field) + '()\n')
-			f.write('\t\t\t)\n\n')
-		
-	def write_list_table(self, table_desc, f):
-		f.write('\tdef get_' + table_desc['table_name'] + '_list(self, redis, id_string):\n')
-		f.write('\t\treturn redis.get(self.redis_table.' + self.table_method_name.get_list_method_name(table_desc['table_name']) + '(id_string))\n\n')
-			
-	def write_list_map_table(self, table_desc, f):
-		self.write_list_table(table_desc, f)
-		self.write_map_table(table_desc, f)
-	
-	def write_global_list_table(self, table_desc, f):
-		f.write('\tdef get_' + table_desc['table_name'] + '_list(self, redis):\n')
-		f.write('\t\treturn redis.get(self.redis_table.' + self.table_method_name.get_list_method_name(table_desc['table_name']) + '())\n\n')
-		
-	def write_global_sorted_set_table(self, table_desc, f):
-		f.write('\tdef get_' + table_desc['table_name'] + '(self, redis, member_string):\n')
-		f.write('\t\treturn redis.zrank(self.redis_table.' + self.table_method_name.get_table_method_name(table_desc['table_name']) + '(), member_string)\n\n')
-	
-	def write_sorted_set_table(self, table_desc, f):
-		f.write('\tdef get_' + table_desc['table_name'] + '(self, redis, id_string, member_string):\n')
-		f.write('\t\treturn redis.zrank(self.redis_table.' + self.table_method_name.get_table_method_name(table_desc['table_name']) + '(id_string), member_string)\n\n')
+				sorted_set_accessor_writer = SortedSetAccessorWriter(table_desc, f)
+				sorted_set_accessor_writer.write()
 
 """
 from redis_client.redis_table import RedisTable
@@ -75,6 +56,9 @@ class RedisAccessor(object):
 	
 	def get_user(self, redis, id_string):
 		return redis.hgetall(self.redis_table.get_user_key(id_string))
+		
+	def set_user(self, redis, id_string, user_dict):
+		redis.hmset(self.redis_table.get_user_key(id_string), user_dict)
 		
 	def get_user_table_user_id(self, redis, id_string):
 		return redis.hget(

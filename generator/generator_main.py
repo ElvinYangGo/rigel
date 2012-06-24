@@ -1,6 +1,6 @@
 import json
 from generator.redis_table_writer import RedisTableWriter
-from generator.redis_accessor_writer import RedisAccessorWriter
+from generator.redis_accessor_generator.redis_accessor_writer import RedisAccessorWriter
 from generator.plain_class_generator.plain_table_array_writer import PlainTableArrayWriter
 
 if __name__ == '__main__':
