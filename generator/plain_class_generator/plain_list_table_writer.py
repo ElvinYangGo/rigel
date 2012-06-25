@@ -5,7 +5,7 @@ class PlainListTableWriter(PlainClassWriter):
 		PlainClassWriter.__init__(self, path, table_desc)
 		
 	def get_file_name(self):
-		return self.path + self.table_desc['table_name'] + '_manager'+ '.py'
+		return '{}{}_manager.py'.format(self.path, self.table_desc['table_name'])
 	
 	def get_class_name(self):
 		word_list = self.table_desc['table_name'].split('_')
@@ -16,17 +16,25 @@ class PlainListTableWriter(PlainClassWriter):
 	
 	def write_init_function(self, f):
 		f.write('\tdef __init__(self):\n')
-		f.write('\t\tself.' + self.get_member_variable_name() + ' = []\n\n')
+		f.write('\t\tself.{} = []\n\n'.format(self.get_member_variable_name()))
 		
 	def get_member_variable_name(self):
-		return self.table_desc['table_name'] + 's'
+		return '{}s'.format(self.table_desc['table_name'])
 		
 	def write_class_body(self, f):
-		f.write('\tdef get_all_' + self.get_member_variable_name() + '(self):\n')
-		f.write('\t\treturn self.' + self.get_member_variable_name() + '\n\n')
+		f.write('\tdef get_all_{}(self):\n'.format(self.get_member_variable_name()))
+		f.write('\t\treturn self.{}\n\n'.format(self.get_member_variable_name()))
 		
-		f.write('\tdef add_' + self.table_desc['table_name'] + '(self, ' + self.table_desc['table_name'] + '):\n')
-		f.write('\t\tself.' + self.get_member_variable_name() + '.add(' + self.table_desc['table_name'] + ')\n')
+		f.write('\tdef add_{}(self, {}):\n'.format(
+					self.table_desc['table_name'],
+					self.table_desc['table_name']
+					)
+				)
+		f.write('\t\tself.{}.add({})\n'.format(
+					self.get_member_variable_name(), 
+					self.table_desc['table_name']
+					)
+				)
 		
 """
 class ItemManager(object):

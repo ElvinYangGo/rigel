@@ -12,6 +12,6 @@ class ProtocolIDWriter:
 			f.write('class ProtocolID:\n')
 			protocol_value = 1
 			for protocol_id in self.id_list:
-				f.write('\t' + protocol_id + ' = ' + str(protocol_value) + '\n')
+				f.write('\t{} = {}\n'.format(protocol_id, str(protocol_value)))
 				protocol_value += 1
 			f.flush()
