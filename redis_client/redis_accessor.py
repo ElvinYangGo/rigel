@@ -90,9 +90,33 @@ class RedisAccessor(object):
 	def get_online_player_list(self, redis):
 		return redis.get(self.redis_table.get_online_player_list_key())
 
+	def add_online_player(self, redis, online_player_string):
+		redis.rpush(self.redis_table.get_online_player_list_key(), online_player_string)
+
+	def remove_online_player(self, redis, online_player_string):
+		redis.lrem(self.redis_table.get_online_player_list_key(), 0, online_player_string)
+
 	def get_level_rank(self, redis, member_string):
 		return redis.zrank(self.redis_table.get_level_rank_key(), member_string)
 
+	def add_level_rank(self, redis, member_string, score):
+		redis.zadd(self.redis_table.get_level_rank_key(), score, member_string)
+
+	def remove_level_rank(self, redis, member_string):
+		redis.zrem(self.redis_table.get_level_rank_key(), member_string)
+
+	def get_level_rank_range(self, redis, start, stop):
+		return redis.zrange(self.redis_table.get_level_rank_key(), start, stop)
+
 	def get_race_score_rank(self, redis, id_string, member_string):
 		return redis.zrank(self.redis_table.get_race_score_rank_key(id_string), member_string)
+
+	def add_race_score_rank(self, redis, id_string, member_string, score):
+		redis.zadd(self.redis_table.get_race_score_rank_key(id_string), score, member_string)
+
+	def remove_race_score_rank(self, redis, id_string, member_string):
+		redis.zrem(self.redis_table.get_race_score_rank_key(id_string), member_string)
+
+	def get_race_score_rank_range(self, redis, id_string, start, stop):
+		return redis.zrange(self.redis_table.get_race_score_rank_key(id_string), start, stop)
 
