@@ -20,7 +20,7 @@ class PlainMapTableWriter(PlainClassWriter):
 		
 	def write_init_function_body(self, f):
 		for field_name in self.table_desc['table_field'].iterkeys():
-			f.write('\t\tself.{} = \n'.format(
+			f.write('\t\tself.{} = {}\n'.format(
 						field_name, 
 						field_name
 						)
