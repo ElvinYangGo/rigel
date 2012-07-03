@@ -12,15 +12,18 @@ class ListAccessorWriter(object):
 		self.write_remover_function()
 
 	def write_getter_function(self):
-		self.f.write('\tdef get_{}_list(self, redis, id_string):\n'.format(self.table_desc['table_name']))
-		self.f.write('\t\treturn redis.get(self.redis_table.{}(id_string))\n\n'.format(
+		self.f.write('\tdef {}(self, redis, id_string):\n'.format(self.get_getter_function_name()))
+		self.f.write('\t\treturn redis.lrange(self.redis_table.{}(id_string), 0, -1)\n\n'.format(
 						self.table_method_name.get_list_method_name(self.table_desc['table_name']) 
 						)
 					)
 		
+	def get_getter_function_name(self):
+		return 'get_{}_list'.format(self.table_desc['table_name'])
+		
 	def write_adder_function(self):
-		self.f.write('\tdef add_{}(self, redis, id_string, {}_string):\n'.format(
-						self.table_desc['table_name'], 
+		self.f.write('\tdef {}(self, redis, id_string, {}_string):\n'.format(
+						self.get_adder_function_name(), 
 						self.table_desc['table_name']
 						)
 					)
@@ -29,10 +32,13 @@ class ListAccessorWriter(object):
 						self.table_desc['table_name']
 						)
 					)
+	
+	def get_adder_function_name(self):
+		return 'add_{}'.format(self.table_desc['table_name'])
 		
 	def write_remover_function(self):
-		self.f.write('\tdef remove_{}(self, redis, id_string, {}_string):\n'.format(
-						self.table_desc['table_name'], 
+		self.f.write('\tdef {}(self, redis, id_string, {}_string):\n'.format(
+						self.get_remover_function_name(), 
 						self.table_desc['table_name']
 						)
 					)
@@ -42,9 +48,12 @@ class ListAccessorWriter(object):
 						)
 					)
 		
+	def get_remover_function_name(self):
+		return 'remove_{}'.format(self.table_desc['table_name'])
+	
 """
 	def get_item_list(self, redis, id_string):
-		return redis.get(self.redis_table.get_item_list_key(id_string))
+		return redis.lrange(self.redis_table.get_item_list_key(id_string), 0, -1)
 	
 	def add_item(self, redis, id_string, item_string):
 		redis.rpush(self.redis_table.get_item_list_key(id_string), item_string)

@@ -10,67 +10,88 @@ class MapAccessorWriter(object):
 		self.write_table_getter_function()
 		self.write_table_setter_function()
 		
-		for field in self.table_desc['table_field'].keys():
-			self.write_field_getter_function(field)
-			self.write_field_setter_function(field)
+		for field_pair in self.table_desc['table_field'].iteritems():
+			self.write_field_getter_function(field_pair)
+			self.write_field_setter_function(field_pair)
+			
+	def get_key_param_string(self):
+		return 'id_string'
 	
 	def write_table_getter_function(self):
-		self.f.write('\tdef get_{}(self, redis, id_string):\n'.format(
-						self.table_desc['table_name']
+		self.f.write('\tdef {}(self, redis, {}):\n'.format(
+						self.get_table_getter_function_name(),
+						self.get_key_param_string()
 						)
 					)
-		self.f.write('\t\treturn redis.hgetall(self.redis_table.{}(id_string))\n\n'.format( 
-						self.table_method_name.get_table_method_name(self.table_desc['table_name']) 
+		self.f.write('\t\treturn redis.hgetall(self.redis_table.{}({}))\n\n'.format( 
+						self.table_method_name.get_table_method_name(self.table_desc['table_name']),
+						self.get_key_param_string() 
 						)
 					)
+	
+	def get_table_getter_function_name(self):
+		return 'get_{}'.format(self.table_desc['table_name'])
 
 	def write_table_setter_function(self):
-		self.f.write('\tdef set_{}(self, redis, id_string, {}_dict):\n'.format(
-						self.table_desc['table_name'], 
-						self.table_desc['table_name']
+		self.f.write('\tdef {}(self, redis, {}, d):\n'.format(
+						self.get_table_setter_function_name(),
+						self.get_key_param_string()
 						)
 					)
-		self.f.write('\t\treturn redis.hmset(self.redis_table.{}(id_string), {}_dict)\n\n'.format( 
-						self.table_method_name.get_table_method_name(self.table_desc['table_name']), 
-						self.table_desc['table_name']
+		self.f.write('\t\tredis.hmset(self.redis_table.{}({}), d)\n\n'.format( 
+						self.table_method_name.get_table_method_name(self.table_desc['table_name']),
+						self.get_key_param_string()
 						)
 					)
-		
-	def write_field_getter_function(self, field):
-		self.f.write('\tdef get_{}_table_{}(self, redis, id_string):\n'.format(
-						self.table_desc['table_name'],
-						field
+	
+	def get_table_setter_function_name(self):
+		return 'set_{}'.format(self.table_desc['table_name'])	
+	
+	def write_field_getter_function(self, field_pair):
+		field_name = field_pair[0]
+		self.f.write('\tdef {}(self, redis, {}):\n'.format(
+						self.get_field_getter_function_name(field_name),
+						self.get_key_param_string()
 						)
 					)
 		self.f.write('\t\treturn redis.hget(\n')
-		self.f.write('\t\t\tself.redis_table.{}(id_string),\n'.format( 
-						self.table_method_name.get_table_method_name(self.table_desc['table_name'])
+		self.f.write('\t\t\tself.redis_table.{}({}),\n'.format( 
+						self.table_method_name.get_table_method_name(self.table_desc['table_name']),
+						self.get_key_param_string()
 						)
 					)
 		self.f.write('\t\t\tself.redis_table.{}()\n'.format( 
-						self.table_method_name.get_table_field_method_name(self.table_desc['table_name'], field) 
+						self.table_method_name.get_table_field_method_name(self.table_desc['table_name'], field_name) 
 						)
 					)
 		self.f.write('\t\t\t)\n\n')	
 		
-	def write_field_setter_function(self, field):
-		self.f.write('\tdef set_{}_table_{}(self, redis, id_string, {}_string):\n'.format(
-						self.table_desc['table_name'], 
-						field,
-						field
+	def get_field_getter_function_name(self, field_name):
+		return 'get_{}_table_{}'.format(self.table_desc['table_name'], field_name)
+		
+	def write_field_setter_function(self, field_pair):
+		field_name = field_pair[0]
+		self.f.write('\tdef {}(self, redis, {}, {}_string):\n'.format(
+						self.get_field_setter_function_name(field_name), 
+						self.get_key_param_string(),
+						field_name
 						)
 					)
 		self.f.write('\t\tredis.hset(\n')
-		self.f.write('\t\t\tself.redis_table.{}(id_string),\n'.format(
-						self.table_method_name.get_table_method_name(self.table_desc['table_name'])
+		self.f.write('\t\t\tself.redis_table.{}({}),\n'.format(
+						self.table_method_name.get_table_method_name(self.table_desc['table_name']),
+						self.get_key_param_string()
 						)
 					)
 		self.f.write('\t\t\tself.redis_table.{}(),\n'.format(
-						self.table_method_name.get_table_field_method_name(self.table_desc['table_name'], field) 
+						self.table_method_name.get_table_field_method_name(self.table_desc['table_name'], field_name) 
 						)
 					)
-		self.f.write('\t\t\t{}_string\n'.format(field))
+		self.f.write('\t\t\t{}_string\n'.format(field_name))
 		self.f.write('\t\t\t)\n\n')	
+	
+	def get_field_setter_function_name(self, field_name):
+		return 'set_{}_table_{}'.format(self.table_desc['table_name'], field_name)
 		
 """		
 	def get_user(self, redis, id_string):

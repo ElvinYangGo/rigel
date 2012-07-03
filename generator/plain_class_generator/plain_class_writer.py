@@ -4,7 +4,8 @@ class PlainClassWriter(object):
 		self.table_desc = table_desc
 
 	def write(self):
-		with open(self.get_file_name(), 'w') as f:
+		file_name_with_path = '{}{}.py'.format(self.path, self.get_file_name())
+		with open(file_name_with_path, 'w') as f:
 			self.write_class_head(f)
 			self.write_init_function(f)
 			self.write_class_body(f)
@@ -21,7 +22,7 @@ class PlainClassWriter(object):
 		pass
 	
 	def get_file_name(self):
-		return '{}{}.py'.format(self.path, self.table_desc['table_name'])
+		return self.table_desc['table_name']
 	
 	def get_class_name(self):
 		pass

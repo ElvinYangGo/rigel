@@ -5,7 +5,7 @@ class PlainListTableWriter(PlainClassWriter):
 		PlainClassWriter.__init__(self, path, table_desc)
 		
 	def get_file_name(self):
-		return '{}{}_manager.py'.format(self.path, self.table_desc['table_name'])
+		return '{}_manager'.format(self.table_desc['table_name'])
 	
 	def get_class_name(self):
 		word_list = self.table_desc['table_name'].split('_')
@@ -15,8 +15,12 @@ class PlainListTableWriter(PlainClassWriter):
 		return table_name
 	
 	def write_init_function(self, f):
-		f.write('\tdef __init__(self):\n')
-		f.write('\t\tself.{} = []\n\n'.format(self.get_member_variable_name()))
+		f.write('\tdef __init__(self, {}):\n'.format(self.get_member_variable_name()))
+		f.write('\t\tself.{} = {}\n\n'.format(
+				self.get_member_variable_name(),
+				self.get_member_variable_name()
+				)
+			)
 		
 	def get_member_variable_name(self):
 		return '{}s'.format(self.table_desc['table_name'])
@@ -30,7 +34,7 @@ class PlainListTableWriter(PlainClassWriter):
 					self.table_desc['table_name']
 					)
 				)
-		f.write('\t\tself.{}.add({})\n'.format(
+		f.write('\t\tself.{}.append({})\n'.format(
 					self.get_member_variable_name(), 
 					self.table_desc['table_name']
 					)
@@ -45,5 +49,5 @@ class ItemManager(object):
 		return self.items
 	
 	def add_item(self, item):
-		self.items.add(item)
+		self.items.append(item)
 """	

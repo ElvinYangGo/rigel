@@ -15,8 +15,8 @@ class RedisTable(object):
 	def get_friend_list_key(self, id_string):
 		return 'friend_list:' + id_string
 
-	def get_friend_key(self, id_string):
-		return 'friend:' + id_string
+	def get_friend_key(self, id_string, second_id_string):
+		return 'friend:' + id_string + ':' + second_id_string
 
 	def get_friend_table_user_name_field(self):
 		return 'user_name'

@@ -16,7 +16,7 @@ class PlainMapTableWriter(PlainClassWriter):
 		f.write('\n')
 	
 	def write_init_function_head(self, f):
-		f.write('\tdef __init__(self{}):\n'.format(self.get_init_parameter()))
+		f.write('\tdef __init__(self, {}):\n'.format(self.get_init_parameter()))
 		
 	def write_init_function_body(self, f):
 		for field_name in self.table_desc['table_field'].iterkeys():
@@ -27,23 +27,29 @@ class PlainMapTableWriter(PlainClassWriter):
 					)
 
 	def get_init_parameter(self):
-		parameter_string = ''
-		for field_name in self.table_desc['table_field'].iterkeys():
-			parameter_string = parameter_string + ', ' + field_name
+		parameter_string = ', '.join(self.table_desc['table_field'].iterkeys())
+		#for field_name in self.table_desc['table_field'].iterkeys():
+		#	parameter_string = parameter_string + ', ' + field_name
 		return parameter_string
 	
 	def write_class_body(self, f):
 		for field_name in self.table_desc['table_field'].iterkeys():
-			self.write_get_function(f, field_name)
-			self.write_set_function(f, field_name)
+			self.write_getter_function(f, field_name)
+			self.write_setter_function(f, field_name)
 	
-	def write_get_function(self, f, field_name):
-		f.write('\tdef get_{}(self):\n'.format(field_name))
+	def write_getter_function(self, f, field_name):
+		f.write('\tdef {}(self):\n'.format(self.get_getter_function_name(field_name)))
 		f.write('\t\treturn self.{}\n\n'.format(field_name))
 	
-	def write_set_function(self, f, field_name):
-		f.write('\tdef set_{}(self, {}):\n'.format(field_name, field_name))
+	def get_getter_function_name(self, field_name):
+		return 'get_{}'.format(field_name)
+	
+	def write_setter_function(self, f, field_name):
+		f.write('\tdef {}(self, {}):\n'.format(self.get_setter_function_name(field_name), field_name))
 		f.write('\t\tself.{} = {}\n\n'.format(field_name, field_name))
+		
+	def get_setter_function_name(self, field_name):
+		return 'set_{}'.format(field_name)
 		
 """
 class User(object):
