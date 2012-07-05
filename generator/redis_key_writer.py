@@ -1,10 +1,10 @@
-from generator.table_method_name import TableMethodName
+from generator.redis_key_name import RedisKeyName
 
 class RedisKeyWriter(object):
 	def __init__(self, file_name, table_desc_array):
 		self.file_name = file_name
 		self.table_desc_array = table_desc_array
-		self.table_method_name = TableMethodName()
+		self.redis_key_name = RedisKeyName()
 
 	def write(self):
 		with open(self.file_name, 'w') as f:
@@ -38,7 +38,7 @@ class RedisKeyWriter(object):
 
 	def write_map_key_getter_function(self, table_desc, f):
 		f.write('\tdef {}(self, id_string):\n'.format(
-					self.table_method_name.get_table_method_name(table_desc['table_name'])
+					self.redis_key_name.get_table_method_name(table_desc['table_name'])
 					)
 				)
 		f.write("\t\treturn '{}:' + id_string\n\n".format(table_desc['table_name']))
@@ -46,14 +46,14 @@ class RedisKeyWriter(object):
 	def write_map_field_getter_function(self, table_desc, f):
 		for field in table_desc['table_field'].keys():
 			f.write('\tdef {}(self):\n'.format(
-						self.table_method_name.get_table_field_method_name(table_desc['table_name'], field)
+						self.redis_key_name.get_table_field_method_name(table_desc['table_name'], field)
 						)
 					)
 			f.write("\t\treturn '{}'\n\n".format(field))
 	
 	def write_list_table(self, table_desc, f):
 		f.write('\tdef {}(self, id_string):\n'.format(
-					self.table_method_name.get_list_method_name(table_desc['table_name'])
+					self.redis_key_name.get_list_method_name(table_desc['table_name'])
 					)
 				)
 		f.write("\t\treturn '{}_list:' + id_string\n\n".format(table_desc['table_name']))
@@ -65,28 +65,28 @@ class RedisKeyWriter(object):
 		
 	def write_list_map_key_getter_function(self, table_desc, f):
 		f.write('\tdef {}(self, id_string, second_id_string):\n'.format(
-					self.table_method_name.get_table_method_name(table_desc['table_name'])
+					self.redis_key_name.get_table_method_name(table_desc['table_name'])
 					)
 				)
 		f.write("\t\treturn '{}:' + id_string + ':' + second_id_string\n\n".format(table_desc['table_name']))
 		
 	def write_global_list_table(self, table_desc, f):
 		f.write('\tdef {}(self):\n'.format(
-					self.table_method_name.get_list_method_name(table_desc['table_name'])
+					self.redis_key_name.get_list_method_name(table_desc['table_name'])
 					)
 				)
 		f.write("\t\treturn '{}_list'\n\n".format(table_desc['table_name']))
 		
 	def write_global_sorted_set_table(self, table_desc, f):
 		f.write('\tdef {}(self):\n'.format(
-					self.table_method_name.get_table_method_name(table_desc['table_name'])
+					self.redis_key_name.get_table_method_name(table_desc['table_name'])
 					)
 				)
 		f.write("\t\treturn '{}'\n\n".format(table_desc['table_name']))
 		
 	def write_sorted_set_table(self, table_desc, f):
 		f.write('\tdef {}(self, id_string):\n'.format(
-					self.table_method_name.get_table_method_name(table_desc['table_name'])
+					self.redis_key_name.get_table_method_name(table_desc['table_name'])
 					)
 				)
 		f.write("\t\treturn '{}:' + id_string\n\n".format(table_desc['table_name']))

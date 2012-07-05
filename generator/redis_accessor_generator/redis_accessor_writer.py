@@ -1,4 +1,3 @@
-from generator.table_method_name import TableMethodName
 from generator.redis_accessor_generator.map_accessor_writer import MapAccessorWriter
 from generator.redis_accessor_generator.list_accessor_writer import ListAccessorWriter
 from generator.redis_accessor_generator.list_map_accessor_writer import ListMapAccessorWriter
@@ -10,7 +9,6 @@ class RedisAccessorWriter(object):
 	def __init__(self, file_name, table_desc_array):
 		self.file_name = file_name
 		self.table_desc_array = table_desc_array
-		self.table_method_name = TableMethodName()
 
 	def write(self):
 		with open(self.file_name, 'w') as f:
@@ -97,7 +95,8 @@ class RedisAccessor(object):
 
 	def get_friend_list(self, redis, id_string):
 		return redis.lrange(self.redis_table.get_friend_list_key(id_string), 0, -1)
-	def get_friend_dict_list(self, redis, id_string):
+
+	def get_friend_dict_list(self, redis, id_string):
 		friend_string_list = self.get_friend_list(redis, id_string)
 		friend_dict_list = []
 		with redis.pipeline() as pipe:

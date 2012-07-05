@@ -1,4 +1,4 @@
-class TableMethodName(object):
+class RedisKeyName(object):
 	def get_table_method_name(self, table_name):
 		return 'get_{}_key'.format(table_name)
 	

@@ -1,10 +1,10 @@
-from generator.table_method_name import TableMethodName
+from generator.redis_key_name import RedisKeyName
 
 class MapAccessorWriter(object):
 	def __init__(self, table_desc, f):
 		self.table_desc = table_desc
 		self.f = f
-		self.table_method_name = TableMethodName()
+		self.redis_key_name = RedisKeyName()
 		
 	def write(self):
 		self.write_table_getter_function()
@@ -24,7 +24,7 @@ class MapAccessorWriter(object):
 						)
 					)
 		self.f.write('\t\treturn redis.hgetall(self.redis_table.{}({}))\n\n'.format( 
-						self.table_method_name.get_table_method_name(self.table_desc['table_name']),
+						self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 						self.get_key_param_string() 
 						)
 					)
@@ -39,7 +39,7 @@ class MapAccessorWriter(object):
 						)
 					)
 		self.f.write('\t\tredis.hmset(self.redis_table.{}({}), d)\n\n'.format( 
-						self.table_method_name.get_table_method_name(self.table_desc['table_name']),
+						self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 						self.get_key_param_string()
 						)
 					)
@@ -56,12 +56,12 @@ class MapAccessorWriter(object):
 					)
 		self.f.write('\t\treturn redis.hget(\n')
 		self.f.write('\t\t\tself.redis_table.{}({}),\n'.format( 
-						self.table_method_name.get_table_method_name(self.table_desc['table_name']),
+						self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 						self.get_key_param_string()
 						)
 					)
 		self.f.write('\t\t\tself.redis_table.{}()\n'.format( 
-						self.table_method_name.get_table_field_method_name(self.table_desc['table_name'], field_name) 
+						self.redis_key_name.get_table_field_method_name(self.table_desc['table_name'], field_name)
 						)
 					)
 		self.f.write('\t\t\t)\n\n')	
@@ -79,12 +79,12 @@ class MapAccessorWriter(object):
 					)
 		self.f.write('\t\tredis.hset(\n')
 		self.f.write('\t\t\tself.redis_table.{}({}),\n'.format(
-						self.table_method_name.get_table_method_name(self.table_desc['table_name']),
+						self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 						self.get_key_param_string()
 						)
 					)
 		self.f.write('\t\t\tself.redis_table.{}(),\n'.format(
-						self.table_method_name.get_table_field_method_name(self.table_desc['table_name'], field_name) 
+						self.redis_key_name.get_table_field_method_name(self.table_desc['table_name'], field_name)
 						)
 					)
 		self.f.write('\t\t\t{}_string\n'.format(field_name))

@@ -1,10 +1,10 @@
-from generator.table_method_name import TableMethodName
+from generator.redis_key_name import RedisKeyName
 
 class GlobalListAccessorWriter(object):
 	def __init__(self, table_desc, f):
 		self.table_desc = table_desc
 		self.f = f
-		self.table_method_name = TableMethodName()
+		self.redis_key_name = RedisKeyName()
 	
 	def write(self):
 		self.write_getter_function()
@@ -17,7 +17,7 @@ class GlobalListAccessorWriter(object):
 						)
 					)
 		self.f.write('\t\treturn redis.get(self.redis_table.{}())\n\n'.format(
-						self.table_method_name.get_list_method_name(self.table_desc['table_name'])
+						self.redis_key_name.get_list_method_name(self.table_desc['table_name'])
 						)
 					)
 	
@@ -28,7 +28,7 @@ class GlobalListAccessorWriter(object):
 						)
 					)
 		self.f.write('\t\tredis.rpush(self.redis_table.{}(), {}_string)\n\n'.format( 
-						self.table_method_name.get_list_method_name(self.table_desc['table_name']), 
+						self.redis_key_name.get_list_method_name(self.table_desc['table_name']),
 						self.table_desc['table_name']
 						)
 					)
@@ -40,7 +40,7 @@ class GlobalListAccessorWriter(object):
 						)
 					)
 		self.f.write('\t\tredis.lrem(self.redis_table.{}(), 0, {}_string)\n\n'.format( 
-						self.table_method_name.get_list_method_name(self.table_desc['table_name']),
+						self.redis_key_name.get_list_method_name(self.table_desc['table_name']),
 						self.table_desc['table_name']
 						)
 					)

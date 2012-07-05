@@ -29,7 +29,7 @@ class ListMapListAccessorWriter(ListAccessorWriter):
 			)
 		self.f.write(
 			'\t\t\t\tpipe.hgetall(self.redis_table.{}(id_string, {}_string))\n'.format(
-				self.table_method_name.get_table_method_name(self.table_desc['table_name']),
+				self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 				self.table_desc['table_name']
 				)
 			)
@@ -50,13 +50,13 @@ class ListMapListAccessorWriter(ListAccessorWriter):
 						)
 					)
 		self.f.write('\t\tredis.rpush(self.redis_table.{}(id_string), {}_string)\n'.format( 
-						self.table_method_name.get_list_method_name(self.table_desc['table_name']), 
+						self.redis_key_name.get_list_method_name(self.table_desc['table_name']),
 						self.table_desc['table_name']
 						)
 					)
 		self.f.write(
 			'\t\tredis.hmset(self.redis_table.{}(id_string, {}_string), d)\n\n'.format(
-				self.table_method_name.get_table_method_name(self.table_desc['table_name']),
+				self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 				self.table_desc['table_name']
 				)
 			)
@@ -68,13 +68,13 @@ class ListMapListAccessorWriter(ListAccessorWriter):
 						)
 					)
 		self.f.write('\t\tredis.lrem(self.redis_table.{}(id_string), 0, {}_string)\n'.format( 
-						self.table_method_name.get_list_method_name(self.table_desc['table_name']),
+						self.redis_key_name.get_list_method_name(self.table_desc['table_name']),
 						self.table_desc['table_name']
 						)
 					)
 		self.f.write(
 			'\t\tredis.delete(self.redis_table.{}(id_string, {}_string))\n\n'.format(
-				self.table_method_name.get_table_method_name(self.table_desc['table_name']),
+				self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 				self.table_desc['table_name']
 				)
 			)
@@ -82,7 +82,8 @@ class ListMapListAccessorWriter(ListAccessorWriter):
 """
 	def get_friend_list(self, redis, id_string):
 		return redis.lrange(self.redis_table.get_friend_list_key(id_string), 0, -1)
-	def get_friend_dict_list(self, redis, id_string):
+
+	def get_friend_dict_list(self, redis, id_string):
 		friend_string_list = self.get_friend_list(redis, id_string)
 		with redis.pipeline() as pipe:
 			for friend_string in friend_string_list:

@@ -58,7 +58,7 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 			elif field_pair[1]['data_type'] == 'string':
 				self.f.write("\t\t{}_param = '{}'\n".format(field_pair[0], field_pair[1]['default']))
 			self.f.write('\t\tif self.redis_table.{}() in {}_dict:\n'.format(
-							self.table_method_name.get_table_field_method_name(
+							self.redis_key_name.get_table_field_method_name(
 								self.table_desc['table_name'], 
 								field_pair[0]
 								),
@@ -74,7 +74,7 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 			self.f.write(format_string.format(
 							field_pair[0],
 							self.table_desc['table_name'],
-							self.table_method_name.get_table_field_method_name(
+							self.redis_key_name.get_table_field_method_name(
 								self.table_desc['table_name'], 
 								field_pair[0]
 								)
@@ -146,7 +146,7 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 			self.f.write(
 				format_string.format(
 					self.table_desc['table_name'],
-					self.table_method_name.get_table_field_method_name(
+					self.redis_key_name.get_table_field_method_name(
 						self.table_desc['table_name'], 
 						field_pair[0]
 						),
