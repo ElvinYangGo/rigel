@@ -1,31 +1,43 @@
-from generator.plain_class_generator.plain_list_table_writer import PlainListTableWriter
-from generator.redis_accessor_generator.list_accessor_writer import ListAccessorWriter
+from generator.plain_class_name import PlainClassName
+from generator.redis_accessor_name import RedisAccessorName
 
-class PlainListAccessorWriter(ListAccessorWriter):
+class PlainListAccessorWriter(object):
 	def __init__(self, table_desc, f):
-		ListAccessorWriter.__init__(self, table_desc, f)
-		self.plain_list_table_writer = PlainListTableWriter('', table_desc)
+		self.table_desc = table_desc
+		self.f = f
+		self.plain_class_name = PlainClassName()
+		self.redis_accessor_name = RedisAccessorName()
 		
 	def write_import_declaration(self):
 		import_format_string = 'from plain_class.{} import {}\n'
-		self.f.write(import_format_string.format(
-							self.plain_list_table_writer.get_file_name(),
-							self.plain_list_table_writer.get_class_name()
-						)
-					)
-	
+		self.f.write(
+			import_format_string.format(
+				self.plain_class_name.get_list_file_name(self.table_desc['table_name']),
+				self.plain_class_name.get_list_class_name(self.table_desc['table_name'])
+				)
+			)
+
+	def write(self):
+		self.write_getter_function()
+		self.write_adder_function()
+		self.write_remover_function()
+
 	def write_getter_function(self):
-		self.f.write('\tdef get_{}(self, redis, id_int):\n'.format(self.plain_list_table_writer.get_file_name()))
+		self.f.write(
+			'\tdef get_{}_manager(self, redis, id_int):\n'.format(
+				self.table_desc['table_name']
+				)
+			)
 		if self.table_desc['data_type'] == 'string':
 			self.f.write(
 				'\t\t{}_list = self.redis_accessor.{}(redis, str(id_int))\n'.format(
 					self.table_desc['table_name'],
-					self.get_getter_function_name()
+					self.redis_accessor_name.get_list_getter_function_name(self.table_desc['table_name'])
 					)
 				)		
 			self.f.write(
 				'\t\treturn {}({}_list)\n\n'.format(
-					self.plain_list_table_writer.get_class_name(),
+					self.plain_class_name.get_list_class_name(self.table_desc['table_name']),
 					self.table_desc['table_name']
 					)
 				)
@@ -33,7 +45,7 @@ class PlainListAccessorWriter(ListAccessorWriter):
 			self.f.write(
 				'\t\t{}_list_string = self.redis_accessor.{}(redis, str(id_int))\n'.format(
 					self.table_desc['table_name'],
-					self.get_getter_function_name()
+					self.redis_accessor_name.get_list_getter_function_name(self.table_desc['table_name'])
 					)
 				)
 			self.f.write('\t\t{}_list = [int({}_string) for {}_string in {}_list_string]\n'.format(
@@ -45,7 +57,7 @@ class PlainListAccessorWriter(ListAccessorWriter):
 				)
 			self.f.write(
 				'\t\treturn {}({}_list)\n\n'.format(
-					self.plain_list_table_writer.get_class_name(),
+					self.plain_class_name.get_list_class_name(self.table_desc['table_name']),
 					self.table_desc['table_name']
 					)
 				)
@@ -53,7 +65,7 @@ class PlainListAccessorWriter(ListAccessorWriter):
 	def write_adder_function(self):
 		self.f.write(
 			'\tdef {}(self, redis, id_int, {}):\n'.format(
-				self.get_adder_function_name(),
+				self.redis_accessor_name.get_list_adder_function_name(self.table_desc['table_name']),
 				self.table_desc['table_name']
 				)
 			)
@@ -64,7 +76,7 @@ class PlainListAccessorWriter(ListAccessorWriter):
 			format_string = '\t\tself.redis_accessor.{}(redis, str(id_int), {})\n\n'
 		self.f.write(
 			format_string.format(
-				self.get_adder_function_name(),
+				self.redis_accessor_name.get_list_adder_function_name(self.table_desc['table_name']),
 				self.table_desc['table_name']
 				)
 			)
@@ -72,7 +84,7 @@ class PlainListAccessorWriter(ListAccessorWriter):
 	def write_remover_function(self):
 		self.f.write(
 			'\tdef {}(self, redis, id_int, {}):\n'.format(
-				self.get_remover_function_name(),
+				self.redis_accessor_name.get_list_remover_function_name(self.table_desc['table_name']),
 				self.table_desc['table_name']
 				)
 			)
@@ -83,7 +95,7 @@ class PlainListAccessorWriter(ListAccessorWriter):
 			format_string = '\t\tself.redis_accessor.{}(redis, str(id_int), {})\n\n'
 		self.f.write(
 			format_string.format(
-				self.get_remover_function_name(),
+				self.redis_accessor_name.get_list_remover_function_name(self.table_desc['table_name']),
 				self.table_desc['table_name']
 				)
 			)	

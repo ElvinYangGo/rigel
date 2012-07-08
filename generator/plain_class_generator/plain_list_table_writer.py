@@ -1,19 +1,17 @@
 from generator.plain_class_generator.plain_class_writer import PlainClassWriter
+from generator.plain_class_name import PlainClassName
 
 class PlainListTableWriter(PlainClassWriter):
 	def __init__(self, path, table_desc):
-		PlainClassWriter.__init__(self, path, table_desc)
+		super(PlainListTableWriter, self).__init__(path, table_desc)
+		self.plain_class_name = PlainClassName()
 		
 	def get_file_name(self):
-		return '{}_manager'.format(self.table_desc['table_name'])
+		return self.plain_class_name.get_list_file_name(self.table_desc['table_name'])
 	
 	def get_class_name(self):
-		word_list = self.table_desc['table_name'].split('_')
-		capitalized_word_list = [word.capitalize() for word in word_list]
-		capitalized_word_list.append('Manager')
-		table_name = ''.join(capitalized_word_list)
-		return table_name
-	
+		return self.plain_class_name.get_list_class_name(self.table_desc['table_name'])
+
 	def write_init_function(self, f):
 		f.write('\tdef __init__(self, {}):\n'.format(self.get_member_variable_name()))
 		f.write('\t\tself.{} = {}\n\n'.format(

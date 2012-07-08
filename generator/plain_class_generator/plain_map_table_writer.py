@@ -1,14 +1,13 @@
 from generator.plain_class_generator.plain_class_writer import PlainClassWriter
+from generator.plain_class_name import PlainClassName
 
 class PlainMapTableWriter(PlainClassWriter):
 	def __init__(self, path, table_desc):
-		PlainClassWriter.__init__(self, path, table_desc)
+		super(PlainMapTableWriter, self).__init__(path, table_desc)
+		self.plain_class_name = PlainClassName()
 		
 	def get_class_name(self):
-		word_list = self.table_desc['table_name'].split('_')
-		capitalized_word_list = [word.capitalize() for word in word_list]
-		table_name = ''.join(capitalized_word_list)
-		return table_name
+		return self.plain_class_name.get_map_class_name(self.table_desc['table_name'])
 
 	def write_init_function(self, f):
 		self.write_init_function_head(f)
@@ -28,8 +27,6 @@ class PlainMapTableWriter(PlainClassWriter):
 
 	def get_init_parameter(self):
 		parameter_string = ', '.join(self.table_desc['table_field'].iterkeys())
-		#for field_name in self.table_desc['table_field'].iterkeys():
-		#	parameter_string = parameter_string + ', ' + field_name
 		return parameter_string
 	
 	def write_class_body(self, f):
@@ -38,18 +35,21 @@ class PlainMapTableWriter(PlainClassWriter):
 			self.write_setter_function(f, field_name)
 	
 	def write_getter_function(self, f, field_name):
-		f.write('\tdef {}(self):\n'.format(self.get_getter_function_name(field_name)))
+		f.write(
+			'\tdef {}(self):\n'.format(
+				self.plain_class_name.get_map_field_getter_function_name(field_name)
+				)
+			)
 		f.write('\t\treturn self.{}\n\n'.format(field_name))
-	
-	def get_getter_function_name(self, field_name):
-		return 'get_{}'.format(field_name)
-	
+
 	def write_setter_function(self, f, field_name):
-		f.write('\tdef {}(self, {}):\n'.format(self.get_setter_function_name(field_name), field_name))
+		f.write(
+			'\tdef {}(self, {}):\n'.format(
+				self.plain_class_name.get_map_field_setter_function_name(field_name),
+				field_name
+				)
+			)
 		f.write('\t\tself.{} = {}\n\n'.format(field_name, field_name))
-		
-	def get_setter_function_name(self, field_name):
-		return 'set_{}'.format(field_name)
 		
 """
 class User(object):

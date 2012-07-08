@@ -1,3 +1,5 @@
+from generator.plain_class_name import PlainClassName
+
 class PlainClassWriter(object):
 	def __init__(self, path, table_desc):
 		self.path = path
@@ -22,7 +24,8 @@ class PlainClassWriter(object):
 		pass
 	
 	def get_file_name(self):
-		return self.table_desc['table_name']
+		plain_class_name = PlainClassName()
+		return plain_class_name.get_file_name(self.table_desc['table_name'])
 	
 	def get_class_name(self):
 		pass

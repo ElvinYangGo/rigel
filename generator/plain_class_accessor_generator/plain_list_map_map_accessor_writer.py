@@ -2,7 +2,7 @@ from generator.plain_class_accessor_generator.plain_map_accessor_writer import P
 
 class PlainListMapMapAccessorWriter(PlainMapAccessorWriter):
 	def __init__(self, table_desc, f):
-		PlainMapAccessorWriter.__init__(self, table_desc, f)
+		super(PlainListMapMapAccessorWriter, self).__init__(table_desc, f)
 		
 	def get_key_declaration_string(self):
 		return 'id_int, {}_int'.format(self.table_desc['table_name'])

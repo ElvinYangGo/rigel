@@ -1,19 +1,30 @@
-from generator.plain_class_generator.plain_map_table_writer import PlainMapTableWriter
-from generator.redis_accessor_generator.map_accessor_writer import MapAccessorWriter
+from generator.redis_accessor_name import RedisAccessorName
+from generator.plain_class_name import PlainClassName
+from generator.redis_key_name import RedisKeyName
 
-class PlainMapAccessorWriter(MapAccessorWriter):
+class PlainMapAccessorWriter(object):
 	def __init__(self, table_desc, f):
-		MapAccessorWriter.__init__(self, table_desc, f)
-		self.plain_map_table_writer = PlainMapTableWriter('', table_desc)
+		self.table_desc = table_desc
+		self.f = f
+		self.redis_key_name = RedisKeyName()
+		self.redis_accessor_name = RedisAccessorName()
+		self.plain_class_name = PlainClassName()
 	
 	def write_import_declaration(self):
-		import_format_string = 'from plain_class.{} import {}\n'
-		self.f.write(import_format_string.format(
-							self.plain_map_table_writer.get_file_name(),
-							self.plain_map_table_writer.get_class_name()
-						)
-					)
-		
+		import_format_string = 'from plain_class.{} import {}\n'.format(
+			self.plain_class_name.get_file_name(self.table_desc['table_name']),
+			self.plain_class_name.get_map_class_name(self.table_desc['table_name'])
+			)
+		self.f.write(import_format_string)
+
+	def write(self):
+		self.write_table_getter_function()
+		self.write_table_setter_function()
+
+		for field_pair in self.table_desc['table_field'].iteritems():
+			self.write_field_getter_function(field_pair)
+			self.write_field_setter_function(field_pair)
+
 	def get_key_declaration_string(self):
 		return 'id_int'
 	
@@ -27,14 +38,14 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 	def write_table_upper_level_getter_function(self):
 		self.f.write(
 			'\tdef {}(self, redis, {}):\n'.format(
-				self.get_table_getter_function_name(),
+				self.redis_accessor_name.get_map_getter_function_name(self.table_desc['table_name']),
 				self.get_key_declaration_string()
 				)
 			)
 		self.f.write(
 			'\t\t{}_dict = self.redis_accessor.{}(redis, {})\n'.format(
 				self.table_desc['table_name'],
-				self.get_table_getter_function_name(),
+				self.redis_accessor_name.get_map_getter_function_name(self.table_desc['table_name']),
 				self.get_key_param_string()
 				)
 			)
@@ -48,7 +59,7 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 	def write_table_builder_function(self):
 		self.f.write(
 			'\tdef {}(self, {}_dict):\n'.format(
-				self.get_table_builder_function_name(),
+				self.plain_class_name.get_map_class_builder_function_name(self.table_desc['table_name']),
 				self.table_desc['table_name']
 				)
 			)
@@ -85,17 +96,13 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 		for field_pair in self.table_desc['table_field'].iteritems():
 			param_list.append('{}={}_param'.format(field_pair[0], field_pair[0]))
 		param_string = ', '.join(param_list)
-		self.f.write('\t\treturn {}({})\n\n'.format(
-						self.plain_map_table_writer.get_class_name(),
-						param_string)
-					)
-	
-	def get_table_builder_function_name(self):
-		return 'build_{}_from_{}_dict'.format(
-			self.table_desc['table_name'],
-			self.table_desc['table_name']
+		self.f.write(
+			'\t\treturn {}({})\n\n'.format(
+				self.plain_class_name.get_map_class_name(self.table_desc['table_name']),
+				param_string
+				)
 			)
-			
+	
 	def write_table_setter_function(self):
 		self.write_table_upper_level_setter_function()
 		self.write_table_dict_builder_function()
@@ -103,7 +110,7 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 	def write_table_upper_level_setter_function(self):
 		self.f.write(
 			'\tdef {}(self, redis, {}, {}):\n'.format(
-				self.get_table_setter_function_name(),
+				self.redis_accessor_name.get_map_setter_function_name(self.table_desc['table_name']),
 				self.get_key_declaration_string(),
 				self.table_desc['table_name']
 				)
@@ -111,28 +118,22 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 		self.f.write(
 			'\t\t{}_dict = self.{}({})\n'.format(
 				self.table_desc['table_name'],
-				self.get_table_dict_builder_function_name(),
+				self.plain_class_name.get_map_dict_builder_function_name(self.table_desc['table_name']),
 				self.table_desc['table_name']
 				)
 			)
 		self.f.write(
 			'\t\tself.redis_accessor.{}(redis, {}, {}_dict)\n\n'.format(
-				self.get_table_setter_function_name(),
+				self.redis_accessor_name.get_map_setter_function_name(self.table_desc['table_name']),
 				self.get_key_param_string(),
 				self.table_desc['table_name']
 				)
 			)
 
-	def get_table_dict_builder_function_name(self):
-		return 'build_{}_dict_from_{}'.format(
-			self.table_desc['table_name'],
-			self.table_desc['table_name']
-			)
-	
 	def write_table_dict_builder_function(self):
 		self.f.write(
 			'\tdef {}(self, {}):\n'.format(
-				self.get_table_dict_builder_function_name(),
+				self.plain_class_name.get_map_dict_builder_function_name(self.table_desc['table_name']),
 				self.table_desc['table_name']
 				)
 			)
@@ -151,7 +152,7 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 						field_pair[0]
 						),
 					self.table_desc['table_name'],
-					self.plain_map_table_writer.get_getter_function_name(field_pair[0])
+					self.plain_class_name.get_map_field_getter_function_name(field_pair[0])
 					)
 				)
 				
@@ -164,21 +165,21 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 	def write_field_getter_function(self, field_pair):
 		self.f.write(
 			'\tdef {}(self, redis, {}):\n'.format(
-				self.get_field_getter_function_name(field_pair[0]),
+				self.redis_accessor_name.get_map_field_getter_function_name(self.table_desc['table_name'], field_pair[0]),
 				self.get_key_declaration_string()
 				)
 			)
 		if field_pair[1]['data_type'] == 'string':
 			self.f.write(
 				'\t\treturn self.redis_accessor.{}(redis, {})\n\n'.format(
-					self.get_field_getter_function_name(field_pair[0]),
+					self.redis_accessor_name.get_map_field_getter_function_name(self.table_desc['table_name'], field_pair[0]),
 					self.get_key_param_string()
 					)
 				)
 		elif field_pair[1]['data_type'] == 'int':
 			self.f.write(
 				'\t\treturn int(self.redis_accessor.{}(redis, {}))\n\n'.format(
-					self.get_field_getter_function_name(field_pair[0]),
+					self.redis_accessor_name.get_map_field_getter_function_name(self.table_desc['table_name'], field_pair[0]),
 					self.get_key_param_string()
 					)
 				)
@@ -186,14 +187,14 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 	def write_field_setter_function(self, field_pair):
 		self.f.write(
 			'\tdef {}(self, redis, {}, {}):\n'.format(
-				self.get_field_setter_function_name(field_pair[0]),
+				self.redis_accessor_name.get_map_field_setter_function_name(self.table_desc['table_name'], field_pair[0]),
 				self.get_key_declaration_string(),
 				field_pair[0])
 			)
 		if field_pair[1]['data_type'] == 'string':
 			self.f.write(
 				'\t\tself.redis_accessor.{}(redis, {}, {})\n\n'.format(
-					self.get_field_setter_function_name(field_pair[0]),
+					self.redis_accessor_name.get_map_field_setter_function_name(self.table_desc['table_name'], field_pair[0]),
 					self.get_key_param_string(),
 					field_pair[0]
 					)
@@ -201,7 +202,7 @@ class PlainMapAccessorWriter(MapAccessorWriter):
 		elif field_pair[1]['data_type'] == 'int':
 			self.f.write(
 				'\t\tself.redis_accessor.{}(redis, {}, str({}))\n\n'.format(
-					self.get_field_setter_function_name(field_pair[0]),
+					self.redis_accessor_name.get_map_field_setter_function_name(self.table_desc['table_name'], field_pair[0]),
 					self.get_key_param_string(),
 					field_pair[0]
 					)

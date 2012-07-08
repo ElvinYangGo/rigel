@@ -4,7 +4,7 @@ from generator.plain_class_generator.plain_map_table_writer import PlainMapTable
 
 class PlainListMapTableWriter(PlainClassWriter):
 	def __init__(self, path, table_desc):
-		PlainClassWriter.__init__(self, path, table_desc)
+		super(PlainListMapTableWriter, self).__init__(path, table_desc)
 		self.plain_list_table_writer = PlainListTableWriter(path, table_desc)
 		self.plain_map_table_writer = PlainMapTableWriter(path, table_desc)
 		
