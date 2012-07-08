@@ -69,7 +69,6 @@ class PlainListAccessorWriter(object):
 				self.table_desc['table_name']
 				)
 			)
-		format_string = ''
 		if self.table_desc['data_type'] == 'int':
 			format_string = '\t\tself.redis_accessor.{}(redis, str(id_int), str({}))\n\n'
 		elif self.table_desc['data_type'] == 'string':
@@ -88,7 +87,6 @@ class PlainListAccessorWriter(object):
 				self.table_desc['table_name']
 				)
 			)
-		format_string = ''
 		if self.table_desc['data_type'] == 'int':
 			format_string = '\t\tself.redis_accessor.{}(redis, str(id_int), str({}))\n\n'
 		elif self.table_desc['data_type'] == 'string':

@@ -1,6 +1,9 @@
 from generator.plain_class_accessor_generator.plain_map_accessor_writer import PlainMapAccessorWriter
 from generator.plain_class_accessor_generator.plain_list_accessor_writer import PlainListAccessorWriter
 from generator.plain_class_accessor_generator.plain_list_map_accessor_writer import PlainListMapAccessorWriter
+from generator.plain_class_accessor_generator.plain_global_list_accessor_writer import PlainGlobalListAccessorWriter
+from generator.plain_class_accessor_generator.plain_global_sorted_set_accessor_writer import PlainGlobalSortedSetAccessorWriter
+from generator.plain_class_accessor_generator.plain_sorted_set_accessor_writer import PlainSortedSetAccessorWriter
 
 class PlainClassAccessorWriter(object):
 	def __init__(self, file_name, table_desc_array):
@@ -47,6 +50,15 @@ class PlainClassAccessorWriter(object):
 			elif table_type == 'list_map':
 				plain_list_map_accessor_writer = PlainListMapAccessorWriter(table_desc, f)
 				plain_list_map_accessor_writer.write()
+			elif table_type == 'global_list':
+				plain_global_list_accessor_writer = PlainGlobalListAccessorWriter(table_desc, f)
+				plain_global_list_accessor_writer.write()
+			elif table_type == 'global_sorted_set':
+				plain_global_sorted_set_accessor_writer = PlainGlobalSortedSetAccessorWriter(table_desc, f)
+				plain_global_sorted_set_accessor_writer.write()
+			elif table_type == 'sorted_set':
+				plain_sorted_set_accessor_writer = PlainSortedSetAccessorWriter(table_desc, f)
+				plain_sorted_set_accessor_writer.write()
 
 	def write_init_function(self, f):
 		f.write('\tdef __init__(self):\n')

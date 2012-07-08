@@ -22,3 +22,27 @@ class RedisAccessorName(object):
 
 	def get_dict_list_getter_function_name(self, table_name):
 		return 'get_{}_dict_list'.format(table_name)
+
+	def get_global_sorted_set_getter_function_name(self, table_name):
+		return 'get_{}'.format(table_name)
+
+	def get_global_sorted_set_adder_function_name(self, table_name):
+		return 'add_{}'.format(table_name)
+
+	def get_global_sorted_set_remover_function_name(self, table_name):
+		return 'remove_{}'.format(table_name)
+
+	def get_global_sorted_set_range_getter_function_name(self, table_name):
+		return 'get_{}_range'.format(table_name)
+
+	def get_sorted_set_getter_function_name(self, table_name):
+		return 'get_{}'.format(table_name)
+
+	def get_sorted_set_adder_function_name(self, table_name):
+		return 'add_{}'.format(table_name)
+
+	def get_sorted_set_remover_function_name(self, table_name):
+		return 'remove_{}'.format(table_name)
+
+	def get_sorted_set_range_getter_function_name(self, table_name):
+		return 'get_{}_range'.format(table_name)

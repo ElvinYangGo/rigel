@@ -13,7 +13,8 @@
 		"table_type": "list",
 		"data_type": "int"
 	},
-		{
+	
+	{
 		"table_name": "friend",
 		"table_type": "list_map",
 		"table_field": {
