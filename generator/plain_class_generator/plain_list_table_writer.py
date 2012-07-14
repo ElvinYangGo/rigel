@@ -13,31 +13,59 @@ class PlainListTableWriter(PlainClassWriter):
 		return self.plain_class_name.get_list_class_name(self.table_desc['table_name'])
 
 	def write_init_function(self, f):
-		f.write('\tdef __init__(self, {}):\n'.format(self.get_member_variable_name()))
-		f.write('\t\tself.{} = {}\n\n'.format(
-				self.get_member_variable_name(),
-				self.get_member_variable_name()
+		f.write(
+			'\tdef __init__(self, {}):\n'.format(
+				self.plain_class_name.get_list_member_variable_name(self.table_desc['table_name'])
+				)
+			)
+		f.write(
+			'\t\tself.{} = {}\n\n'.format(
+				self.plain_class_name.get_list_member_variable_name(self.table_desc['table_name']),
+				self.plain_class_name.get_list_member_variable_name(self.table_desc['table_name'])
 				)
 			)
 		
-	def get_member_variable_name(self):
-		return '{}s'.format(self.table_desc['table_name'])
-		
 	def write_class_body(self, f):
-		f.write('\tdef get_all_{}(self):\n'.format(self.get_member_variable_name()))
-		f.write('\t\treturn self.{}\n\n'.format(self.get_member_variable_name()))
-		
-		f.write('\tdef add_{}(self, {}):\n'.format(
-					self.table_desc['table_name'],
-					self.table_desc['table_name']
-					)
+		f.write(
+			'\tdef get_all_{}(self):\n'.format(
+				self.plain_class_name.get_list_member_variable_name(self.table_desc['table_name'])
 				)
-		f.write('\t\tself.{}.append({})\n'.format(
-					self.get_member_variable_name(), 
-					self.table_desc['table_name']
-					)
+			)
+		f.write(
+			'\t\treturn self.{}\n\n'.format(
+				self.plain_class_name.get_list_member_variable_name(self.table_desc['table_name'])
 				)
+			)
 		
+		f.write(
+			'\tdef add_{}(self, {}):\n'.format(
+				self.table_desc['table_name'],
+				self.table_desc['table_name']
+				)
+			)
+		f.write(
+			'\t\tself.{}.append({})\n\n'.format(
+				self.plain_class_name.get_list_member_variable_name(self.table_desc['table_name']),
+				self.table_desc['table_name']
+				)
+			)
+		self.write_to_net_function(f)
+		self.write_to_net_string_function(f)
+
+	def write_to_net_body(self, f):
+		f.write(
+			'\t\tproto = protocol.auto_data_pb2.{}()\n'.format(
+				self.plain_class_name.get_list_class_name(self.table_desc['table_name'])
+				)
+			)
+		f.write(
+			'\t\tproto.{}.extend(self.{})\n'.format(
+				self.plain_class_name.get_list_member_variable_name(self.table_desc['table_name']),
+				self.plain_class_name.get_list_member_variable_name(self.table_desc['table_name'])
+				)
+			)
+		f.write('\t\treturn proto\n\n')
+
 """
 class ItemManager(object):
 	def __init__(self):
@@ -48,4 +76,10 @@ class ItemManager(object):
 	
 	def add_item(self, item):
 		self.items.append(item)
-"""	
+
+	def to_net(self):
+		proto = protocol.auto_data_pb2.ItemManager()
+		proto.items.extend(self.items)
+		return proto
+
+"""

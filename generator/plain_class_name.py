@@ -35,3 +35,6 @@ class PlainClassName(object):
 
 	def get_map_field_setter_function_name(self, field_name):
 		return 'set_{}'.format(field_name)
+
+	def get_list_member_variable_name(self, table_name):
+		return '{}s'.format(table_name)

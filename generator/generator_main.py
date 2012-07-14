@@ -3,6 +3,7 @@ from generator.redis_key_writer import RedisKeyWriter
 from generator.redis_accessor_generator.redis_accessor_writer import RedisAccessorWriter
 from generator.plain_class_generator.plain_table_array_writer import PlainTableArrayWriter
 from generator.plain_class_accessor_generator.plain_class_accessor_writer import PlainClassAccessorWriter
+from generator.proto_generator.proto_table_array_writer import ProtoTableArrayWriter
 
 if __name__ == '__main__':
 	f = open('data.rd')
@@ -18,5 +19,7 @@ if __name__ == '__main__':
 	plain_table_array_writer.write()
 	plain_class_accessor_writer = PlainClassAccessorWriter('../plain_class/plain_class_accessor.py', table_desc_array)
 	plain_class_accessor_writer.write()
+	proto_table_array_writer = ProtoTableArrayWriter('../protocol/auto_data.proto', table_desc_array)
+	proto_table_array_writer.write()
 
 	print 'finished'

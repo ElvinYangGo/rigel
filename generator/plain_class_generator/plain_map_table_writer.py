@@ -33,6 +33,8 @@ class PlainMapTableWriter(PlainClassWriter):
 		for field_name in self.table_desc['table_field'].iterkeys():
 			self.write_getter_function(f, field_name)
 			self.write_setter_function(f, field_name)
+		self.write_to_net_function(f)
+		self.write_to_net_string_function(f)
 	
 	def write_getter_function(self, f, field_name):
 		f.write(
@@ -50,7 +52,22 @@ class PlainMapTableWriter(PlainClassWriter):
 				)
 			)
 		f.write('\t\tself.{} = {}\n\n'.format(field_name, field_name))
-		
+
+	def write_to_net_body(self, f):
+		f.write(
+			'\t\tproto = protocol.auto_data.{}()\n'.format(
+				self.get_class_name()
+				)
+			)
+		for field_pair in self.table_desc['table_field'].iteritems():
+			f.write(
+				'\t\tproto.{} = self.{}\n'.format(
+					field_pair[0],
+					field_pair[0]
+					)
+				)
+		f.write('\t\treturn proto\n\n')
+
 """
 class User(object):
 	def __init__(self, user_id, user_name):
@@ -68,4 +85,13 @@ class User(object):
 	
 	def set_user_name(self, user_name):
 		self.user_name = user_name
+
+	def to_net(self):
+		proto = protocol.auto_data.User()
+		proto.user_id = self.user_id
+		proto.user_name = self.user_name
+		return proto
+
+	def to_net_string(self):
+		return self.to_net().SerializeToString()
 """	
