@@ -11,7 +11,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = descriptor.FileDescriptor(
   name='auto_data.proto',
   package='',
-  serialized_pb='\n\x0f\x61uto_data.proto\"*\n\x04User\x12\x11\n\tuser_name\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\x05\",\n\x06\x46riend\x12\x11\n\tuser_name\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\x05')
+  serialized_pb='\n\x0f\x61uto_data.proto\"*\n\x04User\x12\x11\n\tuser_name\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\x05\"\x1c\n\x0bItemManager\x12\r\n\x05items\x18\x01 \x03(\x05\",\n\x06\x46riend\x12\x11\n\tuser_name\x18\x01 \x01(\t\x12\x0f\n\x07user_id\x18\x02 \x01(\x05\")\n\rFriendManager\x12\x18\n\x07\x66riends\x18\x01 \x03(\x0b\x32\x07.Friend')
 
 
 
@@ -51,6 +51,34 @@ _USER = descriptor.Descriptor(
 )
 
 
+_ITEMMANAGER = descriptor.Descriptor(
+  name='ItemManager',
+  full_name='ItemManager',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='items', full_name='ItemManager.items', index=0,
+      number=1, type=5, cpp_type=1, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=63,
+  serialized_end=91,
+)
+
+
 _FRIEND = descriptor.Descriptor(
   name='Friend',
   full_name='Friend',
@@ -81,12 +109,43 @@ _FRIEND = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=63,
-  serialized_end=107,
+  serialized_start=93,
+  serialized_end=137,
 )
 
+
+_FRIENDMANAGER = descriptor.Descriptor(
+  name='FriendManager',
+  full_name='FriendManager',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='friends', full_name='FriendManager.friends', index=0,
+      number=1, type=11, cpp_type=10, label=3,
+      has_default_value=False, default_value=[],
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=139,
+  serialized_end=180,
+)
+
+_FRIENDMANAGER.fields_by_name['friends'].message_type = _FRIEND
 DESCRIPTOR.message_types_by_name['User'] = _USER
+DESCRIPTOR.message_types_by_name['ItemManager'] = _ITEMMANAGER
 DESCRIPTOR.message_types_by_name['Friend'] = _FRIEND
+DESCRIPTOR.message_types_by_name['FriendManager'] = _FRIENDMANAGER
 
 class User(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
@@ -94,10 +153,22 @@ class User(message.Message):
   
   # @@protoc_insertion_point(class_scope:User)
 
+class ItemManager(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _ITEMMANAGER
+  
+  # @@protoc_insertion_point(class_scope:ItemManager)
+
 class Friend(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _FRIEND
   
   # @@protoc_insertion_point(class_scope:Friend)
+
+class FriendManager(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _FRIENDMANAGER
+  
+  # @@protoc_insertion_point(class_scope:FriendManager)
 
 # @@protoc_insertion_point(module_scope)

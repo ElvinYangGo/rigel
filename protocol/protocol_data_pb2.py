@@ -11,7 +11,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = descriptor.FileDescriptor(
   name='protocol_data.proto',
   package='',
-  serialized_pb='\n\x13protocol_data.proto\"4\n\x06Server\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x05\x12\x0c\n\x04type\x18\x03 \x01(\x05')
+  serialized_pb='\n\x13protocol_data.proto\"4\n\x06Server\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x05\x12\x0c\n\x04type\x18\x03 \x01(\x05\"Q\n\x0fProtocolWrapper\x12\x13\n\x0bprotocol_id\x18\x01 \x01(\x05\x12\x11\n\tclient_id\x18\x02 \x01(\x05\x12\x16\n\x0einner_protocol\x18\x03 \x01(\x0c')
 
 
 
@@ -57,12 +57,61 @@ _SERVER = descriptor.Descriptor(
   serialized_end=75,
 )
 
+
+_PROTOCOLWRAPPER = descriptor.Descriptor(
+  name='ProtocolWrapper',
+  full_name='ProtocolWrapper',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='protocol_id', full_name='ProtocolWrapper.protocol_id', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='client_id', full_name='ProtocolWrapper.client_id', index=1,
+      number=2, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='inner_protocol', full_name='ProtocolWrapper.inner_protocol', index=2,
+      number=3, type=12, cpp_type=9, label=1,
+      has_default_value=False, default_value="",
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=77,
+  serialized_end=158,
+)
+
 DESCRIPTOR.message_types_by_name['Server'] = _SERVER
+DESCRIPTOR.message_types_by_name['ProtocolWrapper'] = _PROTOCOLWRAPPER
 
 class Server(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
   DESCRIPTOR = _SERVER
   
   # @@protoc_insertion_point(class_scope:Server)
+
+class ProtocolWrapper(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _PROTOCOLWRAPPER
+  
+  # @@protoc_insertion_point(class_scope:ProtocolWrapper)
 
 # @@protoc_insertion_point(module_scope)

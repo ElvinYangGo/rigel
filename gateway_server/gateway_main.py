@@ -23,12 +23,12 @@ if __name__ == '__main__':
 	server_initializer.initialize()
 	
 	channel_pipeline_factory = ChannelPipelineFactory()
-	channel_pipeline_factory.append_handler('buffer_head_codec', BufferHeadCodec())
-	channel_pipeline_factory.append_handler('handler_dispatcher', HandlerDispatcher())
 	channel_pipeline_factory.append_handler('client_message_relay', ClientMessageRelay())
+	channel_pipeline_factory.append_handler('handler_dispatcher', HandlerDispatcher())
+	channel_pipeline_factory.append_handler('buffer_head_codec', BufferHeadCodec())
 	
 	endpoint = TCP4ServerEndpoint(reactor, 34600)
-	endpoint.listen(TwistedProtocolFactory(channel_pipeline_factory))
+	endpoint.listen(TwistedProtocolFactory(channel_pipeline_factory, GatewayGlobalData.channel_manager))
 	reactor.run()
 	
 	print u'authentication started'

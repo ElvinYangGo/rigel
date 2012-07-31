@@ -1,8 +1,11 @@
 from network.channel_buffer import ChannelBuffer
+from common.client_connection_info import ClientConnectionInfo
 
 class Channel:
 	def __init__(self):
 		self.channel_buffer = ChannelBuffer()
+		self.client_connection_info = ClientConnectionInfo()
+		self.channel_manager = None
 	
 	def set_channel_pipeline(self, channel_pipeline):
 		self.channel_pipeline = channel_pipeline
@@ -42,3 +45,18 @@ class Channel:
 	
 	def get_remote_port(self):
 		return self.twisted_protocol.get_remote_port()
+
+	def set_client_connection_info(self, client_connection_info):
+		self.client_connection_info = client_connection_info
+
+	def get_client_id(self):
+		return self.client_connection_info.get_client_client_id()
+
+	def get_game_server_name(self):
+		return self.client_connection_info.get_game_server_name()
+
+	def get_channel_manager(self):
+		return channel_mananger
+
+	def set_channel_manager(self, channel_manager):
+		self.channel_manager = channel_manager
