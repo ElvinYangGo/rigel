@@ -2,6 +2,7 @@ from master_server.master_server_initializer import MasterServerInitializer
 from common.mq_reader import MQReader
 from master_server.master_handler_register import MasterHandlerRegister
 from common.server_option_reader import ServerOptionReader
+from master_server.master_global_data import MasterGlobalData
 
 if __name__ == '__main__':
 	mq_reader = MQReader('../config/mq.xml')
@@ -16,7 +17,8 @@ if __name__ == '__main__':
 		mq_config.get_sub_address(),
 		u'master_server',
 		MasterHandlerRegister(),
-		server_option_reader
+		server_option_reader,
+		MasterGlobalData
 		)
 	server_initializer.initialize()
 

@@ -1,3 +1,4 @@
+from authentication_server.authentciation_global_data import AuthenticationGlobalData
 from twisted.internet.endpoints import TCP4ServerEndpoint
 from twisted.internet import reactor
 from network.twisted_protocol_factory import TwistedProtocolFactory 
@@ -7,6 +8,7 @@ from common.handler_dispatcher import HandlerDispatcher
 from authentication_server.authentication_server_initializer import AuthenticationServerInitializer
 from common.mq_reader import MQReader
 from authentication_server.authentication_handler_register import AuthenticationHandlerRegister
+from authentication_server.authentciation_global_data import AuthenticationGlobalData
 
 if __name__ == '__main__':
 	mq_reader = MQReader('../config/mq.xml')
@@ -17,7 +19,8 @@ if __name__ == '__main__':
 		mq_config.get_pub_address(), 
 		mq_config.get_sub_address(),
 		u'authentication_server',
-		AuthenticationHandlerRegister()
+		AuthenticationHandlerRegister(),
+		AuthenticationGlobalData
 		)
 	server_initializer.initialize()
 	

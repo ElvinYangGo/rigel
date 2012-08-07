@@ -1,17 +1,15 @@
 from common.server_initializer import ServerInitializer
-from common.global_data import GlobalData
 from master_server.server_manager import ServerManager
 from mq_client.rmq import RMQ
 from common.channel_name import ChannelName
 from master_server.heart_beat_monitor import HeartBeatMonitor
 
 class MasterServerInitializer(ServerInitializer):
-	def __init__(self, pub_address, sub_address, server_name, handler_register, server_option_reader):
-		ServerInitializer.__init__(self, pub_address, sub_address, server_name, handler_register)
+	def __init__(self, pub_address, sub_address, server_name, handler_register, server_option_reader, global_data):
+		super(ServerInitializer, self).__init__(pub_address, sub_address, server_name, handler_register, global_data)
 		self.server_option_reader = server_option_reader
 			
 	def init_global_data(self):
-		self.global_data = GlobalData()
 		self.global_data.server_manager = ServerManager()
 		self.global_data.server_option_reader = self.server_option_reader
 		

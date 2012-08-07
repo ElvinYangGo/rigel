@@ -1,14 +1,15 @@
+import zmq
 from common.server_handler_dispatcher import ServerHandlerDispatcher
 from mq_client.rmq import RMQ
 
 class ServerInitializer:
-	def __init__(self, pub_address, sub_address, server_name, handler_register):
+	def __init__(self, pub_address, sub_address, server_name, handler_register, global_data):
 		self.pub_address = pub_address
 		self.sub_address = sub_address
 		self.server_name = server_name
 		self.handler_register = handler_register
+		self.global_data = global_data
 		self.server_handler_dispatcher = None
-		self.global_data = None
 		self.rmq = None
 		
 	def init_server_handler_dispatcher(self):
@@ -16,7 +17,7 @@ class ServerInitializer:
 		return self.server_handler_dispatcher
 
 	def init_global_data(self):
-		pass
+		self.global_data.zmq_context = zmq.Context()
 	
 	def init_rmq(self):	
 		self.rmq = RMQ(self.pub_address, self.sub_address, self.server_handler_dispatcher)

@@ -8,6 +8,7 @@ from gateway_server.client_message_relay import ClientMessageRelay
 from common.mq_reader import MQReader
 from gateway_server.gateway_server_initializer import GatewayServerInitializer
 from gateway_server.gateway_handler_register import GatewayHandlerRegister
+from gateway_server.gateway_global_data import GatewayGlobalData
 
 if __name__ == '__main__':
 	mq_reader = MQReader('../config/mq.xml')
@@ -18,7 +19,8 @@ if __name__ == '__main__':
 		mq_config.get_pub_address(), 
 		mq_config.get_sub_address(),
 		u'gateway_server',
-		GatewayHandlerRegister()
+		GatewayHandlerRegister(),
+		GatewayGlobalData
 		)
 	server_initializer.initialize()
 	

@@ -1,6 +1,7 @@
 from common.mq_reader import MQReader
 from center_server.center_server_initializer import CenterServerInitializer
 from center_server.center_handler_dispatcher import CenterHandlerRegister
+from center_server.center_global_data import CenterGlobalData
 
 if __name__ == '__main__':
 	mq_reader = MQReader('../config/mq.xml')
@@ -11,7 +12,8 @@ if __name__ == '__main__':
 		mq_config.get_pub_address(), 
 		mq_config.get_sub_address(),
 		u'center_server',
-		CenterHandlerRegister()
+		CenterHandlerRegister(),
+		CenterGlobalData
 		)
 	server_initializer.initialize()
 
