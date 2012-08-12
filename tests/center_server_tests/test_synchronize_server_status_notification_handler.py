@@ -65,7 +65,6 @@ class SynchronizeServerStatusNotificationHandlerTest(unittest.TestCase):
 		server_net2.status = ServerStatus.SERVER_STATUS_CLOSED
 		
 		channel_buffer = ChannelBuffer(message.SerializeToString())
-		global_data = GlobalData()
 		self.handler.handle_closed_server = Mock()
 		self.handler.handle_running_server = Mock()
 		
