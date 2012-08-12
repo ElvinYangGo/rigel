@@ -20,20 +20,20 @@ class StartServerInitRequestHandlerTest(unittest.TestCase):
 		message.type = ServerType.AUTHENTICATION_SERVER
 		channel_buffer = ChannelBuffer(message.SerializeToString())
 		
-		global_data = GlobalData()
-		global_data.server_manager = ServerManager()
-		global_data.rmq = Mock()
-		global_data.rmq.send_message_string = Mock()
+		GlobalData.instance = GlobalData()
+		GlobalData.instance.server_manager = ServerManager()
+		GlobalData.instance.rmq = Mock()
+		GlobalData.instance.rmq.send_message_string = Mock()
 		
 		message_to_send = protocol.protocol_message_pb2.StartServerInitResponse()
 		message_to_send.config = ''
 		
 		self.handler.create_config_xml_string = Mock()
 		self.handler.create_config_xml_string.return_value = ''
-		self.handler.handle_message(global_data, u'test_channel', 1, channel_buffer)
+		self.handler.handle_message(1, channel_buffer, channel_name=u'test_channel')
 		
-		self.assertEqual(len(global_data.server_manager.servers), 1)
-		global_data.rmq.send_message_string.assert_called_with(message_to_send, u'sa', ProtocolID.START_SERVER_INIT_RESPONSE)
+		self.assertEqual(len(GlobalData.instance.server_manager.servers), 1)
+		GlobalData.instance.rmq.send_message_string.assert_called_with(message_to_send, u'sa', ProtocolID.START_SERVER_INIT_RESPONSE)
 		
 	def test_config_xml_string(self):
 		content = u"""<config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout></config>"""
@@ -44,10 +44,10 @@ class StartServerInitRequestHandlerTest(unittest.TestCase):
 		</config>
 		"""
 		
-		global_data = GlobalData()
-		global_data.server_option_reader = ServerOptionReader(string_content=content)
-		global_data.server_option_reader.parse()
-		config_xml_string = self.handler.create_config_xml_string(global_data)
+		GlobalData.instance = GlobalData()
+		GlobalData.instance.server_option_reader = ServerOptionReader(string_content=content)
+		GlobalData.instance.server_option_reader.parse()
+		config_xml_string = self.handler.create_config_xml_string()
 		
 		config_should_be = u'<?xml version="1.0" encoding="utf-8"?><config><server_option_config><config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout></config></server_option_config></config>'
 		self.assertEqual(config_xml_string, config_should_be)

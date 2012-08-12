@@ -25,31 +25,31 @@ class SynchronizeServerStatusNotificationHandlerTest(unittest.TestCase):
 		server_net2.type = ServerType.GATEWAY_SERVER
 		server_net2.status = ServerStatus.SERVER_STATUS_RUNNING
 		
-		global_data = GlobalData()
-		global_data.server_manager = ServerManager()
+		GlobalData.instance = GlobalData()
+		GlobalData.instance.server_manager = ServerManager()
 		
-		self.handler.handle_running_server(global_data, server_net)
-		self.handler.handle_running_server(global_data, server_net2)
+		self.handler.handle_running_server(server_net)
+		self.handler.handle_running_server(server_net2)
 		
-		self.assertEqual(len(global_data.server_manager.servers), 1)
-		self.assertEqual(global_data.server_manager.servers.get('sb').get_name(), 'sb')
-		self.assertEqual(global_data.server_manager.servers.get('sb').get_type(), ServerType.GATEWAY_SERVER)
-		self.assertEqual(global_data.server_manager.servers.get('sb').get_status(), ServerStatus.SERVER_STATUS_RUNNING)
+		self.assertEqual(len(GlobalData.instance.server_manager.servers), 1)
+		self.assertEqual(GlobalData.instance.server_manager.servers.get('sb').get_name(), 'sb')
+		self.assertEqual(GlobalData.instance.server_manager.servers.get('sb').get_type(), ServerType.GATEWAY_SERVER)
+		self.assertEqual(GlobalData.instance.server_manager.servers.get('sb').get_status(), ServerStatus.SERVER_STATUS_RUNNING)
 
 	def test_handle_closed_server(self):
 		server = Server('sa', ServerType.GATEWAY_SERVER, ServerStatus.SERVER_STATUS_RUNNING)
-		global_data = GlobalData()
-		global_data.server_manager = ServerManager()
-		global_data.server_manager.add_server(server)
+		GlobalData.instance = GlobalData()
+		GlobalData.instance.server_manager = ServerManager()
+		GlobalData.instance.server_manager.add_server(server)
 		
 		server_net = protocol.protocol_data_pb2.Server()
 		server_net.name = 'sa'
 		server_net.type = ServerType.GATEWAY_SERVER
 		server_net.status = ServerStatus.SERVER_STATUS_RUNNING
 	
-		self.handler.handle_closed_server(global_data, server_net)
+		self.handler.handle_closed_server(server_net)
 		
-		self.assertEqual(len(global_data.server_manager.servers), 0)
+		self.assertEqual(len(GlobalData.instance.server_manager.servers), 0)
 		
 	def test_handle_message(self):
 		message = protocol.protocol_message_pb2.SynchronizeServerNotification()
@@ -63,14 +63,13 @@ class SynchronizeServerStatusNotificationHandlerTest(unittest.TestCase):
 		server_net2.status = ServerStatus.SERVER_STATUS_CLOSED
 		
 		channel_buffer = ChannelBuffer(message.SerializeToString())
-		global_data = GlobalData()
 		self.handler.handle_closed_server = Mock()
 		self.handler.handle_running_server = Mock()
 		
-		self.handler.handle_message(global_data, u'test_channel', 1, channel_buffer)
+		self.handler.handle_message(1, channel_buffer, channel_name=u'test_channel')
 		
-		self.handler.handle_running_server.assert_called_with(global_data, server_net)
-		self.handler.handle_closed_server.assert_called_with(global_data, server_net2)
+		self.handler.handle_running_server.assert_called_with(server_net)
+		self.handler.handle_closed_server.assert_called_with(server_net2)
 
 def get_tests():
 	return unittest.makeSuite(SynchronizeServerStatusNotificationHandlerTest)

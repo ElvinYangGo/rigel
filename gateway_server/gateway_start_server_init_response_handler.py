@@ -1,7 +1,7 @@
 from protocol.protocol_id import ProtocolID
 import protocol.protocol_message_pb2
 from common.start_server_init_response_handler import StartServerInitResponseHandler
-from common.GlobalData.instance import GlobalData
+from common.global_data import GlobalData
 
 class GatewayStartServerInitResponseHandler(StartServerInitResponseHandler):
 	def __init__(self):

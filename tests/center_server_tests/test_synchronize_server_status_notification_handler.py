@@ -69,10 +69,10 @@ class SynchronizeServerStatusNotificationHandlerTest(unittest.TestCase):
 		self.handler.handle_closed_server = Mock()
 		self.handler.handle_running_server = Mock()
 		
-		self.handler.handle_message(global_data, u'test_channel', 1, channel_buffer)
+		self.handler.handle_message(1, channel_buffer, channel_name=u'test_channel')
 		
-		self.handler.handle_running_server.assert_called_with(global_data, server_net)
-		self.handler.handle_closed_server.assert_called_with(global_data, server_net2)
+		self.handler.handle_running_server.assert_called_with(server_net)
+		self.handler.handle_closed_server.assert_called_with(server_net2)
 
 def get_tests():
 	return unittest.makeSuite(SynchronizeServerStatusNotificationHandlerTest)
