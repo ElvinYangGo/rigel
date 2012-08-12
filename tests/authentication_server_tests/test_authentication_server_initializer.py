@@ -7,6 +7,7 @@ import protocol.protocol_message_pb2
 from common.server_type import ServerType
 from common.global_data import GlobalData
 from authentication_server.authentication_handler_register import AuthenticationHandlerRegister
+from authentication_server.authentciation_global_data import AuthenticationGlobalData
 
 class AuthenticationServerInitializerTest(unittest.TestCase):
 	def setUp(self):
@@ -14,13 +15,13 @@ class AuthenticationServerInitializerTest(unittest.TestCase):
 			'localhost:34510',
 			'localhost:34511', 
 			u'authentication_server',
-			AuthenticationHandlerRegister()
+			AuthenticationHandlerRegister(),
+			AuthenticationGlobalData
 			)
 		
 	def test_construction(self):
 		self.assertEqual(self.server_initializer.pub_address, 'localhost:34510')
 		self.assertEqual(self.server_initializer.sub_address, 'localhost:34511')
-		self.assertTrue(self.server_initializer.global_data is None)
 		self.assertTrue(self.server_initializer.rmq is None)
 		self.assertTrue(self.server_initializer.server_handler_dispatcher is None)
 		

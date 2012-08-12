@@ -7,9 +7,6 @@ class RMQPub(object):
 		self.pub_socket = context.socket(zmq.PUB)
 		self.pub_socket.connect('tcp://' + self.pub_address)
 
-	def set_global_data(self, global_data):
-		self.global_data = global_data
-
 	def send_message_string(self, message_string, channel_name=u'', message_id=0):
 		channel_buffer = ChannelBuffer()
 		channel_buffer.append(message_string.SerializeToString())

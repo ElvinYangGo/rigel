@@ -7,3 +7,6 @@ class ChannelManager(object):
 
 	def remove(self, id):
 		del self.channels[id]
+
+	def get_channel(self, id):
+		return self.channels[id]

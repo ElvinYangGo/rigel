@@ -1,7 +1,9 @@
 from common.global_data import GlobalData
 
 class GatewayGlobalData(GlobalData):
-	server_manager = None
-	server_name = None
-	rmq_pub = None
-	channel_manager = None
+	def __init__(self):
+		super(GatewayGlobalData, self).__init__()
+		self.server_manager = None
+		self.server_name = None
+		self.rmq_pub = None
+		self.channel_manager = None

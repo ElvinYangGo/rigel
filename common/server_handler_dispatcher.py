@@ -5,12 +5,12 @@ class ServerHandlerDispatcher:
 	def append_handler(self, key, handler):
 		self.handlers[key] = handler
 		
-	def handle_upstream(self, global_data, channel_name, channel_buffer):
+	def handle_upstream(self, channel_buffer, **kwargs):
 		message_id = channel_buffer.get_int()
 		if self.handlers.has_key(message_id):
 			channel_buffer.skip_data(4)
 			handler = self.handlers.get(message_id)
-			handler.handle_message(global_data, channel_name, message_id, channel_buffer)
+			handler.handle_message(message_id, channel_buffer, **kwargs)
 		else:
 			#send to upstream
 			return channel_buffer

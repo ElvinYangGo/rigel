@@ -1,30 +1,23 @@
 import zmq
-from common.server_handler_dispatcher import ServerHandlerDispatcher
 from mq_client.rmq import RMQ
+from common.global_data import GlobalData
 
-class ServerInitializer:
-	def __init__(self, pub_address, sub_address, server_name, handler_register, global_data):
+class ServerInitializer(object):
+	def __init__(self, pub_address, sub_address, server_name, pipeline):
 		self.pub_address = pub_address
 		self.sub_address = sub_address
 		self.server_name = server_name
-		self.handler_register = handler_register
-		self.global_data = global_data
-		self.server_handler_dispatcher = None
+		self.pipeline = pipeline
 		self.rmq = None
 		
-	def init_server_handler_dispatcher(self):
-		self.server_handler_dispatcher = self.handler_register.register(ServerHandlerDispatcher())
-		return self.server_handler_dispatcher
-
 	def init_global_data(self):
-		self.global_data.zmq_context = zmq.Context()
+		GlobalData.instance.zmq_context = zmq.Context()
 	
 	def init_rmq(self):	
-		self.rmq = RMQ(self.pub_address, self.sub_address, self.server_handler_dispatcher)
-		self.rmq.subscribe(self.global_data.server_name)
+		self.rmq = RMQ(self.pub_address, self.sub_address, GlobalData.instance.zmq_context, self.pipeline)
+		self.rmq.subscribe(GlobalData.instance.server_name)
 	
-		self.global_data.rmq = self.rmq
-		self.rmq.set_global_data(self.global_data)
+		GlobalData.instance.rmq = self.rmq
 	
 		self.rmq.start()
 	
@@ -33,6 +26,5 @@ class ServerInitializer:
 	
 	def initialize(self):
 		self.init_global_data()
-		self.init_server_handler_dispatcher()
 		self.init_rmq()
 		self.send_init_request()

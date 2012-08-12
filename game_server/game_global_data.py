@@ -1,5 +1,7 @@
 from common.global_data import GlobalData
 
 class GameGlobalData(GlobalData):
-	server_manager = None
-	server_name = None
+	def __init__(self):
+		super(GameGlobalData, self).__init__()
+		self.server_manager = None
+		self.server_name = None

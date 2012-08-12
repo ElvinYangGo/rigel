@@ -31,8 +31,8 @@ class HandlerDispatcherTest(unittest.TestCase):
 		channel_buffer = ChannelBuffer()
 		channel_buffer.write_int(1)
 		self.handler_dispatcher.append_handler(1, handler)
-		self.handler_dispatcher.handle_upstream(channel, channel_buffer)
-		handler.handle_message.assert_called_with(1, channel, channel_buffer)
+		self.handler_dispatcher.handle_upstream(channel_buffer, channel=channel)
+		handler.handle_message.assert_called_with(1, channel_buffer, channel=channel)
 		self.assertEqual(0, channel_buffer.readable_bytes())
 		
 	def test_handle_upstream_without_return(self):
@@ -42,7 +42,7 @@ class HandlerDispatcherTest(unittest.TestCase):
 		channel_buffer = ChannelBuffer()
 		channel_buffer.write_int(2)
 		self.handler_dispatcher.append_handler(1, handler)
-		self.handler_dispatcher.handle_upstream(channel, channel_buffer)
+		self.handler_dispatcher.handle_upstream(channel_buffer, channel=channel)
 		self.assertFalse(handler.handle_message.called)
 		self.assertEqual(4, channel_buffer.readable_bytes())
 		

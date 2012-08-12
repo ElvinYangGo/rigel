@@ -6,7 +6,7 @@ class ChannelFactory:
 		self.channel_manager = channel_manager
 	
 	def create_channel(self):
-		channel_pipeline = self.channel_pipeline_factory.create_channel_pipeline()
+		channel_pipeline = self.channel_pipeline_factory.create_pipeline()
 		channel = Channel()
 		channel_pipeline.set_channel(channel)
 		channel.set_channel_pipeline(channel_pipeline)

@@ -2,6 +2,7 @@ import unittest
 import tests.auxiliary 
 from mock import Mock
 from network.channel_pipeline import ChannelPipeline
+from network.channel import Channel
 
 class ChannelPipelineTest(unittest.TestCase):
 	def setUp(self):
@@ -64,18 +65,18 @@ class ChannelPipelineTest(unittest.TestCase):
 		
 	def test_handle_upstream(self):
 		handler_a = Mock()
-		def fun_a(channel, channel_buffer):
+		def fun_a(channel_buffer, **kwargs):
 			channel_buffer.v *= 4
 			return channel_buffer
 		handler_a.handle_upstream = fun_a
 		
 		handler_b = Mock()
-		def fun_b(channel, channel_buffer):
+		def fun_b(channel_buffer, **kwargs):
 			return None
 		handler_b.handle_upstream = fun_b
 		
 		handler_c = Mock()
-		def fun_c(channel, channel_buffer):
+		def fun_c(channel_buffer, **kwargs):
 			channel_buffer.v *= 3
 			return channel_buffer
 		handler_c.handle_upstream = fun_c
@@ -91,18 +92,18 @@ class ChannelPipelineTest(unittest.TestCase):
 	
 	def test_handle_downstream(self):
 		handler_a = Mock()
-		def fun_a(channel, channel_buffer):
+		def fun_a(channel_buffer, **kwargs):
 			channel_buffer.v *= 4
 			return channel_buffer
 		handler_a.handle_downstream = fun_a
 		
 		handler_b = Mock()
-		def fun_b(channel, channel_buffer):
+		def fun_b(channel_buffer, **kwargs):
 			return channel_buffer
 		handler_b.handle_downstream = fun_b
 		
 		handler_c = Mock()
-		def fun_c(channel, channel_buffer):
+		def fun_c(channel_buffer, **kwargs):
 			channel_buffer.v *= 3
 			return channel_buffer
 		handler_c.handle_downstream = fun_c
@@ -113,7 +114,7 @@ class ChannelPipelineTest(unittest.TestCase):
 			return 3
 		channel_buffer.read_all_data = fun_read_all_data
 		
-		channel = Mock()
+		channel = Channel()
 		channel.write_to_twisted_protocol = Mock()
 		self.channel_pipeline.set_channel(channel)
 		self.channel_pipeline.append_handler('handler_a', handler_a)

@@ -1,6 +1,8 @@
 from common.global_data import GlobalData
 
 class MasterGlobalData(GlobalData):
-	server_manager = None
-	server_option_reader = None
-	heart_beat_monitor = None
+	def __init__(self):
+		super(MasterGlobalData, self).__init__()
+		self.server_manager = None
+		self.server_option_reader = None
+		self.heart_beat_monitor = None

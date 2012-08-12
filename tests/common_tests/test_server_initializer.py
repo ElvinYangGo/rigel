@@ -12,13 +12,13 @@ class ServerInitializerTest(unittest.TestCase):
 			'localhost:34510',
 			'localhost:34511', 
 			u'authentication_server',
-			self.handler_register
+			self.handler_register,
+			GlobalData
 			)
 		
 	def test_construction(self):
 		self.assertEqual(self.server_initializer.pub_address, 'localhost:34510')
 		self.assertEqual(self.server_initializer.sub_address, 'localhost:34511')
-		self.assertTrue(self.server_initializer.global_data is None)
 		self.assertTrue(self.server_initializer.rmq is None)
 		self.assertTrue(self.server_initializer.server_handler_dispatcher is None)
 		
@@ -27,7 +27,7 @@ class ServerInitializerTest(unittest.TestCase):
 		self.assertTrue(self.handler_register.register.called)
 		
 	def test_init_rmq(self):
-		self.server_initializer.global_data = GlobalData()
+		self.server_initializer.init_global_data()
 		self.server_initializer.global_data.server_name = u'game_server'
 		self.server_initializer.init_rmq()
 		self.assertEqual(self.server_initializer.global_data.rmq.pub_address, 'localhost:34510')
