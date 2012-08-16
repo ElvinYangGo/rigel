@@ -1,0 +1,26 @@
+{
+	"cauth":
+		{
+			"id_start":"0x0001",
+			"id_list":
+				[
+					{
+						"id":"AUTH_USER",
+						"result":
+							[
+								"USER_NAME_INVALID"
+							]
+					}
+				]
+		},
+	"cgateway":
+		{
+			"id_start":"0x0101",
+			"id_list":[]
+		},
+	"cgame":
+		{
+			"id_start":"0x1001",
+			"id_list":[]
+		}
+}
