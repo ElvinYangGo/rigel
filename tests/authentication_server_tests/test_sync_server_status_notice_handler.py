@@ -1,6 +1,6 @@
 import unittest
 import tests.auxiliary
-from authentication_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler
+from authentication_server.sync_server_status_notice_handler import SyncServerStatusNoticeHandler
 import protocol.protocol_message_pb2
 import protocol.protocol_data_pb2
 from common.server_type import ServerType
@@ -11,9 +11,9 @@ from common.server_manager import ServerManager
 from common.server import Server
 from mock import Mock
 
-class SynchronizeServerStatusNotificationHandlerTest(unittest.TestCase):
+class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 	def setUp(self):
-		self.handler = SynchronizeServerStatusNotificationHandler()
+		self.handler = SyncServerStatusNoticeHandler()
 		
 	def test_handle_running_server(self):
 		server_net = protocol.protocol_data_pb2.Server()
@@ -72,7 +72,7 @@ class SynchronizeServerStatusNotificationHandlerTest(unittest.TestCase):
 		self.handler.handle_closed_server.assert_called_with(server_net2)
 
 def get_tests():
-	return unittest.makeSuite(SynchronizeServerStatusNotificationHandlerTest)
+	return unittest.makeSuite(SyncServerStatusNoticeHandlerTest)
 
 if '__main__' == __name__:
 	unittest.main()

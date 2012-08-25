@@ -1,19 +1,19 @@
 import unittest
 import tests.auxiliary
-from authentication_server.authentication_server_initializer import AuthenticationServerInitializer
+from authentication_server.auth_server_initializer import AuthServerInitializer
 from mock import Mock
 from protocol.protocol_id import ProtocolID
 import protocol.protocol_message_pb2
 from common.server_type import ServerType
 from common.global_data import GlobalData
-from authentication_server.authentciation_global_data import AuthenticationGlobalData
+from authentication_server.auth_global_data import AuthGlobalData
 from common.server_initializer import ServerInitializer
 
-class AuthenticationServerInitializerTest(unittest.TestCase):
+class AuthServerInitializerTest(unittest.TestCase):
 	def setUp(self):
 		self.server_name = u'authentication_server'
-		GlobalData.instance = AuthenticationGlobalData()
-		self.server_initializer = AuthenticationServerInitializer(
+		GlobalData.instance = AuthGlobalData()
+		self.server_initializer = AuthServerInitializer(
 			'localhost:34510',
 			'localhost:34511',
 			self.server_name,
@@ -42,7 +42,7 @@ class AuthenticationServerInitializerTest(unittest.TestCase):
 			)
 
 def get_tests():
-	return unittest.makeSuite(AuthenticationServerInitializerTest)
+	return unittest.makeSuite(AuthServerInitializerTest)
 
 if '__main__' == __name__:
 	unittest.main()

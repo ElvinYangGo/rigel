@@ -4,7 +4,7 @@ from common.server_status import ServerStatus
 from common.server import Server
 from common.global_data import GlobalData
 
-class SynchronizeServerStatusNotificationHandler:
+class SyncServerStatusNoticeHandler:
 	def handle_message(self, message_id, channel_buffer, **kwargs):
 		message = protocol.protocol_message_pb2.SynchronizeServerNotification.FromString(channel_buffer.read_all_data())
 		for server_net in message.servers:

@@ -4,15 +4,15 @@ from common.server_manager import ServerManager
 import protocol.protocol_message_pb2
 from common.server_type import ServerType
 from common.global_data import GlobalData
-from authentication_server.authentciation_global_data import AuthenticationGlobalData
+from authentication_server.auth_global_data import AuthGlobalData
 
-class AuthenticationServerInitializer(ServerInitializer):
+class AuthServerInitializer(ServerInitializer):
 	def __init__(self, pub_address, sub_address, server_name, pipeline):
-		super(AuthenticationServerInitializer, self).__init__(pub_address, sub_address, server_name, pipeline)
+		super(AuthServerInitializer, self).__init__(pub_address, sub_address, server_name, pipeline)
 	
 	def init_global_data(self):
-		GlobalData.instance = AuthenticationGlobalData()
-		super(AuthenticationServerInitializer, self).init_global_data()
+		GlobalData.instance = AuthGlobalData()
+		super(AuthServerInitializer, self).init_global_data()
 		GlobalData.instance.server_manager = ServerManager()
 		GlobalData.instance.server_name = self.server_name
 	

@@ -11,9 +11,9 @@ from mock import Mock
 from common.global_data import GlobalData
 from center_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler
 
-class SynchronizeServerStatusNotificationHandlerTest(unittest.TestCase):
+class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 	def setUp(self):
-		self.handler = SynchronizeServerStatusNotificationHandler()
+		self.handler = SyncServerStatusNoticeHandler()
 		
 	"""
 	def test_handle_running_server(self):
@@ -74,7 +74,7 @@ class SynchronizeServerStatusNotificationHandlerTest(unittest.TestCase):
 		self.handler.handle_closed_server.assert_called_with(server_net2)
 
 def get_tests():
-	return unittest.makeSuite(SynchronizeServerStatusNotificationHandlerTest)
+	return unittest.makeSuite(SyncServerStatusNoticeHandlerTest)
 
 if '__main__' == __name__:
 	unittest.main()

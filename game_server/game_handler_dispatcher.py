@@ -11,7 +11,7 @@ class GameHandlerRegister(HandlerRegister):
 			)
 		handler_dispatcher.append_handler(
 			ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION,
-			SynchronizeServerStatusNotificationHandler()
+			SyncServerStatusNoticeHandler()
 			)
 	
 		return handler_dispatcher

@@ -1,15 +1,15 @@
 import unittest
 import tests.auxiliary
-from authentication_server.authentication_start_server_init_response_handler import AuthenticationStartServerInitResponseHandler 
+from authentication_server.auth_start_server_init_res_handler import AuthStartServerInitResHandler 
 from mock import Mock
 import protocol.protocol_message_pb2
 from protocol.protocol_id import ProtocolID
 from network.channel_buffer import ChannelBuffer
 from common.global_data import GlobalData
 
-class AuthenticationStartServerInitResponseHandlerTest(unittest.TestCase):
+class AuthStartServerInitResHandlerTest(unittest.TestCase):
 	def setUp(self):
-		self.handler = AuthenticationStartServerInitResponseHandler()
+		self.handler = AuthStartServerInitResHandler()
 	
 	def test_handle_message(self):
 		GlobalData.instance = Mock()
@@ -50,7 +50,7 @@ class AuthenticationStartServerInitResponseHandlerTest(unittest.TestCase):
 		self.assertTrue(self.handler.init_heart_beat.called)
 		
 def get_tests():
-	return unittest.makeSuite(AuthenticationStartServerInitResponseHandlerTest)
+	return unittest.makeSuite(AuthStartServerInitResHandlerTest)
 
 if '__main__' == __name__:
 	unittest.main()

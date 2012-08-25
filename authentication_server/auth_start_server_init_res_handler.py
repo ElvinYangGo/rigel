@@ -4,7 +4,7 @@ from common.start_server_init_response_handler import StartServerInitResponseHan
 from common.channel_name import ChannelName
 from common.global_data import GlobalData
 
-class AuthenticationStartServerInitResponseHandler(StartServerInitResponseHandler):
+class AuthStartServerInitResHandler(StartServerInitResponseHandler):
 	def handle_message(self, message_id, channel_buffer, **kwargs):
 		message = protocol.protocol_message_pb2.StartServerInitResponse.FromString(channel_buffer.read_all_data())
 		if message.HasField('config'):

@@ -1,7 +1,6 @@
-from common.server_manager import ServerManager
 from common.server_type import ServerType
 
-class AuthenticationServerManager:
+class AuthServerManager:
 	def __init__(self):
 		self.gateway_servers = []
 		self.game_servers = []

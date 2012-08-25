@@ -4,7 +4,7 @@ from common.server_type import ServerType
 from common.server_status import ServerStatus
 from common.global_data import GlobalData
 
-class SynchronizeServerStatusNotificationHandler:
+class SyncServerStatusNoticeHandler:
 	def handle_message(self, message_id, channel_buffer, **kwargs):
 		pass
 	"""

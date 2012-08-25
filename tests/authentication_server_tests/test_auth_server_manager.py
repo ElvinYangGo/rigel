@@ -1,13 +1,13 @@
 import unittest
 import tests.auxiliary
-from authentication_server.authentication_server_manager import AuthenticationServerManager
+from authentication_server.auth_server_manager import AuthServerManager
 from common.server import Server
 from common.server_type import ServerType
 from common.server_status import ServerStatus
 
-class AuthenticationServerManagerTest(unittest.TestCase):
+class AuthServerManagerTest(unittest.TestCase):
 	def setUp(self):
-		self.server_manager = AuthenticationServerManager()
+		self.server_manager = AuthServerManager()
 		
 	def test_constructor(self):
 		self.assertEqual(self.server_manager.game_server_index, 0)
@@ -44,7 +44,7 @@ class AuthenticationServerManagerTest(unittest.TestCase):
 		self.assertEqual(self.server_manager.dispatch_game_server().get_name(), 'se')
 
 def get_tests():
-	return unittest.makeSuite(AuthenticationServerManagerTest)
+	return unittest.makeSuite(AuthServerManagerTest)
 
 if '__main__' == __name__:
 	unittest.main()
