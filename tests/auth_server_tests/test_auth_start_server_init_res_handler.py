@@ -1,6 +1,6 @@
 import unittest
 import tests.auxiliary
-from authentication_server.auth_start_server_init_res_handler import AuthStartServerInitResHandler 
+from auth_server.auth_start_server_init_res_handler import AuthStartServerInitResHandler
 from mock import Mock
 import protocol.protocol_message_pb2
 from protocol.protocol_id import ProtocolID
@@ -16,7 +16,7 @@ class AuthStartServerInitResHandlerTest(unittest.TestCase):
 		GlobalData.instance.rmq = Mock()
 		GlobalData.instance.rmq.subscribe = Mock()
 		GlobalData.instance.rmq.send_message_string = Mock()
-		GlobalData.instance.server_name = u'authentication_server'
+		GlobalData.instance.server_name = u'auth_server'
 		
 		m = protocol.protocol_message_pb2.StartServerInitResponse()
 		m.config = u"""
@@ -33,7 +33,7 @@ class AuthStartServerInitResHandlerTest(unittest.TestCase):
 		self.handler.init_heart_beat = Mock()
 		
 		message = protocol.protocol_message_pb2.EndServerInitNotification()
-		message.name = u'authentication_server'		
+		message.name = u'auth_server'
 		
 		self.handler.handle_message(
 			ProtocolID.START_SERVER_INIT_RESPONSE,

@@ -1,6 +1,6 @@
 import unittest
 import tests.auxiliary
-from authentication_server.auth_server_manager import AuthServerManager
+from auth_server.auth_server_manager import AuthServerManager
 from common.server import Server
 from common.server_type import ServerType
 from common.server_status import ServerStatus

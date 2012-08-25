@@ -1,6 +1,6 @@
 import unittest
 import tests.auxiliary
-from authentication_server.sync_server_status_notice_handler import SyncServerStatusNoticeHandler
+from auth_server.sync_server_status_notice_handler import SyncServerStatusNoticeHandler
 import protocol.protocol_message_pb2
 import protocol.protocol_data_pb2
 from common.server_type import ServerType

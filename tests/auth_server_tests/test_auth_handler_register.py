@@ -2,7 +2,7 @@ import unittest
 import tests.auxiliary
 from common.handler_dispatcher import HandlerDispatcher
 from protocol.protocol_id import ProtocolID
-from authentication_server.auth_handler_register import AuthHandlerRegister
+from auth_server.auth_handler_register import AuthHandlerRegister
 
 class AuthHandlerRegisterTest(unittest.TestCase):
 	def setUp(self):

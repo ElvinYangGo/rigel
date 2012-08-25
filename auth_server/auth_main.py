@@ -4,9 +4,9 @@ from network.twisted_protocol_factory import TwistedProtocolFactory
 from network.channel_pipeline_factory import ChannelPipelineFactory
 from network.buffer_head_codec import BufferHeadCodec
 from common.handler_dispatcher import HandlerDispatcher
-from authentication_server.auth_server_initializer import AuthServerInitializer
+from auth_server.auth_server_initializer import AuthServerInitializer
 from common.mq_reader import MQReader
-from authentication_server.auth_handler_register import AuthHandlerRegister
+from auth_server.auth_handler_register import AuthHandlerRegister
 from network.channel_pipeline import ChannelPipeline
 from common.global_data import GlobalData
 
@@ -23,7 +23,7 @@ if __name__ == '__main__':
 	server_initializer = AuthServerInitializer(
 		mq_config.get_pub_address(), 
 		mq_config.get_sub_address(),
-		u'authentication_server',
+		u'auth_server',
 		rmq_pipeline
 		)
 	server_initializer.initialize()
@@ -36,5 +36,5 @@ if __name__ == '__main__':
 	endpoint.listen(TwistedProtocolFactory(channel_pipeline_factory, GlobalData.instance.channel_manager))
 	reactor.run()
 	
-	print u'authentication started'
+	print u'auth server started'
 	

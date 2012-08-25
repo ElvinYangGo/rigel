@@ -4,7 +4,7 @@ from common.server_manager import ServerManager
 import protocol.protocol_message_pb2
 from common.server_type import ServerType
 from common.global_data import GlobalData
-from authentication_server.auth_global_data import AuthGlobalData
+from auth_server.auth_global_data import AuthGlobalData
 
 class AuthServerInitializer(ServerInitializer):
 	def __init__(self, pub_address, sub_address, server_name, pipeline):
