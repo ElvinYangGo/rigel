@@ -5,19 +5,19 @@
 			"id_list":
 				[
 					{
-						"id":"START_SERVER_INIT_REQUEST"
+						"id":"START_SERVER_INIT_REQ"
 					},
 					{
-						"id":"START_SERVER_INIT_RESPONSE"
+						"id":"START_SERVER_INIT_RES"
 					},
 					{
-						"id":"END_SERVER_INIT_NOTIFICATION"
+						"id":"END_SERVER_INIT_NOTICE"
 					},
 					{
-						"id":"SYNCHRONIZE_SERVER_STATUS_NOTIFICATION"
+						"id":"SYNC_SERVER_STATUS_NOTICE"
 					},
 					{
-						"id":"HEART_BEAT_NOTIFICATION"
+						"id":"HEART_BEAT_NOTICE"
 					},
 					{
 						"id":"CLIENT_TO_GAME_SERVER_RELAY"

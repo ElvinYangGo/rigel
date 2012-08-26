@@ -3,7 +3,7 @@ import tests.auxiliary
 from auth_server.auth_start_server_init_res_handler import AuthStartServerInitResHandler
 from mock import Mock
 import protocol.protocol_message_pb2
-from protocol.protocol_id import ProtocolID
+from protocol.server_protocol_id import ServerProtocolID
 from network.channel_buffer import ChannelBuffer
 from common.global_data import GlobalData
 
@@ -18,7 +18,7 @@ class AuthStartServerInitResHandlerTest(unittest.TestCase):
 		GlobalData.instance.rmq.send_message_string = Mock()
 		GlobalData.instance.server_name = u'auth_server'
 		
-		m = protocol.protocol_message_pb2.StartServerInitResponse()
+		m = protocol.protocol_message_pb2.StartServerInitRes()
 		m.config = u"""
 		<config>
 			<server_option_config>
@@ -32,11 +32,11 @@ class AuthStartServerInitResHandlerTest(unittest.TestCase):
 		channel_buffer = ChannelBuffer(m.SerializeToString())
 		self.handler.init_heart_beat = Mock()
 		
-		message = protocol.protocol_message_pb2.EndServerInitNotification()
+		message = protocol.protocol_message_pb2.EndServerInitNotice()
 		message.name = u'auth_server'
 		
 		self.handler.handle_message(
-			ProtocolID.START_SERVER_INIT_RESPONSE,
+			ServerProtocolID.P_START_SERVER_INIT_RES,
 			channel_buffer,
 			channel_name=u'test_channel'
 			)
@@ -45,7 +45,7 @@ class AuthStartServerInitResHandlerTest(unittest.TestCase):
 		GlobalData.instance.rmq.send_message_string.assert_called_with(
 			message,
 			u'server_initialization',
-			ProtocolID.END_SERVER_INIT_NOTIFICATION
+			ServerProtocolID.P_END_SERVER_INIT_NOTICE
 			)
 		self.assertTrue(self.handler.init_heart_beat.called)
 		

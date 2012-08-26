@@ -1,7 +1,7 @@
 import unittest
 import tests.auxiliary
 from common.handler_dispatcher import HandlerDispatcher
-from protocol.protocol_id import ProtocolID
+from protocol.server_protocol_id import ServerProtocolID
 from auth_server.auth_handler_register import AuthHandlerRegister
 
 class AuthHandlerRegisterTest(unittest.TestCase):
@@ -12,8 +12,8 @@ class AuthHandlerRegisterTest(unittest.TestCase):
 		handler_register = AuthHandlerRegister()
 		handler_dispatcher = handler_register.register(HandlerDispatcher())
 		self.assertEqual(len(handler_dispatcher.handlers), 2)
-		self.assertTrue(handler_dispatcher.handlers.has_key(ProtocolID.START_SERVER_INIT_RESPONSE))
-		self.assertTrue(handler_dispatcher.handlers.has_key(ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION))
+		self.assertTrue(handler_dispatcher.handlers.has_key(ServerProtocolID.P_START_SERVER_INIT_RES))
+		self.assertTrue(handler_dispatcher.handlers.has_key(ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE))
 
 def get_tests():
 	return unittest.makeSuite(AuthHandlerRegisterTest)

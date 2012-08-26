@@ -1,11 +1,11 @@
 import unittest
 import tests.auxiliary
-from common.start_server_init_response_handler import StartServerInitResponseHandler
+from common.start_server_init_res_handler import StartServerInitResHandler
 from common.server_option_reader import ServerOptionReader
 
-class StartServerInitResponseHandlerTest(unittest.TestCase):
+class StartServerInitResHandlerTest(unittest.TestCase):
 	def setUp(self):
-		self.start_server_init_response_handler = StartServerInitResponseHandler()
+		self.start_server_init_response_handler = StartServerInitResHandler()
 		self.config = u'<config><server_option_config><config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout></config></server_option_config></config>'
 		"""
 		<config>
@@ -33,7 +33,7 @@ class StartServerInitResponseHandlerTest(unittest.TestCase):
 		self.assertEqual(server_option_reader.get_server_option_config().get_heart_beat_interval(), 10000)
 
 def get_tests():
-	return unittest.makeSuite(StartServerInitResponseHandlerTest)
+	return unittest.makeSuite(StartServerInitResHandlerTest)
 
 if '__main__' == __name__:
 	unittest.main()

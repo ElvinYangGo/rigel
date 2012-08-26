@@ -1,27 +1,27 @@
 import "protocol_data.proto";
 
-message StartServerInitRequest
+message StartServerInitReq
 {
 	optional string name = 1;
 	optional int32 type = 2;
 }
 
-message StartServerInitResponse
+message StartServerInitRes
 {
 	optional string config = 1;
 }
 
-message EndServerInitNotification
+message EndServerInitNotice
 {
 	optional string name = 1;
 }
 
-message SynchronizeServerNotification
+message SyncServerNotice
 {
 	repeated Server servers = 1;
 }
 
-message HeartBeatNotification
+message HeartBeatNotice
 {
 	optional string name = 1;
 }

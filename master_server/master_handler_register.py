@@ -1,22 +1,22 @@
-from protocol.protocol_id import ProtocolID
-from master_server.start_server_init_request_handler import StartServerInitRequestHandler
-from master_server.end_server_init_notification_handler import EndServerInitNotificationHandler
+from protocol.server_protocol_id import ServerProtocolID
+from master_server.start_server_init_req_handler import StartServerInitReqHandler
+from master_server.end_server_init_notice_handler import EndServerInitNoticeHandler
 from common.handler_register import HandlerRegister
-from master_server.heart_beat_notification_handler import HeartBeatNotificationHandler
+from master_server.heart_beat_notice_handler import HeartBeatNoticeHandler
 
 class MasterHandlerRegister(HandlerRegister):
 	def register(self, handler_dispatcher):
 		handler_dispatcher.append_handler(
-			ProtocolID.START_SERVER_INIT_REQUEST, 
-			StartServerInitRequestHandler()
+			ServerProtocolID.P_START_SERVER_INIT_REQ,
+			StartServerInitReqHandler()
 			)
 		handler_dispatcher.append_handler(
-			ProtocolID.END_SERVER_INIT_NOTIFICATION, 
-			EndServerInitNotificationHandler()
+			ServerProtocolID.P_END_SERVER_INIT_NOTICE,
+			EndServerInitNoticeHandler()
 			)
 		handler_dispatcher.append_handler(
-			ProtocolID.HEART_BEAT_NOTIFICATION,
-			HeartBeatNotificationHandler()
+			ServerProtocolID.P_HEART_BEAT_NOTICE,
+			HeartBeatNoticeHandler()
 			)
 
 		return handler_dispatcher

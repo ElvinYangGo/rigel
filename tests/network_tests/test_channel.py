@@ -50,15 +50,6 @@ class ChannelTest(unittest.TestCase):
 		self.channel.send(channel_buffer)
 		channel_pipeline.handle_downstream.assert_called_with(channel_buffer)
 		
-	def test_write_to_twisted_protocol(self):
-		twisted_protocol = Mock()
-		twisted_protocol.transport = Mock()
-		twisted_protocol.transport.write = Mock()
-		data = Mock()
-		self.channel.set_twisted_protocol(twisted_protocol)
-		self.channel.write_to_twisted_protocol(data)
-		twisted_protocol.transport.write.assert_called_with(data)
-	
 	def test_get_remote_ip(self):
 		twisted_protocol = Mock()
 		twisted_protocol.get_remote_ip = Mock()

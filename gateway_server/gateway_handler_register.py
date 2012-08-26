@@ -1,16 +1,16 @@
-from protocol.protocol_id import ProtocolID
-from gateway_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler
+from protocol.server_protocol_id import ServerProtocolID
 from common.handler_register import HandlerRegister
-from game_server.game_start_server_init_response_handler import GameStartServerInitResponseHandler
+from gateway_server.gateway_start_server_init_res_handler import GatewayStartServerInitResHandler
+from gateway_server.sync_server_status_notice_handler import SyncServerStatusNoticeHandler
 
 class GatewayHandlerRegister(HandlerRegister):
 	def register(self, handler_dispatcher):
 		handler_dispatcher.append_handler(
-			ProtocolID.START_SERVER_INIT_RESPONSE,
-			GameStartServerInitResponseHandler()
+			ServerProtocolID.P_START_SERVER_INIT_RES,
+			GatewayStartServerInitResHandler()
 			)
 		handler_dispatcher.append_handler(
-			ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION,
+			ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE,
 			SyncServerStatusNoticeHandler()
 			)
 	

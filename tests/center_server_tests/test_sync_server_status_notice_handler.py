@@ -5,11 +5,8 @@ import protocol.protocol_data_pb2
 from common.server_type import ServerType
 from common.server_status import ServerStatus
 from network.channel_buffer import ChannelBuffer
-from common.server_manager import ServerManager
-from common.server import Server
 from mock import Mock
-from common.global_data import GlobalData
-from center_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler
+from center_server.sync_server_status_notice_handler import SyncServerStatusNoticeHandler
 
 class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 	def setUp(self):
@@ -54,7 +51,7 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 	"""
 		
 	def test_handle_message(self):
-		message = protocol.protocol_message_pb2.SynchronizeServerNotification()
+		message = protocol.protocol_message_pb2.SyncServerNotice()
 		server_net = message.servers.add()
 		server_net.name = 'sa'
 		server_net.type = ServerType.GATEWAY_SERVER

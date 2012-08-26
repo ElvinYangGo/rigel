@@ -8,7 +8,7 @@ from network.channel_buffer import ChannelBuffer
 from common.server_manager import ServerManager
 from common.server import Server
 from mock import Mock
-from game_server.synchronize_server_status_notification_handler import SynchronizeServerStatusNotificationHandler
+from game_server.sync_server_status_notice_handler import SyncServerStatusNoticeHandler
 from common.global_data import GlobalData
 
 class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
@@ -52,7 +52,7 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 		self.assertEqual(len(GlobalData.instance.server_manager.servers), 0)
 		
 	def test_handle_message(self):
-		message = protocol.protocol_message_pb2.SynchronizeServerNotification()
+		message = protocol.protocol_message_pb2.SyncServerNotice()
 		server_net = message.servers.add()
 		server_net.name = 'sa'
 		server_net.type = ServerType.GATEWAY_SERVER

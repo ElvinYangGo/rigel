@@ -1,6 +1,6 @@
 from gateway_server.gateway_global_data import GatewayGlobalData
 from common.server_initializer import ServerInitializer
-from protocol.protocol_id import ProtocolID
+from protocol.server_protocol_id import ServerProtocolID
 from common.server_manager import ServerManager
 import protocol.protocol_message_pb2
 from common.server_type import ServerType
@@ -25,8 +25,10 @@ class GatewayServerInitializer(ServerInitializer):
 		GlobalData.instance.rmq_pub = rmq_pub
 
 	def send_init_request(self):
-		message = protocol.protocol_message_pb2.StartServerInitRequest()
+		message = protocol.protocol_message_pb2.StartServerInitReq()
 		message.name = GlobalData.instance.server_name
 		message.type = ServerType.GATEWAY_SERVER
-		self.rmq.send_message_string(message, u'server_initialization', ProtocolID.START_SERVER_INIT_REQUEST)
+		self.rmq.send_message_string(
+			message, u'server_initialization', ServerProtocolID.P_START_SERVER_INIT_REQ
+			)
 

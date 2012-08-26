@@ -12,27 +12,27 @@ import protocol_data_pb2
 DESCRIPTOR = descriptor.FileDescriptor(
   name='protocol_message.proto',
   package='',
-  serialized_pb='\n\x16protocol_message.proto\x1a\x13protocol_data.proto\"4\n\x16StartServerInitRequest\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\x05\")\n\x17StartServerInitResponse\x12\x0e\n\x06\x63onfig\x18\x01 \x01(\t\")\n\x19\x45ndServerInitNotification\x12\x0c\n\x04name\x18\x01 \x01(\t\"9\n\x1dSynchronizeServerNotification\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server\"%\n\x15HeartBeatNotification\x12\x0c\n\x04name\x18\x01 \x01(\t')
+  serialized_pb='\n\x16protocol_message.proto\x1a\x13protocol_data.proto\"0\n\x12StartServerInitReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\x05\"$\n\x12StartServerInitRes\x12\x0e\n\x06\x63onfig\x18\x01 \x01(\t\"#\n\x13\x45ndServerInitNotice\x12\x0c\n\x04name\x18\x01 \x01(\t\",\n\x10SyncServerNotice\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server\"\x1f\n\x0fHeartBeatNotice\x12\x0c\n\x04name\x18\x01 \x01(\t')
 
 
 
 
-_STARTSERVERINITREQUEST = descriptor.Descriptor(
-  name='StartServerInitRequest',
-  full_name='StartServerInitRequest',
+_STARTSERVERINITREQ = descriptor.Descriptor(
+  name='StartServerInitReq',
+  full_name='StartServerInitReq',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='name', full_name='StartServerInitRequest.name', index=0,
+      name='name', full_name='StartServerInitReq.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='type', full_name='StartServerInitRequest.type', index=1,
+      name='type', full_name='StartServerInitReq.type', index=1,
       number=2, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -48,19 +48,19 @@ _STARTSERVERINITREQUEST = descriptor.Descriptor(
   is_extendable=False,
   extension_ranges=[],
   serialized_start=47,
-  serialized_end=99,
+  serialized_end=95,
 )
 
 
-_STARTSERVERINITRESPONSE = descriptor.Descriptor(
-  name='StartServerInitResponse',
-  full_name='StartServerInitResponse',
+_STARTSERVERINITRES = descriptor.Descriptor(
+  name='StartServerInitRes',
+  full_name='StartServerInitRes',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='config', full_name='StartServerInitResponse.config', index=0,
+      name='config', full_name='StartServerInitRes.config', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
@@ -75,20 +75,20 @@ _STARTSERVERINITRESPONSE = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=101,
-  serialized_end=142,
+  serialized_start=97,
+  serialized_end=133,
 )
 
 
-_ENDSERVERINITNOTIFICATION = descriptor.Descriptor(
-  name='EndServerInitNotification',
-  full_name='EndServerInitNotification',
+_ENDSERVERINITNOTICE = descriptor.Descriptor(
+  name='EndServerInitNotice',
+  full_name='EndServerInitNotice',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='name', full_name='EndServerInitNotification.name', index=0,
+      name='name', full_name='EndServerInitNotice.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
@@ -103,20 +103,20 @@ _ENDSERVERINITNOTIFICATION = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=144,
-  serialized_end=185,
+  serialized_start=135,
+  serialized_end=170,
 )
 
 
-_SYNCHRONIZESERVERNOTIFICATION = descriptor.Descriptor(
-  name='SynchronizeServerNotification',
-  full_name='SynchronizeServerNotification',
+_SYNCSERVERNOTICE = descriptor.Descriptor(
+  name='SyncServerNotice',
+  full_name='SyncServerNotice',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='servers', full_name='SynchronizeServerNotification.servers', index=0,
+      name='servers', full_name='SyncServerNotice.servers', index=0,
       number=1, type=11, cpp_type=10, label=3,
       has_default_value=False, default_value=[],
       message_type=None, enum_type=None, containing_type=None,
@@ -131,20 +131,20 @@ _SYNCHRONIZESERVERNOTIFICATION = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=187,
-  serialized_end=244,
+  serialized_start=172,
+  serialized_end=216,
 )
 
 
-_HEARTBEATNOTIFICATION = descriptor.Descriptor(
-  name='HeartBeatNotification',
-  full_name='HeartBeatNotification',
+_HEARTBEATNOTICE = descriptor.Descriptor(
+  name='HeartBeatNotice',
+  full_name='HeartBeatNotice',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='name', full_name='HeartBeatNotification.name', index=0,
+      name='name', full_name='HeartBeatNotice.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
@@ -159,45 +159,45 @@ _HEARTBEATNOTIFICATION = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=246,
-  serialized_end=283,
+  serialized_start=218,
+  serialized_end=249,
 )
 
-_SYNCHRONIZESERVERNOTIFICATION.fields_by_name['servers'].message_type = protocol_data_pb2._SERVER
-DESCRIPTOR.message_types_by_name['StartServerInitRequest'] = _STARTSERVERINITREQUEST
-DESCRIPTOR.message_types_by_name['StartServerInitResponse'] = _STARTSERVERINITRESPONSE
-DESCRIPTOR.message_types_by_name['EndServerInitNotification'] = _ENDSERVERINITNOTIFICATION
-DESCRIPTOR.message_types_by_name['SynchronizeServerNotification'] = _SYNCHRONIZESERVERNOTIFICATION
-DESCRIPTOR.message_types_by_name['HeartBeatNotification'] = _HEARTBEATNOTIFICATION
+_SYNCSERVERNOTICE.fields_by_name['servers'].message_type = protocol_data_pb2._SERVER
+DESCRIPTOR.message_types_by_name['StartServerInitReq'] = _STARTSERVERINITREQ
+DESCRIPTOR.message_types_by_name['StartServerInitRes'] = _STARTSERVERINITRES
+DESCRIPTOR.message_types_by_name['EndServerInitNotice'] = _ENDSERVERINITNOTICE
+DESCRIPTOR.message_types_by_name['SyncServerNotice'] = _SYNCSERVERNOTICE
+DESCRIPTOR.message_types_by_name['HeartBeatNotice'] = _HEARTBEATNOTICE
 
-class StartServerInitRequest(message.Message):
+class StartServerInitReq(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _STARTSERVERINITREQUEST
+  DESCRIPTOR = _STARTSERVERINITREQ
   
-  # @@protoc_insertion_point(class_scope:StartServerInitRequest)
+  # @@protoc_insertion_point(class_scope:StartServerInitReq)
 
-class StartServerInitResponse(message.Message):
+class StartServerInitRes(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _STARTSERVERINITRESPONSE
+  DESCRIPTOR = _STARTSERVERINITRES
   
-  # @@protoc_insertion_point(class_scope:StartServerInitResponse)
+  # @@protoc_insertion_point(class_scope:StartServerInitRes)
 
-class EndServerInitNotification(message.Message):
+class EndServerInitNotice(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _ENDSERVERINITNOTIFICATION
+  DESCRIPTOR = _ENDSERVERINITNOTICE
   
-  # @@protoc_insertion_point(class_scope:EndServerInitNotification)
+  # @@protoc_insertion_point(class_scope:EndServerInitNotice)
 
-class SynchronizeServerNotification(message.Message):
+class SyncServerNotice(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _SYNCHRONIZESERVERNOTIFICATION
+  DESCRIPTOR = _SYNCSERVERNOTICE
   
-  # @@protoc_insertion_point(class_scope:SynchronizeServerNotification)
+  # @@protoc_insertion_point(class_scope:SyncServerNotice)
 
-class HeartBeatNotification(message.Message):
+class HeartBeatNotice(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _HEARTBEATNOTIFICATION
+  DESCRIPTOR = _HEARTBEATNOTICE
   
-  # @@protoc_insertion_point(class_scope:HeartBeatNotification)
+  # @@protoc_insertion_point(class_scope:HeartBeatNotice)
 
 # @@protoc_insertion_point(module_scope)

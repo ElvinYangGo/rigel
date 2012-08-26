@@ -1,3 +1,4 @@
+from twisted.internet import reactor
 from network.channel_buffer import ChannelBuffer
 from common.client_connection_info import ClientConnectionInfo
 

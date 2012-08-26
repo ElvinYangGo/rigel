@@ -1,6 +1,6 @@
 import unittest
 import tests.auxiliary
-from master_server.heart_beat_notification_handler import HeartBeatNotificationHandler
+from master_server.heart_beat_notice_handler import HeartBeatNoticeHandler
 import protocol
 from network.channel_buffer import ChannelBuffer
 from common.global_data import GlobalData
@@ -8,12 +8,12 @@ from master_server.server_manager import ServerManager
 from common.server_type import ServerType
 from common.server_status import ServerStatus
 
-class HeartBeatNotificationHandlerTest(unittest.TestCase):
+class HeartBeatNoticeHandlerTest(unittest.TestCase):
 	def setUp(self):
-		self.handler = HeartBeatNotificationHandler()
+		self.handler = HeartBeatNoticeHandler()
 	
 	def test_handle_message(self):
-		message = protocol.protocol_message_pb2.HeartBeatNotification()
+		message = protocol.protocol_message_pb2.HeartBeatNotice()
 		message.name = u'sa'
 		channel_buffer = ChannelBuffer(message.SerializeToString())
 		
@@ -27,7 +27,7 @@ class HeartBeatNotificationHandlerTest(unittest.TestCase):
 		self.assertEqual(GlobalData.instance.server_manager.get_server('sa').get_status(), ServerStatus.SERVER_STATUS_RUNNING)
 		
 def get_tests():
-	return unittest.makeSuite(HeartBeatNotificationHandlerTest)
+	return unittest.makeSuite(HeartBeatNoticeHandlerTest)
 
 if '__main__' == __name__:
 	unittest.main()

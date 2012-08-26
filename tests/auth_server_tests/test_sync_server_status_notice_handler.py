@@ -52,7 +52,7 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 		self.assertEqual(len(GlobalData.instance.server_manager.servers), 0)
 		
 	def test_handle_message(self):
-		message = protocol.protocol_message_pb2.SynchronizeServerNotification()
+		message = protocol.protocol_message_pb2.SyncServerNotice()
 		server_net = message.servers.add()
 		server_net.name = 'sa'
 		server_net.type = ServerType.GATEWAY_SERVER

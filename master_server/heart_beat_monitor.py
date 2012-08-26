@@ -1,7 +1,7 @@
 import threading
 import time
 from common.channel_name import ChannelName
-from protocol.protocol_id import ProtocolID
+from protocol.server_protocol_id import ServerProtocolID
 import protocol
 from common.server_status import ServerStatus
 from common.global_data import GlobalData
@@ -25,7 +25,9 @@ class HeartBeatMonitor(threading.Thread):
 				server_message = protocol.protocol_message_pb2.SynchronizeServerNotification()
 				for closed_server in closed_server_list:
 					server_message.servers.extend([closed_server.to_net()])
-				GlobalData.instance.rmq.send_message_string(server_message, ChannelName.SERVER_STATUS, ProtocolID.SYNCHRONIZE_SERVER_STATUS_NOTIFICATION)
+				GlobalData.instance.rmq.send_message_string(
+					server_message, ChannelName.SERVER_STATUS, ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE
+					)
 		
 			time.sleep(self.heart_beat_interval/1000)
 			

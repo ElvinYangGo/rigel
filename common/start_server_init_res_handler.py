@@ -3,7 +3,7 @@ import xml.dom.minidom
 from common.server_option_reader import ServerOptionReader
 from common.global_data import GlobalData
 
-class StartServerInitResponseHandler:
+class StartServerInitResHandler:
 	def __init__(self):
 		pass
 

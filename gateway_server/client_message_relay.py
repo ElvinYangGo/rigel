@@ -1,12 +1,12 @@
 import protocol.protocol_data_pb2
-from protocol.protocol_id import ProtocolID
+from protocol.server_protocol_id import ServerProtocolID
 from network.channel_buffer import ChannelBuffer
 
 class ClientMessageRelay:
 	def handle_upstream(self, channel_buffer, **kwargs):
 		message_id = channel_buffer.get_int()
 		protocol_wrapper = protocol.protocol_data_pb2.ProtocolWrapper()
-		protocol_wrapper.protocol_id = message_id
+		protocol_wrapper.server_protocol_id = message_id
 		protocol_wrapper.inner_protocol = channel_buffer.get_all_data()
 		protocol_wrapper.client_id = channel.get_client_id()
 		#TODO: send to different server in terms of message_id
@@ -14,7 +14,7 @@ class ClientMessageRelay:
 		GatewayGlobalData.rmq_pub.send_message_string(
 			message,
 			channel.get_game_server_name(),
-			ProtocolID.CLIENT_TO_GAME_SERVER_RELAY
+			ServerProtocolID.P_CLIENT_TO_GAME_SERVER_RELAY
 			)
 
 	"""

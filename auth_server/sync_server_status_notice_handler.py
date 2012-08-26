@@ -6,7 +6,9 @@ from common.global_data import GlobalData
 
 class SyncServerStatusNoticeHandler:
 	def handle_message(self, message_id, channel_buffer, **kwargs):
-		message = protocol.protocol_message_pb2.SynchronizeServerNotification.FromString(channel_buffer.read_all_data())
+		message = protocol.protocol_message_pb2.SyncServerNotice.FromString(
+			channel_buffer.read_all_data()
+			)
 		for server_net in message.servers:
 			if server_net.status == ServerStatus.SERVER_STATUS_RUNNING:
 				self.handle_running_server(server_net)
