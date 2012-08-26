@@ -9,9 +9,9 @@ from google.protobuf import descriptor_pb2
 
 
 DESCRIPTOR = descriptor.FileDescriptor(
-  name='protocol_data.proto',
+  name='server_data.proto',
   package='',
-  serialized_pb='\n\x13protocol_data.proto\"4\n\x06Server\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x05\x12\x0c\n\x04type\x18\x03 \x01(\x05\"Q\n\x0fProtocolWrapper\x12\x13\n\x0bprotocol_id\x18\x01 \x01(\x05\x12\x11\n\tclient_id\x18\x02 \x01(\x05\x12\x16\n\x0einner_protocol\x18\x03 \x01(\x0c')
+  serialized_pb='\n\x11server_data.proto\"4\n\x06Server\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0e\n\x06status\x18\x02 \x01(\x05\x12\x0c\n\x04type\x18\x03 \x01(\x05\"Q\n\x0fProtocolWrapper\x12\x13\n\x0bprotocol_id\x18\x01 \x01(\x05\x12\x11\n\tclient_id\x18\x02 \x01(\x05\x12\x16\n\x0einner_protocol\x18\x03 \x01(\x0c')
 
 
 
@@ -53,8 +53,8 @@ _SERVER = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=23,
-  serialized_end=75,
+  serialized_start=21,
+  serialized_end=73,
 )
 
 
@@ -95,8 +95,8 @@ _PROTOCOLWRAPPER = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=77,
-  serialized_end=158,
+  serialized_start=75,
+  serialized_end=156,
 )
 
 DESCRIPTOR.message_types_by_name['Server'] = _SERVER

@@ -7,12 +7,12 @@ from google.protobuf import descriptor_pb2
 # @@protoc_insertion_point(imports)
 
 
-import protocol_data_pb2
+import server_data_pb2
 
 DESCRIPTOR = descriptor.FileDescriptor(
-  name='protocol_message.proto',
+  name='server_message.proto',
   package='',
-  serialized_pb='\n\x16protocol_message.proto\x1a\x13protocol_data.proto\"0\n\x12StartServerInitReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\x05\"$\n\x12StartServerInitRes\x12\x0e\n\x06\x63onfig\x18\x01 \x01(\t\"#\n\x13\x45ndServerInitNotice\x12\x0c\n\x04name\x18\x01 \x01(\t\",\n\x10SyncServerNotice\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server\"\x1f\n\x0fHeartBeatNotice\x12\x0c\n\x04name\x18\x01 \x01(\t')
+  serialized_pb='\n\x14server_message.proto\x1a\x11server_data.proto\"0\n\x12StartServerInitReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\x05\"$\n\x12StartServerInitRes\x12\x0e\n\x06\x63onfig\x18\x01 \x01(\t\"#\n\x13\x45ndServerInitNotice\x12\x0c\n\x04name\x18\x01 \x01(\t\",\n\x10SyncServerNotice\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server\"\x1f\n\x0fHeartBeatNotice\x12\x0c\n\x04name\x18\x01 \x01(\t')
 
 
 
@@ -47,8 +47,8 @@ _STARTSERVERINITREQ = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=47,
-  serialized_end=95,
+  serialized_start=43,
+  serialized_end=91,
 )
 
 
@@ -75,8 +75,8 @@ _STARTSERVERINITRES = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=97,
-  serialized_end=133,
+  serialized_start=93,
+  serialized_end=129,
 )
 
 
@@ -103,8 +103,8 @@ _ENDSERVERINITNOTICE = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=135,
-  serialized_end=170,
+  serialized_start=131,
+  serialized_end=166,
 )
 
 
@@ -131,8 +131,8 @@ _SYNCSERVERNOTICE = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=172,
-  serialized_end=216,
+  serialized_start=168,
+  serialized_end=212,
 )
 
 
@@ -159,11 +159,11 @@ _HEARTBEATNOTICE = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=218,
-  serialized_end=249,
+  serialized_start=214,
+  serialized_end=245,
 )
 
-_SYNCSERVERNOTICE.fields_by_name['servers'].message_type = protocol_data_pb2._SERVER
+_SYNCSERVERNOTICE.fields_by_name['servers'].message_type = server_data_pb2._SERVER
 DESCRIPTOR.message_types_by_name['StartServerInitReq'] = _STARTSERVERINITREQ
 DESCRIPTOR.message_types_by_name['StartServerInitRes'] = _STARTSERVERINITRES
 DESCRIPTOR.message_types_by_name['EndServerInitNotice'] = _ENDSERVERINITNOTICE
