@@ -3,7 +3,7 @@ import tests.auxiliary
 from auth_server.auth_server_initializer import AuthServerInitializer
 from mock import Mock
 from protocol.server_protocol_id import ServerProtocolID
-import protocol.protocol_message_pb2
+import protocol.server_message_pb2
 from common.server_type import ServerType
 from common.global_data import GlobalData
 from auth_server.auth_global_data import AuthGlobalData
@@ -32,7 +32,7 @@ class AuthServerInitializerTest(unittest.TestCase):
 		GlobalData.instance.server_name = self.server_name
 		self.server_initializer.send_init_request()
 		
-		message = protocol.protocol_message_pb2.StartServerInitReq()
+		message = protocol.server_message_pb2.StartServerInitReq()
 		message.name = self.server_name
 		message.type = ServerType.AUTHENTICATION_SERVER
 		self.server_initializer.rmq.send_message_string.assert_called_with(

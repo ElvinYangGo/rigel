@@ -1,5 +1,5 @@
 import xml.dom.minidom
-import protocol.protocol_message_pb2
+import protocol.server_message_pb2
 from protocol.server_protocol_id import ServerProtocolID
 from common.global_data import GlobalData
 
@@ -8,13 +8,13 @@ class StartServerInitReqHandler:
 		pass
 	
 	def handle_message(self, message_id, channel_buffer, **kwargs):
-		message = protocol.protocol_message_pb2.StartServerInitReq.FromString(
+		message = protocol.server_message_pb2.StartServerInitReq.FromString(
 			channel_buffer.read_all_data()
 			)
 
 		GlobalData.instance.server_manager.add_server(message.name, message.type)
 		
-		message_to_send = protocol.protocol_message_pb2.StartServerInitRes()
+		message_to_send = protocol.server_message_pb2.StartServerInitRes()
 		message_to_send.config = self.create_config_xml_string()
 		GlobalData.instance.rmq.send_message_string(
 			message_to_send, message.name, ServerProtocolID.P_START_SERVER_INIT_RES

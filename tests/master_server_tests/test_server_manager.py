@@ -2,7 +2,7 @@ import unittest
 import tests.auxiliary
 from master_server.server_manager import ServerManager
 from master_server.server import Server
-import protocol.protocol_message_pb2
+import protocol.server_message_pb2
 from common.server_status import ServerStatus
 from common.server_type import ServerType
 

@@ -5,7 +5,7 @@ from common.global_data import GlobalData
 from master_server.server_manager import ServerManager
 from common.server_status import ServerStatus
 from common.server_type import ServerType
-import protocol.protocol_message_pb2
+import protocol.server_message_pb2
 from network.channel_buffer import ChannelBuffer
 from mock import Mock
 from protocol.server_protocol_id import ServerProtocolID
@@ -29,7 +29,7 @@ class EndServerInitNoticeHandlerTest(unittest.TestCase):
 			)
 	
 	def test_send_this_server_to_other_servers(self):
-		this_server_message = protocol.protocol_message_pb2.SyncServerNotice()
+		this_server_message = protocol.server_message_pb2.SyncServerNotice()
 		this_server_message.servers.extend([GlobalData.instance.server_manager.get_server('sb').to_net()])
 		
 		self.handler.send_this_server_to_other_servers(GlobalData.instance.server_manager.get_server('sb'))
@@ -38,7 +38,7 @@ class EndServerInitNoticeHandlerTest(unittest.TestCase):
 			)
 		
 	def test_handle_message(self):
-		message = protocol.protocol_message_pb2.EndServerInitNotice()
+		message = protocol.server_message_pb2.EndServerInitNotice()
 		message.name = 'sb'
 		channel_buffer = ChannelBuffer(message.SerializeToString())
 		

@@ -1,7 +1,7 @@
 import unittest
 import tests.auxiliary
 from mock import Mock
-import protocol.protocol_message_pb2
+import protocol.server_message_pb2
 from protocol.server_protocol_id import ServerProtocolID
 from game_server.game_start_server_init_res_handler import GameStartServerInitResHandler
 from network.channel_buffer import ChannelBuffer
@@ -18,7 +18,7 @@ class StartServerInitResHandlerTest(unittest.TestCase):
 		GlobalData.instance.rmq.send_message_string = Mock()
 		GlobalData.instance.server_name = u'game_server'
 		
-		m = protocol.protocol_message_pb2.StartServerInitRes()
+		m = protocol.server_message_pb2.StartServerInitRes()
 		m.config = u"""
 		<config>
 			<server_option_config>
@@ -32,7 +32,7 @@ class StartServerInitResHandlerTest(unittest.TestCase):
 		channel_buffer = ChannelBuffer(m.SerializeToString())
 		self.handler.init_heart_beat = Mock()
 		
-		message = protocol.protocol_message_pb2.EndServerInitNotice()
+		message = protocol.server_message_pb2.EndServerInitNotice()
 		message.name = u'game_server'		
 		
 		self.handler.handle_message(

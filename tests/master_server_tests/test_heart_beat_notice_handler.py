@@ -13,7 +13,7 @@ class HeartBeatNoticeHandlerTest(unittest.TestCase):
 		self.handler = HeartBeatNoticeHandler()
 	
 	def test_handle_message(self):
-		message = protocol.protocol_message_pb2.HeartBeatNotice()
+		message = protocol.server_message_pb2.HeartBeatNotice()
 		message.name = u'sa'
 		channel_buffer = ChannelBuffer(message.SerializeToString())
 		

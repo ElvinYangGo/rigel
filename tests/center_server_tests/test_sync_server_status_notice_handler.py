@@ -1,7 +1,7 @@
 import unittest
 import tests.auxiliary
-import protocol.protocol_message_pb2
-import protocol.protocol_data_pb2
+import protocol.server_message_pb2
+import protocol.server_data_pb2
 from common.server_type import ServerType
 from common.server_status import ServerStatus
 from network.channel_buffer import ChannelBuffer
@@ -14,11 +14,11 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 		
 	"""
 	def test_handle_running_server(self):
-		server_net = protocol.protocol_data_pb2.Server()
+		server_net = protocol.server_data_pb2.Server()
 		server_net.name = 'sa'
 		server_net.type = ServerType.AUTHENTICATION_SERVER
 		server_net.status = ServerStatus.SERVER_STATUS_RUNNING
-		server_net2 = protocol.protocol_data_pb2.Server()
+		server_net2 = protocol.server_data_pb2.Server()
 		server_net2.name = 'sb'
 		server_net2.type = ServerType.GATEWAY_SERVER
 		server_net2.status = ServerStatus.SERVER_STATUS_RUNNING
@@ -40,7 +40,7 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 		global_data.server_manager = ServerManager()
 		global_data.server_manager.add_server(server)
 		
-		server_net = protocol.protocol_data_pb2.Server()
+		server_net = protocol.server_data_pb2.Server()
 		server_net.name = 'sa'
 		server_net.type = ServerType.GATEWAY_SERVER
 		server_net.status = ServerStatus.SERVER_STATUS_RUNNING
@@ -51,7 +51,7 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 	"""
 		
 	def test_handle_message(self):
-		message = protocol.protocol_message_pb2.SyncServerNotice()
+		message = protocol.server_message_pb2.SyncServerNotice()
 		server_net = message.servers.add()
 		server_net.name = 'sa'
 		server_net.type = ServerType.GATEWAY_SERVER

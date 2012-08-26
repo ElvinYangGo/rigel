@@ -3,13 +3,13 @@ from master_server.server import Server
 from common.server_status import ServerStatus
 from network.channel_buffer import ChannelBuffer
 from protocol.server_protocol_id import ServerProtocolID
-import protocol.protocol_message_pb2
+import protocol.server_message_pb2
 from common.channel_name import ChannelName
 from common.global_data import GlobalData
 
 class EndServerInitNoticeHandler:
 	def handle_message(self, message_id, channel_buffer, **kwargs):
-		message = protocol.protocol_message_pb2.EndServerInitNotice.FromString(
+		message = protocol.server_message_pb2.EndServerInitNotice.FromString(
 			channel_buffer.read_all_data()
 			)
 		
@@ -26,7 +26,7 @@ class EndServerInitNoticeHandler:
 			)
 
 	def send_this_server_to_other_servers(self, this_server):
-		this_server_message = protocol.protocol_message_pb2.SyncServerNotice()
+		this_server_message = protocol.server_message_pb2.SyncServerNotice()
 		this_server_message.servers.extend([this_server.to_net()])
 		GlobalData.instance.rmq.send_message_string(
 			this_server_message, ChannelName.SERVER_STATUS, ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE

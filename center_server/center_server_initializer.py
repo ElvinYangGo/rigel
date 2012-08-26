@@ -1,7 +1,7 @@
 from common.server_initializer import ServerInitializer
 from protocol.server_protocol_id import ServerProtocolID
 from common.server_manager import ServerManager
-import protocol.protocol_message_pb2
+import protocol.server_message_pb2
 from common.server_type import ServerType
 from center_server.center_global_data import CenterGlobalData
 from common.global_data import GlobalData
@@ -17,7 +17,7 @@ class CenterServerInitializer(ServerInitializer):
 		GlobalData.instance.server_name = self.server_name
 	
 	def send_init_request(self):
-		message = protocol.protocol_message_pb2.StartServerInitReq()
+		message = protocol.server_message_pb2.StartServerInitReq()
 		message.name = GlobalData.instance.server_name
 		message.type = ServerType.CENTER_SERVER
 		self.rmq.send_message_string(

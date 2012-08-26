@@ -1,7 +1,7 @@
 import unittest
 import tests.auxiliary
 from master_server.start_server_init_req_handler import StartServerInitReqHandler
-import protocol.protocol_message_pb2
+import protocol.server_message_pb2
 from common.server_type import ServerType
 from network.channel_buffer import ChannelBuffer
 from mock import Mock
@@ -15,7 +15,7 @@ class StartServerInitReqHandlerTest(unittest.TestCase):
 		self.handler = StartServerInitReqHandler()
 
 	def test_handle_message(self):
-		message = protocol.protocol_message_pb2.StartServerInitReq()
+		message = protocol.server_message_pb2.StartServerInitReq()
 		message.name = u'sa'
 		message.type = ServerType.AUTHENTICATION_SERVER
 		channel_buffer = ChannelBuffer(message.SerializeToString())
@@ -25,7 +25,7 @@ class StartServerInitReqHandlerTest(unittest.TestCase):
 		GlobalData.instance.rmq = Mock()
 		GlobalData.instance.rmq.send_message_string = Mock()
 		
-		message_to_send = protocol.protocol_message_pb2.StartServerInitRes()
+		message_to_send = protocol.server_message_pb2.StartServerInitRes()
 		message_to_send.config = ''
 		
 		self.handler.create_config_xml_string = Mock()

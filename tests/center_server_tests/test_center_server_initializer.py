@@ -2,7 +2,7 @@ import unittest
 import tests.auxiliary
 from mock import Mock
 from protocol.server_protocol_id import ServerProtocolID
-import protocol.protocol_message_pb2
+import protocol.server_message_pb2
 from common.server_type import ServerType
 from center_server.center_server_initializer import CenterServerInitializer
 from common.global_data import GlobalData
@@ -32,7 +32,7 @@ class CenterServerInitializerTest(unittest.TestCase):
 		GlobalData.instance.server_name = self.server_name
 		self.server_initializer.send_init_request()
 		
-		message = protocol.protocol_message_pb2.StartServerInitReq()
+		message = protocol.server_message_pb2.StartServerInitReq()
 		message.name = self.server_name
 		message.type = ServerType.CENTER_SERVER
 		self.server_initializer.rmq.send_message_string.assert_called_with(

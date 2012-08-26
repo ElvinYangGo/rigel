@@ -2,7 +2,7 @@ import unittest
 import tests.auxiliary
 from auth_server.auth_start_server_init_res_handler import AuthStartServerInitResHandler
 from mock import Mock
-import protocol.protocol_message_pb2
+import protocol.server_message_pb2
 from protocol.server_protocol_id import ServerProtocolID
 from network.channel_buffer import ChannelBuffer
 from common.global_data import GlobalData
@@ -18,7 +18,7 @@ class AuthStartServerInitResHandlerTest(unittest.TestCase):
 		GlobalData.instance.rmq.send_message_string = Mock()
 		GlobalData.instance.server_name = u'auth_server'
 		
-		m = protocol.protocol_message_pb2.StartServerInitRes()
+		m = protocol.server_message_pb2.StartServerInitRes()
 		m.config = u"""
 		<config>
 			<server_option_config>
@@ -32,7 +32,7 @@ class AuthStartServerInitResHandlerTest(unittest.TestCase):
 		channel_buffer = ChannelBuffer(m.SerializeToString())
 		self.handler.init_heart_beat = Mock()
 		
-		message = protocol.protocol_message_pb2.EndServerInitNotice()
+		message = protocol.server_message_pb2.EndServerInitNotice()
 		message.name = u'auth_server'
 		
 		self.handler.handle_message(

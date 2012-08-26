@@ -1,5 +1,5 @@
 from common.server_status import ServerStatus
-import protocol.protocol_data_pb2
+import protocol.server_data_pb2
 
 class Server:
 	def __init__(self, name, type):
@@ -33,7 +33,7 @@ class Server:
 		self.status = status
 		
 	def to_net(self):
-		message = protocol.protocol_data_pb2.Server()
+		message = protocol.server_data_pb2.Server()
 		message.name = self.name
 		message.status = self.status
 		message.type = self.type

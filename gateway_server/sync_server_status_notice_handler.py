@@ -1,5 +1,5 @@
 from common.server import Server
-import protocol.protocol_message_pb2
+import protocol.server_message_pb2
 from common.server_type import ServerType
 from common.server_status import ServerStatus
 from common.global_data import GlobalData
@@ -8,7 +8,7 @@ class SyncServerStatusNoticeHandler:
 	def handle_message(self, message_id, channel_buffer, **kwargs):
 		pass
 	"""
-		message = protocol.protocol_message_pb2.SynchronizeServerNotification.FromString(channel_buffer.read_all_data())
+		message = protocol.server_message_pb2.SynchronizeServerNotification.FromString(channel_buffer.read_all_data())
 		for server_net in message.servers:
 			if server_net.status == ServerStatus.SERVER_STATUS_RUNNING:
 				self.handle_running_server(GlobalData.instance, server_net)
