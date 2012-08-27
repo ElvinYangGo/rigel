@@ -22,7 +22,7 @@ class HeartBeatMonitor(threading.Thread):
 					closed_server_list.append(server)
 			
 			if closed_server_list:
-				server_message = protocol.protocol_message_pb2.SynchronizeServerNotification()
+				server_message = protocol.server_message.SyncServerNotice()
 				for closed_server in closed_server_list:
 					server_message.servers.extend([closed_server.to_net()])
 				GlobalData.instance.rmq.send_message_string(

@@ -12,9 +12,11 @@ class HeartBeat(threading.Thread):
 		
 	def run(self):
 		while True:
-			message = protocol.protocol_message_pb2.HeartBeatNotification()
+			message = protocol.server_message_pb2.HeartBeatNotice()
 			message.name = GlobalData.instance.server_name
-			GlobalData.instance.rmq.send_message_string(message, ChannelName.HEART_BEAT, ServerProtocolID.P_HEART_BEAT_NOTICE)
+			GlobalData.instance.rmq.send_message_string(
+				message, ChannelName.HEART_BEAT, ServerProtocolID.P_HEART_BEAT_NOTICE
+				)
 			time.sleep(self.heart_beat_interval/1000)
 			
 	def set_heart_beat_interval(self, heart_beat_interval):
