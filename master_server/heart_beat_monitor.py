@@ -16,7 +16,7 @@ class HeartBeatMonitor(threading.Thread):
 		while True:
 			closed_server_list = []
 			current_time = time.time()
-			for server in GlobalData.instance.server_manager.get_all_servers().itervalues():
+			for server in GlobalData.inst.server_manager.get_all_servers().itervalues():
 				if server.running() and self.server_timeout(current_time, server):
 					server.set_status(ServerStatus.SERVER_STATUS_CLOSED)
 					closed_server_list.append(server)
@@ -25,7 +25,7 @@ class HeartBeatMonitor(threading.Thread):
 				server_message = protocol.server_message.SyncServerNotice()
 				for closed_server in closed_server_list:
 					server_message.servers.extend([closed_server.to_net()])
-				GlobalData.instance.rmq.send_message_string(
+				GlobalData.inst.rmq.send_message_string(
 					server_message, ChannelName.SERVER_STATUS, ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE
 					)
 		

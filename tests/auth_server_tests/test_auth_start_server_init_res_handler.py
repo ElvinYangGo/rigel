@@ -12,11 +12,11 @@ class AuthStartServerInitResHandlerTest(unittest.TestCase):
 		self.handler = AuthStartServerInitResHandler()
 	
 	def test_handle_message(self):
-		GlobalData.instance = Mock()
-		GlobalData.instance.rmq = Mock()
-		GlobalData.instance.rmq.subscribe = Mock()
-		GlobalData.instance.rmq.send_message_string = Mock()
-		GlobalData.instance.server_name = u'auth_server'
+		GlobalData.inst = Mock()
+		GlobalData.inst.rmq = Mock()
+		GlobalData.inst.rmq.subscribe = Mock()
+		GlobalData.inst.rmq.send_message_string = Mock()
+		GlobalData.inst.server_name = u'auth_server'
 		
 		m = protocol.server_message_pb2.StartServerInitRes()
 		m.config = u"""
@@ -41,8 +41,8 @@ class AuthStartServerInitResHandlerTest(unittest.TestCase):
 			channel_name=u'test_channel'
 			)
 		
-		GlobalData.instance.rmq.subscribe.assert_called_with(u'server_status')
-		GlobalData.instance.rmq.send_message_string.assert_called_with(
+		GlobalData.inst.rmq.subscribe.assert_called_with(u'server_status')
+		GlobalData.inst.rmq.send_message_string.assert_called_with(
 			message,
 			u'server_initialization',
 			ServerProtocolID.P_END_SERVER_INIT_NOTICE

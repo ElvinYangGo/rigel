@@ -9,16 +9,16 @@ class ProtoMapWriter(ProtoWriter):
 
 	def write_fields(self):
 		index = 1
-		for field_pair in self.table_desc['table_field'].iteritems():
-			self.write_field(field_pair, index)
+		for field in self.table_desc['table_field']:
+			self.write_field(field, index)
 			index += 1
 
-	def write_field(self, field_pair, index):
-		if field_pair[1]['data_type'] == 'int':
+	def write_field(self, field, index):
+		if field['data_type'] == 'int':
 			format_string = '\toptional int32 {} = {};\n'
-		elif field_pair[1]['data_type'] == 'string':
+		elif field['data_type'] == 'string':
 			format_string = '\toptional string {} = {};\n'
-		self.f.write(format_string.format(field_pair[0], index))
+		self.f.write(format_string.format(field['field_name'], index))
 
 """
 message User

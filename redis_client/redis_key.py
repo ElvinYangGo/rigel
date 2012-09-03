@@ -3,11 +3,14 @@ class RedisKey(object):
 	def get_user_key(self, id_string):
 		return 'user:' + id_string
 
+	def get_user_table_user_id_field(self):
+		return 'user_id'
+
 	def get_user_table_user_name_field(self):
 		return 'user_name'
 
-	def get_user_table_user_id_field(self):
-		return 'user_id'
+	def get_user_table_password_field(self):
+		return 'password'
 
 	def get_item_list_key(self, id_string):
 		return 'item_list:' + id_string
@@ -18,11 +21,11 @@ class RedisKey(object):
 	def get_friend_key(self, id_string, second_id_string):
 		return 'friend:' + id_string + ':' + second_id_string
 
-	def get_friend_table_user_name_field(self):
-		return 'user_name'
-
 	def get_friend_table_user_id_field(self):
 		return 'user_id'
+
+	def get_friend_table_user_name_field(self):
+		return 'user_name'
 
 	def get_online_player_list_key(self):
 		return 'online_player_list'
@@ -32,4 +35,22 @@ class RedisKey(object):
 
 	def get_race_score_rank_key(self, id_string):
 		return 'race_score_rank:' + id_string
+
+	def get_user_name_to_id_key(self):
+		return 'user_name_to_id'
+
+	def get_client_connection_info_key(self, id_string):
+		return 'client_connection_info:' + id_string
+
+	def get_client_connection_info_table_client_id_field(self):
+		return 'client_id'
+
+	def get_client_connection_info_table_gateway_server_name_field(self):
+		return 'gateway_server_name'
+
+	def get_client_connection_info_table_game_server_name_field(self):
+		return 'game_server_name'
+
+	def get_client_connection_info_table_token_field(self):
+		return 'token'
 

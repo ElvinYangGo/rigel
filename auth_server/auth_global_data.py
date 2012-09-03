@@ -5,4 +5,3 @@ class AuthGlobalData(GlobalData):
 		super(AuthGlobalData, self).__init__()
 		self.server_manager = None
 		self.server_name = None
-		self.channel_manager = None

@@ -12,25 +12,27 @@ from common.server_initializer import ServerInitializer
 class GameServerInitializerTest(unittest.TestCase):
 	def setUp(self):
 		self.server_name = u'gateway_server'
-		GlobalData.instance = GatewayGlobalData()
+		GlobalData.inst = GatewayGlobalData()
 		self.server_initializer = GatewayServerInitializer(
 			'localhost:34510',
 			'localhost:34511',
 			self.server_name,
-			Mock()
+			Mock(),
+			Mock(),
+			Mock(),
 			)
 		
 	def test_init_global_data(self):
 		ServerInitializer.init_global_data = Mock()
 		self.server_initializer.init_global_data()
-		self.assertEqual(len(GlobalData.instance.server_manager.servers), 0)
-		self.assertEqual(len(GlobalData.instance.channel_manager.channels), 0)
-		self.assertEqual(GlobalData.instance.server_name, self.server_name)
+		self.assertEqual(len(GlobalData.inst.server_manager.servers), 0)
+		self.assertEqual(len(GlobalData.inst.channel_manager.channels), 0)
+		self.assertEqual(GlobalData.inst.server_name, self.server_name)
 		
 	def test_send_init_request(self):
 		self.server_initializer.rmq = Mock()
 		self.server_initializer.rmq.send_message_string = Mock()
-		GlobalData.instance.server_name = self.server_name
+		GlobalData.inst.server_name = self.server_name
 		self.server_initializer.send_init_request()
 		
 		message = protocol.server_message_pb2.StartServerInitReq()

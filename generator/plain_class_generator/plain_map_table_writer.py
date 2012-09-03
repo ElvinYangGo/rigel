@@ -18,21 +18,22 @@ class PlainMapTableWriter(PlainClassWriter):
 		f.write('\tdef __init__(self, {}):\n'.format(self.get_init_parameter()))
 		
 	def write_init_function_body(self, f):
-		for field_name in self.table_desc['table_field'].iterkeys():
+		for field in self.table_desc['table_field']:
 			f.write('\t\tself.{} = {}\n'.format(
-						field_name, 
-						field_name
+						field['field_name'],
+						field['field_name']
 						)
 					)
 
 	def get_init_parameter(self):
-		parameter_string = ', '.join(self.table_desc['table_field'].iterkeys())
+		field_name_list = [field['field_name'] for field in self.table_desc['table_field']]
+		parameter_string = ', '.join(field_name_list)
 		return parameter_string
 	
 	def write_class_body(self, f):
-		for field_name in self.table_desc['table_field'].iterkeys():
-			self.write_getter_function(f, field_name)
-			self.write_setter_function(f, field_name)
+		for field in self.table_desc['table_field']:
+			self.write_getter_function(f, field['field_name'])
+			self.write_setter_function(f, field['field_name'])
 		self.write_to_net_function(f)
 		self.write_to_net_string_function(f)
 	
@@ -59,11 +60,11 @@ class PlainMapTableWriter(PlainClassWriter):
 				self.get_class_name()
 				)
 			)
-		for field_pair in self.table_desc['table_field'].iteritems():
+		for field in self.table_desc['table_field']:
 			f.write(
 				'\t\tproto.{} = self.{}\n'.format(
-					field_pair[0],
-					field_pair[0]
+					field['field_name'],
+					field['field_name']
 					)
 				)
 		f.write('\t\treturn proto\n\n')

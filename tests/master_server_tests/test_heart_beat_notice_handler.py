@@ -17,14 +17,14 @@ class HeartBeatNoticeHandlerTest(unittest.TestCase):
 		message.name = u'sa'
 		channel_buffer = ChannelBuffer(message.SerializeToString())
 		
-		GlobalData.instance = GlobalData()
-		GlobalData.instance.server_manager = ServerManager()
-		GlobalData.instance.server_manager.add_server('sa', ServerType.AUTHENTICATION_SERVER)
-		GlobalData.instance.server_manager.get_server('sa').set_status(ServerStatus.SERVER_STATUS_CLOSED)
+		GlobalData.inst = GlobalData()
+		GlobalData.inst.server_manager = ServerManager()
+		GlobalData.inst.server_manager.add_server('sa', ServerType.AUTHENTICATION_SERVER)
+		GlobalData.inst.server_manager.get_server('sa').set_status(ServerStatus.SERVER_STATUS_CLOSED)
 		
 		self.handler.handle_message(1, channel_buffer, channel_name='test_channel')
-		self.assertTrue(GlobalData.instance.server_manager.get_server('sa').get_heart_beat_time() != 0)
-		self.assertEqual(GlobalData.instance.server_manager.get_server('sa').get_status(), ServerStatus.SERVER_STATUS_RUNNING)
+		self.assertTrue(GlobalData.inst.server_manager.get_server('sa').get_heart_beat_time() != 0)
+		self.assertEqual(GlobalData.inst.server_manager.get_server('sa').get_status(), ServerStatus.SERVER_STATUS_RUNNING)
 		
 def get_tests():
 	return unittest.makeSuite(HeartBeatNoticeHandlerTest)

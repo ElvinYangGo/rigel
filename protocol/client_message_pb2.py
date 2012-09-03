@@ -11,28 +11,35 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = descriptor.FileDescriptor(
   name='client_message.proto',
   package='',
-  serialized_pb='\n\x14\x63lient_message.proto\"-\n\x0b\x41uthUserReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"\x1d\n\x0b\x41uthUserRes\x12\x0e\n\x06result\x18\x01 \x01(\x05')
+  serialized_pb='\n\x14\x63lient_message.proto\"B\n\x0cLoginAuthReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x12\n\nuser_token\x18\x03 \x01(\t\"r\n\x0cLoginAuthRes\x12\x0e\n\x06result\x18\x01 \x01(\x05\x12\x14\n\x0cserver_token\x18\x02 \x01(\t\x12\x12\n\ngateway_ip\x18\x03 \x01(\t\x12\x14\n\x0cgateway_port\x18\x04 \x01(\t\x12\x12\n\naccount_id\x18\x05 \x01(\x05\"4\n\x0fLoginGatewayReq\x12\x12\n\naccount_id\x18\x01 \x01(\x05\x12\r\n\x05token\x18\x02 \x01(\t\"!\n\x0fLoginGatewayRes\x12\x0e\n\x06result\x18\x01 \x01(\x05')
 
 
 
 
-_AUTHUSERREQ = descriptor.Descriptor(
-  name='AuthUserReq',
-  full_name='AuthUserReq',
+_LOGINAUTHREQ = descriptor.Descriptor(
+  name='LoginAuthReq',
+  full_name='LoginAuthReq',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='name', full_name='AuthUserReq.name', index=0,
+      name='name', full_name='LoginAuthReq.name', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
     descriptor.FieldDescriptor(
-      name='password', full_name='AuthUserReq.password', index=1,
+      name='password', full_name='LoginAuthReq.password', index=1,
       number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='user_token', full_name='LoginAuthReq.user_token', index=2,
+      number=3, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=unicode("", "utf-8"),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
@@ -47,19 +54,110 @@ _AUTHUSERREQ = descriptor.Descriptor(
   is_extendable=False,
   extension_ranges=[],
   serialized_start=24,
-  serialized_end=69,
+  serialized_end=90,
 )
 
 
-_AUTHUSERRES = descriptor.Descriptor(
-  name='AuthUserRes',
-  full_name='AuthUserRes',
+_LOGINAUTHRES = descriptor.Descriptor(
+  name='LoginAuthRes',
+  full_name='LoginAuthRes',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     descriptor.FieldDescriptor(
-      name='result', full_name='AuthUserRes.result', index=0,
+      name='result', full_name='LoginAuthRes.result', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='server_token', full_name='LoginAuthRes.server_token', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='gateway_ip', full_name='LoginAuthRes.gateway_ip', index=2,
+      number=3, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='gateway_port', full_name='LoginAuthRes.gateway_port', index=3,
+      number=4, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='account_id', full_name='LoginAuthRes.account_id', index=4,
+      number=5, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=92,
+  serialized_end=206,
+)
+
+
+_LOGINGATEWAYREQ = descriptor.Descriptor(
+  name='LoginGatewayReq',
+  full_name='LoginGatewayReq',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='account_id', full_name='LoginGatewayReq.account_id', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='token', full_name='LoginGatewayReq.token', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=208,
+  serialized_end=260,
+)
+
+
+_LOGINGATEWAYRES = descriptor.Descriptor(
+  name='LoginGatewayRes',
+  full_name='LoginGatewayRes',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='result', full_name='LoginGatewayRes.result', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
@@ -74,23 +172,37 @@ _AUTHUSERRES = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=71,
-  serialized_end=100,
+  serialized_start=262,
+  serialized_end=295,
 )
 
-DESCRIPTOR.message_types_by_name['AuthUserReq'] = _AUTHUSERREQ
-DESCRIPTOR.message_types_by_name['AuthUserRes'] = _AUTHUSERRES
+DESCRIPTOR.message_types_by_name['LoginAuthReq'] = _LOGINAUTHREQ
+DESCRIPTOR.message_types_by_name['LoginAuthRes'] = _LOGINAUTHRES
+DESCRIPTOR.message_types_by_name['LoginGatewayReq'] = _LOGINGATEWAYREQ
+DESCRIPTOR.message_types_by_name['LoginGatewayRes'] = _LOGINGATEWAYRES
 
-class AuthUserReq(message.Message):
+class LoginAuthReq(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _AUTHUSERREQ
+  DESCRIPTOR = _LOGINAUTHREQ
   
-  # @@protoc_insertion_point(class_scope:AuthUserReq)
+  # @@protoc_insertion_point(class_scope:LoginAuthReq)
 
-class AuthUserRes(message.Message):
+class LoginAuthRes(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
-  DESCRIPTOR = _AUTHUSERRES
+  DESCRIPTOR = _LOGINAUTHRES
   
-  # @@protoc_insertion_point(class_scope:AuthUserRes)
+  # @@protoc_insertion_point(class_scope:LoginAuthRes)
+
+class LoginGatewayReq(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _LOGINGATEWAYREQ
+  
+  # @@protoc_insertion_point(class_scope:LoginGatewayReq)
+
+class LoginGatewayRes(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _LOGINGATEWAYRES
+  
+  # @@protoc_insertion_point(class_scope:LoginGatewayRes)
 
 # @@protoc_insertion_point(module_scope)

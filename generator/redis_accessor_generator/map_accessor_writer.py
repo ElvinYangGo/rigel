@@ -11,10 +11,11 @@ class MapAccessorWriter(object):
 	def write(self):
 		self.write_table_getter_function()
 		self.write_table_setter_function()
+		self.write_table_pexpire_function()
 		
-		for field_pair in self.table_desc['table_field'].iteritems():
-			self.write_field_getter_function(field_pair)
-			self.write_field_setter_function(field_pair)
+		for field in self.table_desc['table_field']:
+			self.write_field_getter_function(field)
+			self.write_field_setter_function(field)
 			
 	def get_key_param_string(self):
 		return 'id_string'
@@ -46,8 +47,21 @@ class MapAccessorWriter(object):
 				)
 			)
 
-	def write_field_getter_function(self, field_pair):
-		field_name = field_pair[0]
+	def write_table_pexpire_function(self):
+		self.f.write(
+			'\tdef {}(self, redis, {}, milliseconds):\n'.format(
+				self.redis_accessor_name.get_map_pexpire_function_name(self.table_desc['table_name']),
+				self.get_key_param_string()
+				)
+			)
+		self.f.write('\t\tself.pexpire(redis, self.redis_table.{}({}), milliseconds)\n\n'.format(
+				self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
+				self.get_key_param_string()
+				)
+			)
+
+	def write_field_getter_function(self, field):
+		field_name = field['field_name']
 		self.f.write(
 			'\tdef {}(self, redis, {}):\n'.format(
 				self.redis_accessor_name.get_map_field_getter_function_name(self.table_desc['table_name'], field_name),
@@ -66,8 +80,8 @@ class MapAccessorWriter(object):
 					)
 		self.f.write('\t\t\t)\n\n')	
 
-	def write_field_setter_function(self, field_pair):
-		field_name = field_pair[0]
+	def write_field_setter_function(self, field):
+		field_name = field['field_name']
 		self.f.write('\tdef {}(self, redis, {}, {}_string):\n'.format(
 						self.redis_accessor_name.get_map_field_setter_function_name(self.table_desc['table_name'], field_name),
 						self.get_key_param_string(),
@@ -93,7 +107,10 @@ class MapAccessorWriter(object):
 		
 	def set_user(self, redis, id_string, user_dict):
 		redis.hmset(self.redis_table.get_user_key(id_string), user_dict)
-		
+
+	def pexpire_user(self, redis, id_string, milliseconds):
+		self.pexpire(redis, self.redis_table.get_user_key(id_string), milliseconds)
+
 	def get_user_table_user_id(self, redis, id_string):
 		return redis.hget(
 			self.redis_table.get_user_key(id_string), 

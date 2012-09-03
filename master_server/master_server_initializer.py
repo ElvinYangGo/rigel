@@ -7,23 +7,39 @@ from master_server.heart_beat_monitor import HeartBeatMonitor
 from common.global_data import GlobalData
 
 class MasterServerInitializer(ServerInitializer):
-	def __init__(self, pub_address, sub_address, server_name, pipeline, server_option_reader):
-		super(MasterServerInitializer, self).__init__(pub_address, sub_address, server_name, pipeline)
+	def __init__(
+		self,
+		pub_address,
+		sub_address,
+		server_name,
+		pipeline,
+		redis_server_file_name,
+		redis_partition_file_name,
+		server_option_reader
+		):
+		super(MasterServerInitializer, self).__init__(
+			pub_address,
+			sub_address,
+			server_name,
+			pipeline,
+			redis_server_file_name,
+			redis_partition_file_name
+			)
 		self.server_option_reader = server_option_reader
 			
 	def init_global_data(self):
-		GlobalData.instance = MasterGlobalData()
+		GlobalData.inst = MasterGlobalData()
 		super(MasterServerInitializer, self).init_global_data()
-		GlobalData.instance.server_manager = ServerManager()
-		GlobalData.instance.server_option_reader = self.server_option_reader
+		GlobalData.inst.server_manager = ServerManager()
+		GlobalData.inst.server_option_reader = self.server_option_reader
 		
 		self.init_heart_beat_monitor()
 	
 	def init_rmq(self):	
-		self.rmq = RMQ(self.pub_address, self.sub_address, GlobalData.instance.zmq_context, self.pipeline)
+		self.rmq = RMQ(self.pub_address, self.sub_address, GlobalData.inst.zmq_context, self.pipeline)
 		self.rmq.subscribe(ChannelName.SERVER_INITIALIZATION)
 	
-		GlobalData.instance.rmq = self.rmq
+		GlobalData.inst.rmq = self.rmq
 	
 		self.rmq.start()
 
@@ -33,6 +49,6 @@ class MasterServerInitializer(ServerInitializer):
 	def init_heart_beat_monitor(self):
 		heart_beat_interval = self.server_option_reader.get_server_option_config().get_heart_beat_interval()
 		heart_beat_timeout = self.server_option_reader.get_server_option_config().get_heart_beat_timeout()
-		GlobalData.instance.heart_beat_monitor = HeartBeatMonitor(heart_beat_interval, heart_beat_timeout)
-		GlobalData.instance.heart_beat_monitor.start()
+		GlobalData.inst.heart_beat_monitor = HeartBeatMonitor(heart_beat_interval, heart_beat_timeout)
+		GlobalData.inst.heart_beat_monitor.start()
 	

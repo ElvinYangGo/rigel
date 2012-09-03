@@ -5,11 +5,30 @@ class RedisAccessor(object):
 	def __init__(self):
 		self.redis_table = RedisTable()
 
+	def pexpire(self, redis, key, milliseconds):
+		redis.pexpire(key, milliseconds)
+
 	def get_user(self, redis, id_string):
 		return redis.hgetall(self.redis_table.get_user_key(id_string))
 
 	def set_user(self, redis, id_string, d):
 		redis.hmset(self.redis_table.get_user_key(id_string), d)
+
+	def pexpire_user(self, redis, id_string, milliseconds):
+		self.pexpire(redis, self.redis_table.get_user_key(id_string), milliseconds)
+
+	def get_user_table_user_id(self, redis, id_string):
+		return redis.hget(
+			self.redis_table.get_user_key(id_string),
+			self.redis_table.get_user_table_user_id_field()
+			)
+
+	def set_user_table_user_id(self, redis, id_string, user_id_string):
+		redis.hset(
+			self.redis_table.get_user_key(id_string),
+			self.redis_table.get_user_table_user_id_field(),
+			user_id_string
+			)
 
 	def get_user_table_user_name(self, redis, id_string):
 		return redis.hget(
@@ -24,17 +43,17 @@ class RedisAccessor(object):
 			user_name_string
 			)
 
-	def get_user_table_user_id(self, redis, id_string):
+	def get_user_table_password(self, redis, id_string):
 		return redis.hget(
 			self.redis_table.get_user_key(id_string),
-			self.redis_table.get_user_table_user_id_field()
+			self.redis_table.get_user_table_password_field()
 			)
 
-	def set_user_table_user_id(self, redis, id_string, user_id_string):
+	def set_user_table_password(self, redis, id_string, password_string):
 		redis.hset(
 			self.redis_table.get_user_key(id_string),
-			self.redis_table.get_user_table_user_id_field(),
-			user_id_string
+			self.redis_table.get_user_table_password_field(),
+			password_string
 			)
 
 	def get_item_list(self, redis, id_string):
@@ -71,18 +90,8 @@ class RedisAccessor(object):
 	def set_friend(self, redis, id_string, friend_string, d):
 		redis.hmset(self.redis_table.get_friend_key(id_string, friend_string), d)
 
-	def get_friend_table_user_name(self, redis, id_string, friend_string):
-		return redis.hget(
-			self.redis_table.get_friend_key(id_string, friend_string),
-			self.redis_table.get_friend_table_user_name_field()
-			)
-
-	def set_friend_table_user_name(self, redis, id_string, friend_string, user_name_string):
-		redis.hset(
-			self.redis_table.get_friend_key(id_string, friend_string),
-			self.redis_table.get_friend_table_user_name_field(),
-			user_name_string
-			)
+	def pexpire_friend(self, redis, id_string, friend_string, milliseconds):
+		self.pexpire(redis, self.redis_table.get_friend_key(id_string, friend_string), milliseconds)
 
 	def get_friend_table_user_id(self, redis, id_string, friend_string):
 		return redis.hget(
@@ -95,6 +104,19 @@ class RedisAccessor(object):
 			self.redis_table.get_friend_key(id_string, friend_string),
 			self.redis_table.get_friend_table_user_id_field(),
 			user_id_string
+			)
+
+	def get_friend_table_user_name(self, redis, id_string, friend_string):
+		return redis.hget(
+			self.redis_table.get_friend_key(id_string, friend_string),
+			self.redis_table.get_friend_table_user_name_field()
+			)
+
+	def set_friend_table_user_name(self, redis, id_string, friend_string, user_name_string):
+		redis.hset(
+			self.redis_table.get_friend_key(id_string, friend_string),
+			self.redis_table.get_friend_table_user_name_field(),
+			user_name_string
 			)
 
 	def get_online_player_list(self, redis):
@@ -129,4 +151,71 @@ class RedisAccessor(object):
 
 	def get_race_score_rank_range(self, redis, id_string, start, stop):
 		return redis.zrange(self.redis_table.get_race_score_rank_key(id_string), start, stop)
+
+	def get_user_name_to_id(self, redis, field):
+		return redis.hget(self.redis_table.get_user_name_to_id_key(), field)
+
+	def set_user_name_to_id(self, redis, field, value_string):
+		redis.hset(self.redis_table.get_user_name_to_id_key(), field, value_string)
+
+	def get_client_connection_info(self, redis, id_string):
+		return redis.hgetall(self.redis_table.get_client_connection_info_key(id_string))
+
+	def set_client_connection_info(self, redis, id_string, d):
+		redis.hmset(self.redis_table.get_client_connection_info_key(id_string), d)
+
+	def pexpire_client_connection_info(self, redis, id_string, milliseconds):
+		self.pexpire(redis, self.redis_table.get_client_connection_info_key(id_string), milliseconds)
+
+	def get_client_connection_info_table_client_id(self, redis, id_string):
+		return redis.hget(
+			self.redis_table.get_client_connection_info_key(id_string),
+			self.redis_table.get_client_connection_info_table_client_id_field()
+			)
+
+	def set_client_connection_info_table_client_id(self, redis, id_string, client_id_string):
+		redis.hset(
+			self.redis_table.get_client_connection_info_key(id_string),
+			self.redis_table.get_client_connection_info_table_client_id_field(),
+			client_id_string
+			)
+
+	def get_client_connection_info_table_gateway_server_name(self, redis, id_string):
+		return redis.hget(
+			self.redis_table.get_client_connection_info_key(id_string),
+			self.redis_table.get_client_connection_info_table_gateway_server_name_field()
+			)
+
+	def set_client_connection_info_table_gateway_server_name(self, redis, id_string, gateway_server_name_string):
+		redis.hset(
+			self.redis_table.get_client_connection_info_key(id_string),
+			self.redis_table.get_client_connection_info_table_gateway_server_name_field(),
+			gateway_server_name_string
+			)
+
+	def get_client_connection_info_table_game_server_name(self, redis, id_string):
+		return redis.hget(
+			self.redis_table.get_client_connection_info_key(id_string),
+			self.redis_table.get_client_connection_info_table_game_server_name_field()
+			)
+
+	def set_client_connection_info_table_game_server_name(self, redis, id_string, game_server_name_string):
+		redis.hset(
+			self.redis_table.get_client_connection_info_key(id_string),
+			self.redis_table.get_client_connection_info_table_game_server_name_field(),
+			game_server_name_string
+			)
+
+	def get_client_connection_info_table_token(self, redis, id_string):
+		return redis.hget(
+			self.redis_table.get_client_connection_info_key(id_string),
+			self.redis_table.get_client_connection_info_table_token_field()
+			)
+
+	def set_client_connection_info_table_token(self, redis, id_string, token_string):
+		redis.hset(
+			self.redis_table.get_client_connection_info_key(id_string),
+			self.redis_table.get_client_connection_info_table_token_field(),
+			token_string
+			)
 

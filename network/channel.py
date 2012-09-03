@@ -1,11 +1,10 @@
 from twisted.internet import reactor
 from network.channel_buffer import ChannelBuffer
-from common.client_connection_info import ClientConnectionInfo
 
 class Channel:
 	def __init__(self):
 		self.channel_buffer = ChannelBuffer()
-		self.client_connection_info = ClientConnectionInfo()
+		self.client_connection_info = None
 		self.channel_manager = None
 	
 	def set_channel_pipeline(self, channel_pipeline):
@@ -19,12 +18,17 @@ class Channel:
 
 	def append_data(self, data):
 		self.channel_buffer.append(data)
+		self.handle_upstream()
 	
 	def handle_connection(self):
 		self.channel_pipeline.handle_connection()
 	
 	def handle_upstream(self):
 		self.channel_pipeline.handle_upstream(self.channel_buffer)
+
+	def send_string(self, message_string, message_id=0):
+		channel_buffer = ChannelBuffer(message_string)
+		self.send(channel_buffer, message_id)
 	
 	def send(self, channel_buffer, message_id=0):
 		if message_id != 0:
@@ -54,7 +58,7 @@ class Channel:
 		self.client_connection_info = client_connection_info
 
 	def get_client_id(self):
-		return self.client_connection_info.get_client_client_id()
+		return self.client_connection_info.get_client_id()
 
 	def get_game_server_name(self):
 		return self.client_connection_info.get_game_server_name()

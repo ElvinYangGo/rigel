@@ -14,6 +14,7 @@ class ProtocolIDWriter:
 			f.write('class {}:\n'.format(self.out_class_name))
 			for direction_key, direction_value in desc.items():
 				self.write_direction(direction_key, direction_value, f)
+				f.write('\n')
 			f.flush()
 
 	def write_direction(self, direction_key, direction_value, f):

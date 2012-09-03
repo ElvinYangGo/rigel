@@ -14,26 +14,26 @@ class EndServerInitNoticeHandlerTest(unittest.TestCase):
 	def setUp(self):
 		self.handler = EndServerInitNoticeHandler()
 
-		GlobalData.instance = GlobalData()
-		GlobalData.instance.server_manager = ServerManager()
-		GlobalData.instance.server_manager.add_server('sa', ServerType.GATEWAY_SERVER)
-		GlobalData.instance.server_manager.add_server('sb', ServerType.AUTHENTICATION_SERVER)
-		GlobalData.instance.rmq = Mock()
-		GlobalData.instance.rmq.send_message_string = Mock()
+		GlobalData.inst = GlobalData()
+		GlobalData.inst.server_manager = ServerManager()
+		GlobalData.inst.server_manager.add_server('sa', ServerType.GATEWAY_SERVER)
+		GlobalData.inst.server_manager.add_server('sb', ServerType.AUTHENTICATION_SERVER)
+		GlobalData.inst.rmq = Mock()
+		GlobalData.inst.rmq.send_message_string = Mock()
 	
 	def test_send_other_servers_to_this_server(self):
-		server_list_message = GlobalData.instance.server_manager.running_server_to_net()
+		server_list_message = GlobalData.inst.server_manager.running_server_to_net()
 		self.handler.send_other_servers_to_this_server('sb')
-		GlobalData.instance.rmq.send_message_string.assert_called_with(
+		GlobalData.inst.rmq.send_message_string.assert_called_with(
 			server_list_message, 'sb', ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE
 			)
 	
 	def test_send_this_server_to_other_servers(self):
 		this_server_message = protocol.server_message_pb2.SyncServerNotice()
-		this_server_message.servers.extend([GlobalData.instance.server_manager.get_server('sb').to_net()])
+		this_server_message.servers.extend([GlobalData.inst.server_manager.get_server('sb').to_net()])
 		
-		self.handler.send_this_server_to_other_servers(GlobalData.instance.server_manager.get_server('sb'))
-		GlobalData.instance.rmq.send_message_string.assert_called_with(
+		self.handler.send_this_server_to_other_servers(GlobalData.inst.server_manager.get_server('sb'))
+		GlobalData.inst.rmq.send_message_string.assert_called_with(
 			this_server_message, 'server_status', ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE
 			)
 		
@@ -44,7 +44,7 @@ class EndServerInitNoticeHandlerTest(unittest.TestCase):
 		
 		self.handler.handle_message(1, channel_buffer, channel_name='server_initialization')
 		self.assertEqual(
-			GlobalData.instance.server_manager.get_server('sb').get_status(),
+			GlobalData.inst.server_manager.get_server('sb').get_status(),
 			ServerStatus.SERVER_STATUS_RUNNING
 			)
 		

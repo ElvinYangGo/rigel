@@ -5,10 +5,14 @@
 			"id_list":
 				[
 					{
-						"id":"AUTH_USER",
+						"id":"LOGIN_AUTH_REQ"
+					},
+					{
+						"id":"LOGIN_AUTH_RES",
 						"result":
 							[
-								"USER_NAME_INVALID"
+								"USER_NAME_NOT_EXIST",
+								"USER_NAME_OR_PASSWORD_INVALID"
 							]
 					}
 				]
@@ -16,7 +20,20 @@
 	"cgateway":
 		{
 			"id_start":"0x0101",
-			"id_list":[]
+			"id_list":
+				[
+					{
+						"id":"LOGIN_GATEWAY_REQ"
+					},
+					{
+						"id":"LOGIN_GATEWAY_RES",
+						"result":
+							[
+								"TOKEN_EXPIRED",
+								"TOKEN_INVALID"
+							]
+					}
+				]
 		},
 	"cgame":
 		{

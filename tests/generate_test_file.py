@@ -1,5 +1,7 @@
 import sys
 
+#usage: python generate_test_file [package_name] [file_name]
+
 if '__main__' == __name__:
 	package_name = sys.argv[1]
 	file_name = sys.argv[2]

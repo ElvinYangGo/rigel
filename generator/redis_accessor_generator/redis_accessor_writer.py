@@ -4,6 +4,7 @@ from generator.redis_accessor_generator.list_map_accessor_writer import ListMapA
 from generator.redis_accessor_generator.global_list_accessor_writer import GlobalListAccessorWriter
 from generator.redis_accessor_generator.global_sorted_set_accessor_writer import GlobalSortedSetAccessorWriter
 from generator.redis_accessor_generator.sorted_set_accessor_writer import SortedSetAccessorWriter
+from generator.redis_accessor_generator.pair_map_accessor_writer import PairMapAccessorWriter
 
 class RedisAccessorWriter(object):
 	def __init__(self, file_name, table_desc_array):
@@ -24,6 +25,8 @@ class RedisAccessorWriter(object):
 		f.write('\t\tself.redis_table = RedisTable()\n\n')	
 	
 	def write_class_body(self, f):
+		self.write_pexpire_function(f)
+
 		for table_desc in self.table_desc_array:
 			table_type = table_desc['table_type']
 			if table_type == 'map':
@@ -44,6 +47,13 @@ class RedisAccessorWriter(object):
 			elif table_type == 'sorted_set':
 				sorted_set_accessor_writer = SortedSetAccessorWriter(table_desc, f)
 				sorted_set_accessor_writer.write()
+			elif table_type == 'pair_map':
+				pair_map_accessor_writer = PairMapAccessorWriter(table_desc, f)
+				pair_map_accessor_writer.write()
+
+	def write_pexpire_function(self, f):
+		f.write('\tdef pexpire(self, redis, key, milliseconds):\n')
+		f.write('\t\tredis.pexpire(key, milliseconds)\n\n')
 
 """
 from redis_client.redis_table import RedisTable

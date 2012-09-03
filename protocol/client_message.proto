@@ -1,10 +1,26 @@
-message AuthUserReq
+message LoginAuthReq
 {
 	optional string name = 1;
 	optional string password = 2;
+	optional string user_token = 3;
 }
 
-message AuthUserRes
+message LoginAuthRes
+{
+	optional int32 result = 1;
+	optional string server_token = 2;
+	optional string gateway_ip = 3;
+	optional string gateway_port = 4;
+	optional int32 account_id = 5;
+}
+
+message LoginGatewayReq
+{
+	optional int32 account_id = 1;
+	optional string token = 2;
+}
+
+message LoginGatewayRes
 {
 	optional int32 result = 1;
 }

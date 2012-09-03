@@ -5,6 +5,13 @@ from common.server import Server
 from common.global_data import GlobalData
 
 class SyncServerStatusNoticeHandler:
+	@staticmethod
+	def register_server_handler(handler_dispatcher):
+		handler_dispatcher.append_handler(
+			ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE,
+			SyncServerStatusNoticeHandler()
+			)
+
 	def handle_message(self, message_id, channel_buffer, **kwargs):
 		message = protocol.server_message_pb2.SyncServerNotice.FromString(
 			channel_buffer.read_all_data()
@@ -18,8 +25,8 @@ class SyncServerStatusNoticeHandler:
 	def handle_running_server(self, server_net):
 		if server_net.type == ServerType.GATEWAY_SERVER:
 			server = Server(server_net.name, server_net.type, server_net.status)
-			GlobalData.instance.server_manager.add_server(server)
+			GlobalData.inst.server_manager.add_server(server)
 	
 	def handle_closed_server(self, server_net):
 		if server_net.type == ServerType.GATEWAY_SERVER:
-			GlobalData.instance.server_manager.remove_server(server_net.name)
+			GlobalData.inst.server_manager.remove_server(server_net.name)

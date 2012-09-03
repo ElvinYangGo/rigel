@@ -6,14 +6,16 @@ from common.global_data import GlobalData
 
 class ServerInitializerTest(unittest.TestCase):
 	def setUp(self):
-		GlobalData.instance = GlobalData()
+		GlobalData.inst = GlobalData()
 		self.channel_pipeline = Mock()
 		self.server_name = u'authentication_server'
 		self.server_initializer = ServerInitializer(
 			'localhost:34510',
 			'localhost:34511', 
 			self.server_name,
-			self.channel_pipeline
+			self.channel_pipeline,
+			Mock(),
+			Mock()
 			)
 		
 	def test_construction(self):

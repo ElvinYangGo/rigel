@@ -1,3 +1,4 @@
+from generator.plain_class_accessor_generator.plain_pair_map_accessor_writer import PlainPairMapAccessorWriter
 from generator.plain_class_accessor_generator.plain_map_accessor_writer import PlainMapAccessorWriter
 from generator.plain_class_accessor_generator.plain_list_accessor_writer import PlainListAccessorWriter
 from generator.plain_class_accessor_generator.plain_list_map_accessor_writer import PlainListMapAccessorWriter
@@ -59,6 +60,9 @@ class PlainClassAccessorWriter(object):
 			elif table_type == 'sorted_set':
 				plain_sorted_set_accessor_writer = PlainSortedSetAccessorWriter(table_desc, f)
 				plain_sorted_set_accessor_writer.write()
+			elif table_type == 'pair_map':
+				plain_pair_map_accessor_writer = PlainPairMapAccessorWriter(table_desc, f)
+				plain_pair_map_accessor_writer.write()
 
 	def write_init_function(self, f):
 		f.write('\tdef __init__(self):\n')

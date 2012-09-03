@@ -5,9 +5,13 @@ from common.start_server_init_res_handler import StartServerInitResHandler
 from common.global_data import GlobalData
 
 class CenterStartServerInitResHandler(StartServerInitResHandler):
-	def __init__(self):
-		pass
-	
+	@staticmethod
+	def register_server_handler(handler_dispatcher):
+		handler_dispatcher.append_handler(
+			ServerProtocolID.P_START_SERVER_INIT_RES,
+			CenterStartServerInitResHandler()
+			)
+
 	def handle_message(self, message_id, channel_buffer, **kwargs):
 		message = protocol.server_message_pb2.StartServerInitRes.FromString(
 			channel_buffer.read_all_data()
@@ -17,9 +21,9 @@ class CenterStartServerInitResHandler(StartServerInitResHandler):
 				server_option_reader = self.get_server_option_reader(message.config)
 				self.init_heart_beat(server_option_reader.get_server_option_config())
 		
-		GlobalData.instance.rmq.subscribe(ChannelName.SERVER_STATUS)
+		GlobalData.inst.rmq.subscribe(ChannelName.SERVER_STATUS)
 		message = protocol.server_message_pb2.EndServerInitNotice()
-		message.name = GlobalData.instance.server_name
-		GlobalData.instance.rmq.send_message_string(
+		message.name = GlobalData.inst.server_name
+		GlobalData.inst.rmq.send_message_string(
 			message, ChannelName.SERVER_INITIALIZATION, ServerProtocolID.P_END_SERVER_INIT_NOTICE
 			)

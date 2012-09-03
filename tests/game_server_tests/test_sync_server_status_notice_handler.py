@@ -25,22 +25,22 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 		server_net2.type = ServerType.GATEWAY_SERVER
 		server_net2.status = ServerStatus.SERVER_STATUS_RUNNING
 		
-		GlobalData.instance = GlobalData()
-		GlobalData.instance.server_manager = ServerManager()
+		GlobalData.inst = GlobalData()
+		GlobalData.inst.server_manager = ServerManager()
 		
 		self.handler.handle_running_server(server_net)
 		self.handler.handle_running_server(server_net2)
 		
-		self.assertEqual(len(GlobalData.instance.server_manager.servers), 1)
-		self.assertEqual(GlobalData.instance.server_manager.servers.get('sb').get_name(), 'sb')
-		self.assertEqual(GlobalData.instance.server_manager.servers.get('sb').get_type(), ServerType.GATEWAY_SERVER)
-		self.assertEqual(GlobalData.instance.server_manager.servers.get('sb').get_status(), ServerStatus.SERVER_STATUS_RUNNING)
+		self.assertEqual(len(GlobalData.inst.server_manager.servers), 1)
+		self.assertEqual(GlobalData.inst.server_manager.servers.get('sb').get_name(), 'sb')
+		self.assertEqual(GlobalData.inst.server_manager.servers.get('sb').get_type(), ServerType.GATEWAY_SERVER)
+		self.assertEqual(GlobalData.inst.server_manager.servers.get('sb').get_status(), ServerStatus.SERVER_STATUS_RUNNING)
 
 	def test_handle_closed_server(self):
 		server = Server('sa', ServerType.GATEWAY_SERVER, ServerStatus.SERVER_STATUS_RUNNING)
-		GlobalData.instance = GlobalData()
-		GlobalData.instance.server_manager = ServerManager()
-		GlobalData.instance.server_manager.add_server(server)
+		GlobalData.inst = GlobalData()
+		GlobalData.inst.server_manager = ServerManager()
+		GlobalData.inst.server_manager.add_server(server)
 		
 		server_net = protocol.server_data_pb2.Server()
 		server_net.name = 'sa'
@@ -49,7 +49,7 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 	
 		self.handler.handle_closed_server(server_net)
 		
-		self.assertEqual(len(GlobalData.instance.server_manager.servers), 0)
+		self.assertEqual(len(GlobalData.inst.server_manager.servers), 0)
 		
 	def test_handle_message(self):
 		message = protocol.server_message_pb2.SyncServerNotice()

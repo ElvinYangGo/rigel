@@ -39,11 +39,11 @@ class StartServerInitResHandler:
 
 	def init_heart_beat(self, server_option_config):
 		heart_beat_interval = server_option_config.get_heart_beat_interval()
-		if not hasattr(GlobalData.instance, u'heart_beat'):
-			GlobalData.instance.heart_beat = HeartBeat(heart_beat_interval)
-			GlobalData.instance.heart_beat.start()
+		if not hasattr(GlobalData.inst, u'heart_beat'):
+			GlobalData.inst.heart_beat = HeartBeat(heart_beat_interval)
+			GlobalData.inst.heart_beat.start()
 		else:
-			GlobalData.instance.heart_beat.set_heart_beat_interval(heart_beat_interval)
+			GlobalData.inst.heart_beat.set_heart_beat_interval(heart_beat_interval)
 	
 	def get_server_option_reader(self, config):
 		server_option_string = self.get_config_string(config, u'server_option_config')

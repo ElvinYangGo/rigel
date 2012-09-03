@@ -1,0 +1,6 @@
+[
+	{"name":"account", "host":"127.0.0.1", "port":6379},
+	{"name":"center", "host":"127.0.0.1", "port":6379},
+	{"name":"s1", "host":"127.0.0.1", "port":6379},
+	{"name":"s2", "host":"127.0.0.1", "port":6379}
+]

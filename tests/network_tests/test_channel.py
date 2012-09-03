@@ -8,6 +8,7 @@ class ChannelTest(unittest.TestCase):
 		self.channel = Channel()
 
 	def test_append_data(self):
+		self.channel.set_channel_pipeline(Mock())
 		self.channel.append_data(bytearray('aaa'))
 		self.assertEqual(3, self.channel.channel_buffer_readable_bytes())
 	
