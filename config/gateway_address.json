@@ -1,0 +1,4 @@
+{
+    "gateway_server": {"wan_ip":"192.168.0.1", "port":34600},
+    "gateway_server2": {"wan_ip":"192.168.0.1", "port":34600}
+}

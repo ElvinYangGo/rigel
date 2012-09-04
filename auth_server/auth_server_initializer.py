@@ -5,6 +5,7 @@ import protocol.server_message_pb2
 from common.server_type import ServerType
 from common.global_data import GlobalData
 from auth_server.auth_global_data import AuthGlobalData
+from auth_server.gateway_address import GatewayAddress
 
 class AuthServerInitializer(ServerInitializer):
 	def __init__(
@@ -14,7 +15,8 @@ class AuthServerInitializer(ServerInitializer):
 		server_name,
 		pipeline,
 		redis_server_file_name, 
-		redis_partition_file_name
+		redis_partition_file_name,
+		gateway_address_file_name
 		):
 		super(AuthServerInitializer, self).__init__(
 			pub_address,
@@ -24,12 +26,14 @@ class AuthServerInitializer(ServerInitializer):
 			redis_server_file_name,
 			redis_partition_file_name
 			)
+		self.gateway_address_file_name = gateway_address_file_name
 	
 	def init_global_data(self):
 		GlobalData.inst = AuthGlobalData()
 		super(AuthServerInitializer, self).init_global_data()
 		GlobalData.inst.server_manager = ServerManager()
 		GlobalData.inst.server_name = self.server_name
+		GlobalData.inst.gateway_address = GatewayAddress(self.gateway_address_file_name)
 	
 	def send_init_request(self):
 		message = protocol.server_message_pb2.StartServerInitReq()

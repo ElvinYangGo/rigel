@@ -8,8 +8,8 @@ class ConnectionHandler(object):
 		ClientGlobalData.channel = channel
 
 		#send login request
-		#self.send_login_auth_message()
-		self.send_login_gateway_message()
+		self.send_login_auth_message()
+		#self.send_login_gateway_message()
 
 	def handle_disconnection(self, channel):
 		print 'channel disconnected'

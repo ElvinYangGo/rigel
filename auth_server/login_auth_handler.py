@@ -67,8 +67,7 @@ class LoginAuthHandler(object):
 		#send to client
 		response.result = ClientProtocolID.R_LOGIN_AUTH_USER_NAME_OR_PASSWORD_INVALID
 		response.server_token = server_token
-		#TODO gateway ip and port
-		#response.gateway_ip =
-		#response.gateway_port =
+		response.gateway_ip = AuthGlobalData.inst.gateway_address.get_wan_ip(gateway_server.get_name())
+		response.gateway_port = AuthGlobalData.inst.gateway_address.get_port(gateway_server.get_name())
 		response.account_id = account_id
 		channel.send_string(response.SerializeToString(), ClientProtocolID.P_LOGIN_AUTH_RES)

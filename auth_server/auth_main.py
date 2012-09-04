@@ -30,7 +30,8 @@ if __name__ == '__main__':
 		u'auth_server',
 		rmq_pipeline,
 		'../config/redis_server.json',
-		'../config/redis_partition.json'
+		'../config/redis_partition.json',
+		'../config/gateway_address.json'
 		)
 	server_initializer.initialize()
 	

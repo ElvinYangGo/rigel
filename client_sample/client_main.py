@@ -24,7 +24,7 @@ if __name__ == '__main__':
 		sys.stderr.write(str(failure))
 		reactor.stop()
 	print u'client started'
-	endpoint = TCP4ClientEndpoint(reactor, 'localhost', 34600, 5)
+	endpoint = TCP4ClientEndpoint(reactor, 'localhost', 34500, 5)
 	d = endpoint.connect(TwistedProtocolFactory(channel_pipeline_factory, None))
 	d.addErrback(printError)
 	reactor.run()
