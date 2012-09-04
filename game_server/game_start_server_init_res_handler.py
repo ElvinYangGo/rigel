@@ -9,7 +9,7 @@ class GameStartServerInitResHandler(StartServerInitResHandler):
 	def register_server_handler(handler_dispatcher):
 		handler_dispatcher.append_handler(
 			ServerProtocolID.P_START_SERVER_INIT_RES,
-			AuthStartServerInitResHandler()
+			GameStartServerInitResHandler()
 			)
 	
 	def handle_message(self, message_id, channel_buffer, **kwargs):

@@ -27,7 +27,7 @@ class MapAccessorWriter(object):
 				self.get_key_param_string()
 				)
 			)
-		self.f.write('\t\treturn redis.hgetall(self.redis_table.{}({}))\n\n'.format( 
+		self.f.write('\t\treturn redis.hgetall(self.redis_key.{}({}))\n\n'.format(
 						self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 						self.get_key_param_string() 
 						)
@@ -41,7 +41,7 @@ class MapAccessorWriter(object):
 				)
 			)
 		self.f.write(
-			'\t\tredis.hmset(self.redis_table.{}({}), d)\n\n'.format(
+			'\t\tredis.hmset(self.redis_key.{}({}), d)\n\n'.format(
 				self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 				self.get_key_param_string()
 				)
@@ -54,7 +54,7 @@ class MapAccessorWriter(object):
 				self.get_key_param_string()
 				)
 			)
-		self.f.write('\t\tself.pexpire(redis, self.redis_table.{}({}), milliseconds)\n\n'.format(
+		self.f.write('\t\tself.pexpire(redis, self.redis_key.{}({}), milliseconds)\n\n'.format(
 				self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 				self.get_key_param_string()
 				)
@@ -69,12 +69,12 @@ class MapAccessorWriter(object):
 				)
 			)
 		self.f.write('\t\treturn redis.hget(\n')
-		self.f.write('\t\t\tself.redis_table.{}({}),\n'.format( 
+		self.f.write('\t\t\tself.redis_key.{}({}),\n'.format(
 						self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 						self.get_key_param_string()
 						)
 					)
-		self.f.write('\t\t\tself.redis_table.{}()\n'.format( 
+		self.f.write('\t\t\tself.redis_key.{}()\n'.format(
 						self.redis_key_name.get_table_field_method_name(self.table_desc['table_name'], field_name)
 						)
 					)
@@ -89,12 +89,12 @@ class MapAccessorWriter(object):
 						)
 					)
 		self.f.write('\t\tredis.hset(\n')
-		self.f.write('\t\t\tself.redis_table.{}({}),\n'.format(
+		self.f.write('\t\t\tself.redis_key.{}({}),\n'.format(
 						self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 						self.get_key_param_string()
 						)
 					)
-		self.f.write('\t\t\tself.redis_table.{}(),\n'.format(
+		self.f.write('\t\t\tself.redis_key.{}(),\n'.format(
 						self.redis_key_name.get_table_field_method_name(self.table_desc['table_name'], field_name)
 						)
 					)
@@ -103,30 +103,30 @@ class MapAccessorWriter(object):
 
 """		
 	def get_user(self, redis, id_string):
-		return redis.hgetall(self.redis_table.get_user_key(id_string))
+		return redis.hgetall(self.redis_key.get_user_key(id_string))
 		
 	def set_user(self, redis, id_string, user_dict):
-		redis.hmset(self.redis_table.get_user_key(id_string), user_dict)
+		redis.hmset(self.redis_key.get_user_key(id_string), user_dict)
 
 	def pexpire_user(self, redis, id_string, milliseconds):
-		self.pexpire(redis, self.redis_table.get_user_key(id_string), milliseconds)
+		self.pexpire(redis, self.redis_key.get_user_key(id_string), milliseconds)
 
 	def get_user_table_user_id(self, redis, id_string):
 		return redis.hget(
-			self.redis_table.get_user_key(id_string), 
-			self.redis_table.get_user_table_user_id_field()
+			self.redis_key.get_user_key(id_string),
+			self.redis_key.get_user_table_user_id_field()
 			)
 		
 	def get_user_table_user_name(self, redis, id_string):
 		return redis.hget(
-			self.redis_table.get_user_key(id_string), 
-			self.redis_table.get_user_table_user_name_field()
+			self.redis_key.get_user_key(id_string),
+			self.redis_key.get_user_table_user_name_field()
 			)
 	
 	def set_user_table_user_name(self, redis, id_string, user_name_string):
 		redis.hset(
-			self.redis_table.get_user_key(id_string), 
-			self.redis_table.get_user_table_user_name_field()
+			self.redis_key.get_user_key(id_string),
+			self.redis_key.get_user_table_user_name_field()
 			user_name_string
 			)
 """		

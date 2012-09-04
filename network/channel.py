@@ -43,10 +43,10 @@ class Channel:
 		self.channel_pipeline.handle_disconnection()
 
 	def write_to_twisted_protocol(self, data):
-		reactor.callFromThread(Channel.write_to_twisted_protocol_not_safe, data)
+		reactor.callFromThread(Channel.write_to_twisted_protocol_not_safe, self, data)
 
-	def write_to_twisted_protocol_not_safe(data):
-		self.twisted_protocol.transport.write(data)
+	def write_to_twisted_protocol_not_safe(channel, data):
+		channel.twisted_protocol.transport.write(data)
 		
 	def get_remote_ip(self):
 		return self.twisted_protocol.get_remote_ip()

@@ -1,10 +1,10 @@
 import uuid
-import protocol
+import protocol.client_message_pb2
 from auth_server.auth_global_data import AuthGlobalData
 from protocol.client_protocol_id import ClientProtocolID
 from plain_class.client_connection_info import ClientConnectionInfo
 
-class LoginAuthHandler:
+class LoginAuthHandler(object):
 	@staticmethod
 	def register_client_handler(handler_dispatcher):
 		handler_dispatcher.append_handler(

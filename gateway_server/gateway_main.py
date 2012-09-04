@@ -38,7 +38,7 @@ if __name__ == '__main__':
 	server_initializer.initialize()
 
 	client_handler_dispatcher = AutoHandlerRegister().register(
-		'auth_server',
+		'gateway_server',
 		'.',
 		'register_client_handler',
 		HandlerDispatcher()

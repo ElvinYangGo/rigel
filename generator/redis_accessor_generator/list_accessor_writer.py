@@ -19,7 +19,7 @@ class ListAccessorWriter(object):
 				self.redis_accessor_name.get_list_getter_function_name(self.table_desc['table_name'])
 				)
 			)
-		self.f.write('\t\treturn redis.lrange(self.redis_table.{}(id_string), 0, -1)\n\n'.format(
+		self.f.write('\t\treturn redis.lrange(self.redis_key.{}(id_string), 0, -1)\n\n'.format(
 						self.redis_key_name.get_list_method_name(self.table_desc['table_name'])
 						)
 					)
@@ -31,7 +31,7 @@ class ListAccessorWriter(object):
 				self.table_desc['table_name']
 				)
 			)
-		self.f.write('\t\tredis.rpush(self.redis_table.{}(id_string), {}_string)\n\n'.format( 
+		self.f.write('\t\tredis.rpush(self.redis_key.{}(id_string), {}_string)\n\n'.format(
 						self.redis_key_name.get_list_method_name(self.table_desc['table_name']),
 						self.table_desc['table_name']
 						)
@@ -44,7 +44,7 @@ class ListAccessorWriter(object):
 				self.table_desc['table_name']
 				)
 			)
-		self.f.write('\t\tredis.lrem(self.redis_table.{}(id_string), 0, {}_string)\n\n'.format( 
+		self.f.write('\t\tredis.lrem(self.redis_key.{}(id_string), 0, {}_string)\n\n'.format(
 						self.redis_key_name.get_list_method_name(self.table_desc['table_name']),
 						self.table_desc['table_name']
 						)
@@ -52,12 +52,12 @@ class ListAccessorWriter(object):
 
 """
 	def get_item_list(self, redis, id_string):
-		return redis.lrange(self.redis_table.get_item_list_key(id_string), 0, -1)
+		return redis.lrange(self.redis_key.get_item_list_key(id_string), 0, -1)
 	
 	def add_item(self, redis, id_string, item_string):
-		redis.rpush(self.redis_table.get_item_list_key(id_string), item_string)
+		redis.rpush(self.redis_key.get_item_list_key(id_string), item_string)
 	
 	def remove_item(self, redis, id_string, item_string):
-		redis.lrem(self.redis_table.get_item_list_key(id_string), 0, item_string)
+		redis.lrem(self.redis_key.get_item_list_key(id_string), 0, item_string)
 """		
 	

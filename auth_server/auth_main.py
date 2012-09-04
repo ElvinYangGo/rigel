@@ -41,8 +41,8 @@ if __name__ == '__main__':
 		HandlerDispatcher()
 		)
 	channel_pipeline_factory = ChannelPipelineFactory()
-	channel_pipeline_factory.append_handler('buffer_head_codec', BufferHeadCodec())
 	channel_pipeline_factory.append_handler('handler_dispatcher', client_handler_dispatcher)
+	channel_pipeline_factory.append_handler('buffer_head_codec', BufferHeadCodec())
 	
 	endpoint = TCP4ServerEndpoint(reactor, 34500)
 	endpoint.listen(TwistedProtocolFactory(channel_pipeline_factory, None))

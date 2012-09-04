@@ -2,6 +2,7 @@ import zmq
 from mq_client.rmq import RMQ
 from common.global_data import GlobalData
 from cluster.redis_cluster import RedisCluster
+from plain_class.plain_class_accessor import PlainClassAccessor
 
 class ServerInitializer(object):
 	def __init__(
@@ -27,6 +28,7 @@ class ServerInitializer(object):
 			self.redis_server_file_name,
 			self.redis_partition_file_name
 			)
+		GlobalData.inst.plain_class_accessor = PlainClassAccessor()
 	
 	def init_rmq(self):	
 		self.rmq = RMQ(self.pub_address, self.sub_address, GlobalData.inst.zmq_context, self.pipeline)

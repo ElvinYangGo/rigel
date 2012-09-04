@@ -10,7 +10,7 @@ if __name__ == '__main__':
 	mq_config = mq_reader.get_mq_config_list()[0]
 
 	server_handler_dispatcher = AutoHandlerRegister().register(
-		'center_server',
+		'game_server',
 		'.',
 		'register_server_handler',
 		HandlerDispatcher()

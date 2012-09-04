@@ -50,10 +50,10 @@ class PlainMapAccessorWriter(object):
 				self.get_key_param_string()
 				)
 			)
-		self.f.write('\t\tif {}_dict is not None:\n'.format(self.table_desc['table_name']))
+		self.f.write('\t\tif {}_dict:\n'.format(self.table_desc['table_name']))
 		self.f.write(
-			'\t\t\treturn self.build_{}_from_dict({}_dict)\n'.format(
-				self.table_desc['table_name'],
+			'\t\t\treturn self.{}({}_dict)\n'.format(
+				self.plain_class_name.get_map_class_builder_function_name(self.table_desc['table_name']),
 				self.table_desc['table_name']
 				)
 			)
@@ -72,7 +72,7 @@ class PlainMapAccessorWriter(object):
 				self.f.write('\t\t{}_param = {}\n'.format(field['field_name'], field['default']))
 			elif field['data_type'] == 'string':
 				self.f.write("\t\t{}_param = '{}'\n".format(field['field_name'], field['default']))
-			self.f.write('\t\tif self.redis_table.{}() in {}_dict:\n'.format(
+			self.f.write('\t\tif self.redis_key.{}() in {}_dict:\n'.format(
 							self.redis_key_name.get_table_field_method_name(
 								self.table_desc['table_name'], 
 								field['field_name']
@@ -82,9 +82,9 @@ class PlainMapAccessorWriter(object):
 						)
 			format_string = ''
 			if field['data_type'] == 'int':
-				format_string = '\t\t\t{}_param = int({}_dict[self.redis_table.{}()])\n'
+				format_string = '\t\t\t{}_param = int({}_dict[self.redis_key.{}()])\n'
 			elif field['data_type'] == 'string':
-				format_string = '\t\t\t{}_param = {}_dict[self.redis_table.{}()]\n'
+				format_string = '\t\t\t{}_param = {}_dict[self.redis_key.{}()]\n'
 				
 			self.f.write(format_string.format(
 							field['field_name'],
@@ -145,9 +145,9 @@ class PlainMapAccessorWriter(object):
 		for field in self.table_desc['table_field']:
 			format_string = ''
 			if field['data_type'] == 'int':
-				format_string = '\t\t{}_dict[self.redis_table.{}()] = str({}.{}())\n'
+				format_string = '\t\t{}_dict[self.redis_key.{}()] = str({}.{}())\n'
 			elif field['data_type'] == 'string':
-				format_string = '\t\t{}_dict[self.redis_table.{}()] = {}.{}()\n'
+				format_string = '\t\t{}_dict[self.redis_key.{}()] = {}.{}()\n'
 			self.f.write(
 				format_string.format(
 					self.table_desc['table_name'],
@@ -231,23 +231,23 @@ class PlainMapAccessorWriter(object):
 		user_dict = self.redis_accessor.get_user(redis, str(id_int))
 		return self.build_user_from_dict(user_dict)
 
-	def build_user_from_user_dict(self, user_dict):
+	def build_user_from_dict(self, user_dict):
 		user_name_param = ''
-		if self.redis_table.get_user_table_user_name_field() in user_dict:
-			user_name_param = user_dict[self.redis_table.get_user_table_user_name_field()]
+		if self.redis_key.get_user_table_user_name_field() in user_dict:
+			user_name_param = user_dict[self.redis_key.get_user_table_user_name_field()]
 		user_id_param = 0
-		if self.redis_table.get_user_table_user_id_field() in user_dict:
-			user_id_param = int(user_dict[self.redis_table.get_user_table_user_id_field()])
+		if self.redis_key.get_user_table_user_id_field() in user_dict:
+			user_id_param = int(user_dict[self.redis_key.get_user_table_user_id_field()])
 		return User(user_name=user_name_param, user_id=user_id_param)
 	
 	def set_user(self, redis, id_int, user):
-		user_dict = self.build_user_dict_from_user(user)
+		user_dict = self.build_dict_from_user(user)
 		self.redis_accessor.set_user(redis, str(id_int), user_dict)
 		
-	def build_user_dict_from_user(self, user):
+	def build_dict_from_user(self, user):
 		user_dict = {}
-		user_dict[self.redis_table.get_user_table_user_name_field()] = user.get_user_name()
-		user_dict[self.redis_table.get_user_table_user_id_field()] = str(user.get_user_id())
+		user_dict[self.redis_key.get_user_table_user_name_field()] = user.get_user_name()
+		user_dict[self.redis_key.get_user_table_user_id_field()] = str(user.get_user_id())
 		return user_dict
 
 	def pexpire_user(self, redis, id_int, milliseconds):

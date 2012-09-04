@@ -19,14 +19,12 @@ class PlainClassName(object):
 		return class_name
 
 	def get_map_class_builder_function_name(self, table_name):
-		return 'build_{}_from_{}_dict'.format(
-			table_name,
+		return 'build_{}_from_dict'.format(
 			table_name
 			)
 
 	def get_map_dict_builder_function_name(self, table_name):
-		return 'build_{}_dict_from_{}'.format(
-			table_name,
+		return 'build_dict_from_{}'.format(
 			table_name
 			)
 

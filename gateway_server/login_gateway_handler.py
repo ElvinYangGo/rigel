@@ -1,7 +1,15 @@
-import protocol
+import protocol.client_message_pb2
 from protocol.client_protocol_id import ClientProtocolID
+from gateway_server.gateway_global_data import GatewayGlobalData
 
 class LoginGatewayHandler:
+	@staticmethod
+	def register_client_handler(handler_dispatcher):
+		handler_dispatcher.append_handler(
+			ClientProtocolID.P_LOGIN_GATEWAY_REQ,
+			LoginGatewayHandler()
+			)
+
 	def handle_message(self, message_id, channel_buffer, **kwargs):
 		channel = kwargs['channel']
 		request = protocol.client_message_pb2.LoginGatewayReq.FromString(
@@ -11,7 +19,7 @@ class LoginGatewayHandler:
 
 		#get client connection info from redis
 		#check if token matches
-		r = AuthGlobalData.insta.redis_cluster.get_redis(request.account_id)
+		r = GatewayGlobalData.inst.redis_cluster.get_redis(request.account_id)
 		client_connection_info = GatewayGlobalData.inst.plain_class_accessor.get_client_connection_info(
 			r,
 			request.account_id

@@ -20,17 +20,17 @@ class PlainListMapAccessorWriter(object):
 	def get_friend(self, redis, id_int, friend_int):
 		friend_dict = self.redis_accessor.get_friend(redis, str(id_int), str(friend_int))
 		user_name_param = ''
-		if self.redis_table.get_friend_table_user_name_field() in friend_dict:
-			user_name_param = friend_dict[self.redis_table.get_friend_table_user_name_field()]
+		if self.redis_key.get_friend_table_user_name_field() in friend_dict:
+			user_name_param = friend_dict[self.redis_key.get_friend_table_user_name_field()]
 		user_id_param = 0
-		if self.redis_table.get_friend_table_user_id_field() in friend_dict:
-			user_id_param = int(friend_dict[self.redis_table.get_friend_table_user_id_field()])
+		if self.redis_key.get_friend_table_user_id_field() in friend_dict:
+			user_id_param = int(friend_dict[self.redis_key.get_friend_table_user_id_field()])
 		return Friend(user_name=user_name_param, user_id=user_id_param)
 
 	def set_friend(self, redis, id_int, friend_int, friend):
 		friend_dict = {}
-		friend_dict[self.redis_table.get_friend_table_user_name_field()] = friend.get_user_name()
-		friend_dict[self.redis_table.get_friend_table_user_id_field()] = str(friend.get_user_id())
+		friend_dict[self.redis_key.get_friend_table_user_name_field()] = friend.get_user_name()
+		friend_dict[self.redis_key.get_friend_table_user_id_field()] = str(friend.get_user_id())
 		self.redis_accessor.set_friend(redis, str(id_int), str(friend_int), friend_dict)
 
 	def get_friend_table_user_name(self, redis, id_int, friend_int):

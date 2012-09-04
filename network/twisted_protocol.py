@@ -12,7 +12,7 @@ class TwistedProtocol(Protocol):
 		self.channel.handle_disconnection()
 		
 	def dataReceived(self, data):
-		self.channel.appen_data(data)
+		self.channel.append_data(data)
 
 	def get_remote_ip(self):
 		return self.transport.getPeer().host;

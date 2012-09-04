@@ -24,7 +24,7 @@ class PlainClassAccessorWriter(object):
 	
 	def write_import_declaration(self, f):
 		f.write('from redis_client.redis_accessor import RedisAccessor\n')
-		f.write('from redis_client.redis_table import RedisTable\n')
+		f.write('from redis_client.redis_key import RedisKey\n')
 		for table_desc in self.table_desc_array:
 			table_type = table_desc['table_type']
 			if table_type == 'map':
@@ -67,4 +67,4 @@ class PlainClassAccessorWriter(object):
 	def write_init_function(self, f):
 		f.write('\tdef __init__(self):\n')
 		f.write('\t\tself.redis_accessor = RedisAccessor()\n')
-		f.write('\t\tself.redis_table = RedisTable()\n\n')
+		f.write('\t\tself.redis_key = RedisKey()\n\n')

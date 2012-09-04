@@ -16,7 +16,7 @@ class GlobalListAccessorWriter(object):
 						self.table_desc['table_name']
 						)
 					)
-		self.f.write('\t\treturn redis.get(self.redis_table.{}())\n\n'.format(
+		self.f.write('\t\treturn redis.get(self.redis_key.{}())\n\n'.format(
 						self.redis_key_name.get_list_method_name(self.table_desc['table_name'])
 						)
 					)
@@ -27,7 +27,7 @@ class GlobalListAccessorWriter(object):
 						self.table_desc['table_name']
 						)
 					)
-		self.f.write('\t\tredis.rpush(self.redis_table.{}(), {}_string)\n\n'.format( 
+		self.f.write('\t\tredis.rpush(self.redis_key.{}(), {}_string)\n\n'.format(
 						self.redis_key_name.get_list_method_name(self.table_desc['table_name']),
 						self.table_desc['table_name']
 						)
@@ -39,7 +39,7 @@ class GlobalListAccessorWriter(object):
 						self.table_desc['table_name']
 						)
 					)
-		self.f.write('\t\tredis.lrem(self.redis_table.{}(), 0, {}_string)\n\n'.format( 
+		self.f.write('\t\tredis.lrem(self.redis_key.{}(), 0, {}_string)\n\n'.format(
 						self.redis_key_name.get_list_method_name(self.table_desc['table_name']),
 						self.table_desc['table_name']
 						)
@@ -47,11 +47,11 @@ class GlobalListAccessorWriter(object):
 		
 """		
 	def get_online_player_list(self, redis):
-		return redis.get(self.redis_table.get_online_player_list_key())
+		return redis.get(self.redis_key.get_online_player_list_key())
 	
 	def add_online_player(self, redis, online_player_string):
-		redis.rpush(self.redis_table.get_online_player_list_key(), online_player_string)
+		redis.rpush(self.redis_key.get_online_player_list_key(), online_player_string)
 		
 	def remove_online_player(self, redis, online_player_string):
-		redis.lrem(self.redis_table.get_online_player_list_key(), 0, item_string)
+		redis.lrem(self.redis_key.get_online_player_list_key(), 0, item_string)
 """	

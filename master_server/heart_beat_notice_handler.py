@@ -2,6 +2,7 @@ import protocol
 import time
 from common.server_status import ServerStatus
 from common.global_data import GlobalData
+from protocol.server_protocol_id import ServerProtocolID
 
 class HeartBeatNoticeHandler:
 	@staticmethod
