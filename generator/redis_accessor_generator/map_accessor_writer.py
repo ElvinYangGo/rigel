@@ -12,6 +12,7 @@ class MapAccessorWriter(object):
 		self.write_table_getter_function()
 		self.write_table_setter_function()
 		self.write_table_pexpire_function()
+		self.write_table_expire_function()
 		
 		for field in self.table_desc['table_field']:
 			self.write_field_getter_function(field)
@@ -55,6 +56,19 @@ class MapAccessorWriter(object):
 				)
 			)
 		self.f.write('\t\tself.pexpire(redis, self.redis_key.{}({}), milliseconds)\n\n'.format(
+				self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
+				self.get_key_param_string()
+				)
+			)
+		
+	def write_table_expire_function(self):
+		self.f.write(
+			'\tdef {}(self, redis, {}, seconds):\n'.format(
+				self.redis_accessor_name.get_map_expire_function_name(self.table_desc['table_name']),
+				self.get_key_param_string()
+				)
+			)
+		self.f.write('\t\tself.expire(redis, self.redis_key.{}({}), seconds)\n\n'.format(
 				self.redis_key_name.get_table_method_name(self.table_desc['table_name']),
 				self.get_key_param_string()
 				)

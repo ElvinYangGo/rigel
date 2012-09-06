@@ -7,6 +7,9 @@ class RedisAccessorName(object):
 
 	def get_map_pexpire_function_name(self, table_name):
 		return 'pexpire_{}'.format(table_name)
+	
+	def get_map_expire_function_name(self, table_name):
+		return 'expire_{}'.format(table_name)
 
 	def get_map_field_getter_function_name(self, table_name, field_name):
 		return 'get_{}_table_{}'.format(table_name, field_name)

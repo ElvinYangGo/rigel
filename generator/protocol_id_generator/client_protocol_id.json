@@ -12,7 +12,9 @@
 						"result":
 							[
 								"USER_NAME_NOT_EXIST",
-								"USER_NAME_OR_PASSWORD_INVALID"
+								"USER_NAME_OR_PASSWORD_INVALID",
+								"NO_GATEWAY_SERVER",
+								"NO_GAME_SERVER"
 							]
 					}
 				]

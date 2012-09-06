@@ -26,6 +26,7 @@ class RedisAccessorWriter(object):
 	
 	def write_class_body(self, f):
 		self.write_pexpire_function(f)
+		self.write_expire_function(f)
 
 		for table_desc in self.table_desc_array:
 			table_type = table_desc['table_type']
@@ -54,6 +55,10 @@ class RedisAccessorWriter(object):
 	def write_pexpire_function(self, f):
 		f.write('\tdef pexpire(self, redis, key, milliseconds):\n')
 		f.write('\t\tredis.pexpire(key, milliseconds)\n\n')
+		
+	def write_expire_function(self, f):
+		f.write('\tdef expire(self, redis, key, seconds):\n')
+		f.write('\t\tredis.expire(key, seconds)\n\n')
 
 """
 from redis_client.redis_table import RedisTable

@@ -3,6 +3,7 @@ import protocol.client_message_pb2
 from auth_server.auth_global_data import AuthGlobalData
 from protocol.client_protocol_id import ClientProtocolID
 from plain_class.client_connection_info import ClientConnectionInfo
+from common.util import send_result
 
 class LoginAuthHandler(object):
 	@staticmethod
@@ -20,32 +21,85 @@ class LoginAuthHandler(object):
 		response = protocol.client_message_pb2.LoginAuthRes()
 
 		#check if name exist
-		account_id = AuthGlobalData.inst.plain_class_accessor.get_user_name_to_id(
-			AuthGlobalData.inst.redis_cluster.get_account_redis(),
-			request.name
-			)
-		if account_id == 0:
-			response.result = ClientProtocolID.R_LOGIN_AUTH_RES_USER_NAME_NOT_EXIST
-			channel.send_string(response.SerializeToString(), ClientProtocolID.P_LOGIN_AUTH_RES)
+		ok, account_id = self.valid_user_name(channel, request, response)
+		if not ok:
 			return
 
 		#check if name and password valid
-		user = AuthGlobalData.inst.plain_class_accessor.get_user(
-			AuthGlobalData.inst.redis_cluster.get_account_redis(),
-			account_id
-			)
-		if user.get_user_name() != request.name or user.get_password() != request.passord:
-			response.result = ClientProtocolID.R_LOGIN_AUTH_USER_NAME_OR_PASSWORD_INVALID
-			channel.send_string(response.SerializeToString(), ClientProtocolID.P_LOGIN_AUTH_RES)
+		ok = self.valid_user_name_and_password(channel, request, response, account_id)
+		if not ok:
 			return
 
 		#all check passed
 		#dispatch gateway server and game server
 		#generate server token, send it to redis first, then client
 		gateway_server = AuthGlobalData.inst.server_manager.dispatch_gateway_server()
+		if gateway_server is None:
+			send_result(
+				channel,
+				response,
+				ClientProtocolID.P_LOGIN_AUTH_RES,
+				ClientProtocolID.R_LOGIN_AUTH_RES_NO_GATEWAY_SERVER
+				)
+			return
+		
 		game_server = AuthGlobalData.inst.server_manager.dispatch_game_server()
+		if game_server is None:
+			send_result(
+				channel,
+				response,
+				ClientProtocolID.P_LOGIN_AUTH_RES,
+				ClientProtocolID.R_LOGIN_AUTH_RES_NO_GAME_SERVER
+				)
+			return
+		
 		server_token = uuid.uuid1()
-		token = ''.join([request.user_token, server_token])
+		token = ''.join([request.user_token, str(server_token)])
+		self.save_client_connection_info_to_redis(account_id, token, gateway_server, game_server)
+
+		#send to client
+		response = self.fill_success_response(response, server_token, gateway_server)
+		send_result(
+			channel,
+			response,
+			account_id,
+			ClientProtocolID.P_LOGIN_AUTH_RES,
+			ClientProtocolID.R_LOGIN_AUTH_RES_SUCCESS
+			)
+		
+	def valid_user_name(self, channel, request, response):
+		account_id = AuthGlobalData.inst.plain_class_accessor.get_user_name_to_id(
+			AuthGlobalData.inst.redis_cluster.get_account_redis(),
+			request.name
+			)
+		if account_id == 0:
+			send_result(
+				channel,
+				response, 
+				ClientProtocolID.P_LOGIN_AUTH_RES, 
+				ClientProtocolID.R_LOGIN_AUTH_RES_USER_NAME_NOT_EXIST
+				)
+			return False, account_id
+		else:
+			return True, account_id
+		
+	def valid_user_name_and_password(self, channel, request, response, account_id):
+		user = AuthGlobalData.inst.plain_class_accessor.get_user(
+			AuthGlobalData.inst.redis_cluster.get_account_redis(),
+			account_id
+			)
+		if user.get_user_name() != request.name or user.get_password() != request.password:
+			send_result(
+				channel,
+				response,
+				ClientProtocolID.P_LOGIN_AUTH_RES,
+				ClientProtocolID.R_LOGIN_AUTH_RES_USER_NAME_OR_PASSWORD_INVALID
+				)
+			return False
+		else:
+			return True
+
+	def save_client_connection_info_to_redis(self, account_id, token, gateway_server, game_server):
 		client_connection_info = ClientConnectionInfo(
 			account_id,
 			gateway_server.get_name(),
@@ -53,21 +107,22 @@ class LoginAuthHandler(object):
 			token
 			)
 		#send to redis by user id
-		r = AuthGlobalData.insta.redis_cluster.get_redis(account_id)
+		r = AuthGlobalData.inst.redis_cluster.get_redis(account_id)
 		AuthGlobalData.inst.plain_class_accessor.set_client_connection_info(
 			r,
 			account_id,
 			client_connection_info
 			)
-		AuthGlobalData.inst.plain_class_accessor.pexpire_client_connection_info(
+		AuthGlobalData.inst.plain_class_accessor.expire_client_connection_info(
 			r,
 			account_id,
-			10000
+			10
 			)
-		#send to client
-		response.result = ClientProtocolID.R_LOGIN_AUTH_USER_NAME_OR_PASSWORD_INVALID
-		response.server_token = server_token
+		
+	def fill_success_response(self, response, account_id, server_token, gateway_server):
+		response.server_token = str(server_token)
 		response.gateway_ip = AuthGlobalData.inst.gateway_address.get_wan_ip(gateway_server.get_name())
 		response.gateway_port = AuthGlobalData.inst.gateway_address.get_port(gateway_server.get_name())
 		response.account_id = account_id
-		channel.send_string(response.SerializeToString(), ClientProtocolID.P_LOGIN_AUTH_RES)
+		return response
+	

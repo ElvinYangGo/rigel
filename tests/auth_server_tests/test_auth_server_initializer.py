@@ -8,6 +8,7 @@ from common.server_type import ServerType
 from common.global_data import GlobalData
 from auth_server.auth_global_data import AuthGlobalData
 from common.server_initializer import ServerInitializer
+import auth_server.auth_server_initializer
 
 class AuthServerInitializerTest(unittest.TestCase):
 	def setUp(self):
@@ -19,13 +20,16 @@ class AuthServerInitializerTest(unittest.TestCase):
 			self.server_name,
 			Mock(),
 			Mock(),
+			Mock(),
 			Mock()
 			)
 		
 	def test_init_global_data(self):
 		ServerInitializer.init_global_data = Mock()
+		auth_server.auth_server_initializer.GatewayAddress = Mock()
 		self.server_initializer.init_global_data()
-		self.assertEqual(len(GlobalData.inst.server_manager.servers), 0)
+		self.assertEqual(len(GlobalData.inst.server_manager.gateway_servers), 0)
+		self.assertEqual(len(GlobalData.inst.server_manager.game_servers), 0)
 		self.assertEqual(GlobalData.inst.server_name, self.server_name)
 
 	def test_send_init_request(self):

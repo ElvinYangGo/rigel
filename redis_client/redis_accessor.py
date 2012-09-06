@@ -8,6 +8,9 @@ class RedisAccessor(object):
 	def pexpire(self, redis, key, milliseconds):
 		redis.pexpire(key, milliseconds)
 
+	def expire(self, redis, key, seconds):
+		redis.expire(key, seconds)
+
 	def get_user(self, redis, id_string):
 		return redis.hgetall(self.redis_key.get_user_key(id_string))
 
@@ -16,6 +19,9 @@ class RedisAccessor(object):
 
 	def pexpire_user(self, redis, id_string, milliseconds):
 		self.pexpire(redis, self.redis_key.get_user_key(id_string), milliseconds)
+
+	def expire_user(self, redis, id_string, seconds):
+		self.expire(redis, self.redis_key.get_user_key(id_string), seconds)
 
 	def get_user_table_user_id(self, redis, id_string):
 		return redis.hget(
@@ -93,6 +99,9 @@ class RedisAccessor(object):
 	def pexpire_friend(self, redis, id_string, friend_string, milliseconds):
 		self.pexpire(redis, self.redis_key.get_friend_key(id_string, friend_string), milliseconds)
 
+	def expire_friend(self, redis, id_string, friend_string, seconds):
+		self.expire(redis, self.redis_key.get_friend_key(id_string, friend_string), seconds)
+
 	def get_friend_table_user_id(self, redis, id_string, friend_string):
 		return redis.hget(
 			self.redis_key.get_friend_key(id_string, friend_string),
@@ -166,6 +175,9 @@ class RedisAccessor(object):
 
 	def pexpire_client_connection_info(self, redis, id_string, milliseconds):
 		self.pexpire(redis, self.redis_key.get_client_connection_info_key(id_string), milliseconds)
+
+	def expire_client_connection_info(self, redis, id_string, seconds):
+		self.expire(redis, self.redis_key.get_client_connection_info_key(id_string), seconds)
 
 	def get_client_connection_info_table_client_id(self, redis, id_string):
 		return redis.hget(

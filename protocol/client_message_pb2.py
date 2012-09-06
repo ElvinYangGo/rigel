@@ -11,7 +11,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = descriptor.FileDescriptor(
   name='client_message.proto',
   package='',
-  serialized_pb='\n\x14\x63lient_message.proto\"B\n\x0cLoginAuthReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x12\n\nuser_token\x18\x03 \x01(\t\"r\n\x0cLoginAuthRes\x12\x0e\n\x06result\x18\x01 \x01(\x05\x12\x14\n\x0cserver_token\x18\x02 \x01(\t\x12\x12\n\ngateway_ip\x18\x03 \x01(\t\x12\x14\n\x0cgateway_port\x18\x04 \x01(\t\x12\x12\n\naccount_id\x18\x05 \x01(\x05\"4\n\x0fLoginGatewayReq\x12\x12\n\naccount_id\x18\x01 \x01(\x05\x12\r\n\x05token\x18\x02 \x01(\t\"!\n\x0fLoginGatewayRes\x12\x0e\n\x06result\x18\x01 \x01(\x05')
+  serialized_pb='\n\x14\x63lient_message.proto\"B\n\x0cLoginAuthReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x12\n\nuser_token\x18\x03 \x01(\t\"r\n\x0cLoginAuthRes\x12\x0e\n\x06result\x18\x01 \x01(\x05\x12\x14\n\x0cserver_token\x18\x02 \x01(\t\x12\x12\n\ngateway_ip\x18\x03 \x01(\t\x12\x14\n\x0cgateway_port\x18\x04 \x01(\x05\x12\x12\n\naccount_id\x18\x05 \x01(\x05\"4\n\x0fLoginGatewayReq\x12\x12\n\naccount_id\x18\x01 \x01(\x05\x12\r\n\x05token\x18\x02 \x01(\t\"!\n\x0fLoginGatewayRes\x12\x0e\n\x06result\x18\x01 \x01(\x05')
 
 
 
@@ -88,8 +88,8 @@ _LOGINAUTHRES = descriptor.Descriptor(
       options=None),
     descriptor.FieldDescriptor(
       name='gateway_port', full_name='LoginAuthRes.gateway_port', index=3,
-      number=4, type=9, cpp_type=9, label=1,
-      has_default_value=False, default_value=unicode("", "utf-8"),
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),

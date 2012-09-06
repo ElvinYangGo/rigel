@@ -18,12 +18,18 @@ class AuthServerManager:
 		self.gateway_servers = [server for server in self.gateway_servers if server.get_name() == server_name]
 		
 	def dispatch_gateway_server(self):
+		if not self.gateway_servers:
+			return None
+		
 		index = self.gateway_server_index % len(self.gateway_servers)
 		self.gateway_server_index += 1
 		server = self.gateway_servers[index]
 		return server
 
 	def dispatch_game_server(self):
+		if not self.game_servers:
+			return None
+		
 		index = self.game_server_index % len(self.game_servers)
 		self.game_server_index += 1
 		server = self.game_servers[index]

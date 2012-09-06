@@ -10,7 +10,7 @@ message LoginAuthRes
 	optional int32 result = 1;
 	optional string server_token = 2;
 	optional string gateway_ip = 3;
-	optional string gateway_port = 4;
+	optional int32 gateway_port = 4;
 	optional int32 account_id = 5;
 }
 
