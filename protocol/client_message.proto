@@ -24,3 +24,14 @@ message LoginGatewayRes
 {
 	optional int32 result = 1;
 }
+
+message CreateAccountReq
+{
+	optional string name = 1;
+	optional string password = 2;
+}
+
+message CreateAccountRes
+{
+	optional int32 result = 1;
+}

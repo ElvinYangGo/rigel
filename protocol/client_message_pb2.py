@@ -11,7 +11,7 @@ from google.protobuf import descriptor_pb2
 DESCRIPTOR = descriptor.FileDescriptor(
   name='client_message.proto',
   package='',
-  serialized_pb='\n\x14\x63lient_message.proto\"B\n\x0cLoginAuthReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x12\n\nuser_token\x18\x03 \x01(\t\"r\n\x0cLoginAuthRes\x12\x0e\n\x06result\x18\x01 \x01(\x05\x12\x14\n\x0cserver_token\x18\x02 \x01(\t\x12\x12\n\ngateway_ip\x18\x03 \x01(\t\x12\x14\n\x0cgateway_port\x18\x04 \x01(\x05\x12\x12\n\naccount_id\x18\x05 \x01(\x05\"4\n\x0fLoginGatewayReq\x12\x12\n\naccount_id\x18\x01 \x01(\x05\x12\r\n\x05token\x18\x02 \x01(\t\"!\n\x0fLoginGatewayRes\x12\x0e\n\x06result\x18\x01 \x01(\x05')
+  serialized_pb='\n\x14\x63lient_message.proto\"B\n\x0cLoginAuthReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x12\n\nuser_token\x18\x03 \x01(\t\"r\n\x0cLoginAuthRes\x12\x0e\n\x06result\x18\x01 \x01(\x05\x12\x14\n\x0cserver_token\x18\x02 \x01(\t\x12\x12\n\ngateway_ip\x18\x03 \x01(\t\x12\x14\n\x0cgateway_port\x18\x04 \x01(\x05\x12\x12\n\naccount_id\x18\x05 \x01(\x05\"4\n\x0fLoginGatewayReq\x12\x12\n\naccount_id\x18\x01 \x01(\x05\x12\r\n\x05token\x18\x02 \x01(\t\"!\n\x0fLoginGatewayRes\x12\x0e\n\x06result\x18\x01 \x01(\x05\"2\n\x10\x43reateAccountReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"\"\n\x10\x43reateAccountRes\x12\x0e\n\x06result\x18\x01 \x01(\x05')
 
 
 
@@ -176,10 +176,75 @@ _LOGINGATEWAYRES = descriptor.Descriptor(
   serialized_end=295,
 )
 
+
+_CREATEACCOUNTREQ = descriptor.Descriptor(
+  name='CreateAccountReq',
+  full_name='CreateAccountReq',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='name', full_name='CreateAccountReq.name', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='password', full_name='CreateAccountReq.password', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=297,
+  serialized_end=347,
+)
+
+
+_CREATEACCOUNTRES = descriptor.Descriptor(
+  name='CreateAccountRes',
+  full_name='CreateAccountRes',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='result', full_name='CreateAccountRes.result', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=349,
+  serialized_end=383,
+)
+
 DESCRIPTOR.message_types_by_name['LoginAuthReq'] = _LOGINAUTHREQ
 DESCRIPTOR.message_types_by_name['LoginAuthRes'] = _LOGINAUTHRES
 DESCRIPTOR.message_types_by_name['LoginGatewayReq'] = _LOGINGATEWAYREQ
 DESCRIPTOR.message_types_by_name['LoginGatewayRes'] = _LOGINGATEWAYRES
+DESCRIPTOR.message_types_by_name['CreateAccountReq'] = _CREATEACCOUNTREQ
+DESCRIPTOR.message_types_by_name['CreateAccountRes'] = _CREATEACCOUNTRES
 
 class LoginAuthReq(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
@@ -204,5 +269,17 @@ class LoginGatewayRes(message.Message):
   DESCRIPTOR = _LOGINGATEWAYRES
   
   # @@protoc_insertion_point(class_scope:LoginGatewayRes)
+
+class CreateAccountReq(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _CREATEACCOUNTREQ
+  
+  # @@protoc_insertion_point(class_scope:CreateAccountReq)
+
+class CreateAccountRes(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _CREATEACCOUNTRES
+  
+  # @@protoc_insertion_point(class_scope:CreateAccountRes)
 
 # @@protoc_insertion_point(module_scope)
