@@ -60,5 +60,11 @@
 				{"field_name": "game_server_name", "data_type": "string", "default": ""},
 				{"field_name": "token", "data_type": "string", "default": ""}
 			]
+	},
+
+	{
+		"table_name": "account_id",
+		"table_type": "global_id",
+		"data_type": "int"
 	}
 ]

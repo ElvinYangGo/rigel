@@ -5,6 +5,9 @@ class RedisAccessorName(object):
 	def get_map_setter_function_name(self, table_name):
 		return 'set_{}'.format(table_name)
 
+	def get_map_setnx_function_name(self, table_name):
+		return 'setnx_{}'.format(table_name)
+
 	def get_map_pexpire_function_name(self, table_name):
 		return 'pexpire_{}'.format(table_name)
 	
@@ -52,3 +55,6 @@ class RedisAccessorName(object):
 
 	def get_sorted_set_range_getter_function_name(self, table_name):
 		return 'get_{}_range'.format(table_name)
+
+	def get_global_id_incr_function_name(self, table_name):
+		return 'incr_{}'.format(table_name)

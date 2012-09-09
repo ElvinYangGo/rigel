@@ -33,6 +33,8 @@ class RedisKeyWriter(object):
 				self.write_sorted_set_table(table_desc, f)
 			elif table_type == 'pair_map':
 				self.write_pair_table(table_desc, f)
+			elif table_type == 'global_id':
+				self.write_global_id_table(table_desc, f)
 				
 	def write_map_table(self, table_desc, f):
 		self.write_map_key_getter_function(table_desc, f)
@@ -95,6 +97,13 @@ class RedisKeyWriter(object):
 		f.write("\t\treturn '{}:' + id_string\n\n".format(table_desc['table_name']))
 
 	def write_pair_table(self, table_desc, f):
+		f.write('\tdef {}(self):\n'.format(
+					self.redis_key_name.get_table_method_name(table_desc['table_name'])
+					)
+				)
+		f.write("\t\treturn '{}'\n\n".format(table_desc['table_name']))
+
+	def write_global_id_table(self, table_desc, f):
 		f.write('\tdef {}(self):\n'.format(
 					self.redis_key_name.get_table_method_name(table_desc['table_name'])
 					)

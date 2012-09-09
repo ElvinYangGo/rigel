@@ -5,6 +5,7 @@ from generator.redis_accessor_generator.global_list_accessor_writer import Globa
 from generator.redis_accessor_generator.global_sorted_set_accessor_writer import GlobalSortedSetAccessorWriter
 from generator.redis_accessor_generator.sorted_set_accessor_writer import SortedSetAccessorWriter
 from generator.redis_accessor_generator.pair_map_accessor_writer import PairMapAccessorWriter
+from generator.redis_accessor_generator.global_id_accessor_writer import GlobalIDAccessorWriter
 
 class RedisAccessorWriter(object):
 	def __init__(self, file_name, table_desc_array):
@@ -51,6 +52,9 @@ class RedisAccessorWriter(object):
 			elif table_type == 'pair_map':
 				pair_map_accessor_writer = PairMapAccessorWriter(table_desc, f)
 				pair_map_accessor_writer.write()
+			elif table_type == 'global_id':
+				global_id_accessor_writer = GlobalIDAccessorWriter(table_desc, f)
+				global_id_accessor_writer.write()
 
 	def write_pexpire_function(self, f):
 		f.write('\tdef pexpire(self, redis, key, milliseconds):\n')

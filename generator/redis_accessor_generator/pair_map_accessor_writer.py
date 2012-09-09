@@ -11,6 +11,7 @@ class PairMapAccessorWriter(object):
 	def write(self):
 		self.write_field_getter_function()
 		self.write_field_setter_function()
+		self.write_field_setnx_function()
 
 	def write_field_getter_function(self):
 		self.f.write(
@@ -35,10 +36,25 @@ class PairMapAccessorWriter(object):
 				)
 			)
 
+	def write_field_setnx_function(self):
+		self.f.write(
+			'\tdef {}(self, redis, field, value_string):\n'.format(
+				self.redis_accessor_name.get_map_setnx_function_name(self.table_desc['table_name'])
+				)
+			)
+		self.f.write(
+			'\t\treturn redis.hsetnx(self.redis_key.{}(), field, value_string)\n\n'.format(
+				self.redis_key_name.get_table_method_name(self.table_desc['table_name'])
+				)
+			)
+
 """
 	def get_user_name_to_id(self, redis, field):
-		return redis.hget(self.redis_key.get_user_name_to_id_key())
+		return redis.hget(self.redis_key.get_user_name_to_id_key(), field)
 
 	def set_user_name_to_id(self, redis, field, value_string):
 		redis.hset(self.redis_key.get_user_name_to_id_key(), field, value_string)
+
+	def setnx_user_name_to_id(self,redis, field, value_string):
+		return redis.hsetnx(self.redis_key.get_user_name_to_id_key(), field, value_string)
 """

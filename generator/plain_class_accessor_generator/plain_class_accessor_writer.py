@@ -5,6 +5,7 @@ from generator.plain_class_accessor_generator.plain_list_map_accessor_writer imp
 from generator.plain_class_accessor_generator.plain_global_list_accessor_writer import PlainGlobalListAccessorWriter
 from generator.plain_class_accessor_generator.plain_global_sorted_set_accessor_writer import PlainGlobalSortedSetAccessorWriter
 from generator.plain_class_accessor_generator.plain_sorted_set_accessor_writer import PlainSortedSetAccessorWriter
+from generator.plain_class_accessor_generator.plain_global_id_accessor_writer import PlainGlobalIDAccessorWriter
 
 class PlainClassAccessorWriter(object):
 	def __init__(self, file_name, table_desc_array):
@@ -63,6 +64,9 @@ class PlainClassAccessorWriter(object):
 			elif table_type == 'pair_map':
 				plain_pair_map_accessor_writer = PlainPairMapAccessorWriter(table_desc, f)
 				plain_pair_map_accessor_writer.write()
+			elif table_type == 'global_id':
+				plain_global_id_accessor_writer = PlainGlobalIDAccessorWriter(table_desc, f)
+				plain_global_id_accessor_writer.write()
 
 	def write_init_function(self, f):
 		f.write('\tdef __init__(self):\n')

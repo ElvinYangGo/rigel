@@ -54,3 +54,6 @@ class RedisKey(object):
 	def get_client_connection_info_table_token_field(self):
 		return 'token'
 
+	def get_account_id_key(self):
+		return 'account_id'
+

@@ -9,6 +9,7 @@ class PlainPairMapAccessorWriter(object):
 	def write(self):
 		self.write_table_getter_function()
 		self.write_table_setter_function()
+		self.write_table_setnx_function()
 
 	def write_table_getter_function(self):
 		self.f.write(
@@ -45,6 +46,18 @@ class PlainPairMapAccessorWriter(object):
 				)
 			)
 
+	def write_table_setnx_function(self):
+		self.f.write(
+			'\tdef {}(self, redis, field, value):\n'.format(
+				self.redis_accessor_name.get_map_setnx_function_name(self.table_desc['table_name'])
+				)
+			)
+		self.f.write(
+			'\t\treturn self.redis_accessor.{}(redis, field, str(value))\n\n'.format(
+				self.redis_accessor_name.get_map_setnx_function_name(self.table_desc['table_name'])
+				)
+			)
+
 """
 	def get_user_name_to_id(self, redis, field):
 		#return self.redis_accessor.get_user_name_to_id(redis, field)
@@ -56,4 +69,7 @@ class PlainPairMapAccessorWriter(object):
 
 	def set_user_name_to_id(self, redis, field, value):
 		self.redis_accessor.set_user_name_to_id(redis, field, str(value))
+
+	def setnx_user_name_to_id(self, redis, field, value):
+		self.redis_accessor.setnx_user_name_to_id(redis, field, str(value))
 """

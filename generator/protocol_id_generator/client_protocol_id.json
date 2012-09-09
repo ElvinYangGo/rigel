@@ -16,6 +16,16 @@
 								"NO_GATEWAY_SERVER",
 								"NO_GAME_SERVER"
 							]
+					},
+					{
+						"id":"CREATE_ACCOUNT_REQ"
+					},
+					{
+						"id":"CREATE_ACCOUNT_RES",
+						"result":
+							[
+								"NAME_ALREADY_EXIST"
+							]
 					}
 				]
 		},
