@@ -4,15 +4,12 @@ from mock import Mock
 from auth_server.login_auth_handler import LoginAuthHandler
 from auth_server.auth_global_data import AuthGlobalData
 import auth_server.login_auth_handler
-from protocol.client_protocol_id import ClientProtocolID
 
 class LoginAuthHandlerTest(unittest.TestCase):
 	def setUp(self):
 		self.login_auth_handler = LoginAuthHandler()
-		self.channel = Mock()
 		self.response = Mock()
 		self.request = Mock()
-		auth_server.login_auth_handler.send_result = Mock()
 		AuthGlobalData.inst = Mock()
 		AuthGlobalData.inst.plain_class_accessor = Mock()
 		
@@ -20,21 +17,14 @@ class LoginAuthHandlerTest(unittest.TestCase):
 		AuthGlobalData.inst.plain_class_accessor.get_user_name_to_id = Mock()
 	
 		AuthGlobalData.inst.plain_class_accessor.get_user_name_to_id.return_value = 1 
-		ok, account_id = self.login_auth_handler.valid_user_name(self.channel, self.request, self.response)
+		ok, account_id = self.login_auth_handler.valid_user_name(self.request)
 		self.assertTrue(ok)
 		self.assertEqual(account_id, 1)
-		self.assertFalse(auth_server.login_auth_handler.send_result.called)
 
 		AuthGlobalData.inst.plain_class_accessor.get_user_name_to_id.return_value = 0 
-		ok, account_id = self.login_auth_handler.valid_user_name(self.channel, self.request, self.response)
+		ok, account_id = self.login_auth_handler.valid_user_name(self.request)
 		self.assertFalse(ok)
 		self.assertEqual(account_id, 0)
-		auth_server.login_auth_handler.send_result.assert_called_with(
-			self.channel, 
-			self.response,
-			ClientProtocolID.P_LOGIN_AUTH_RES, 
-			ClientProtocolID.R_LOGIN_AUTH_RES_USER_NAME_NOT_EXIST
-			)
 		
 	def test_valid_user_name_and_password(self):
 		user = Mock()
@@ -45,18 +35,12 @@ class LoginAuthHandlerTest(unittest.TestCase):
 		AuthGlobalData.inst.plain_class_accessor.get_user.return_value = user
 		self.request.name = u'aaa'
 		self.request.password = u'aaa'
-		ok = self.login_auth_handler.valid_user_name_and_password(self.channel, self.request, self.response, 1)
+		ok = self.login_auth_handler.valid_user_name_and_password(self.request, 1)
 		self.assertTrue(ok)
 	
 		self.request.password = u'bbb'
-		ok = self.login_auth_handler.valid_user_name_and_password(self.channel, self.request, self.response, 1)
+		ok = self.login_auth_handler.valid_user_name_and_password(self.request, 1)
 		self.assertFalse(ok)
-		auth_server.login_auth_handler.send_result.assert_called_with(
-			self.channel, 
-			self.response,
-			ClientProtocolID.P_LOGIN_AUTH_RES, 
-			ClientProtocolID.R_LOGIN_AUTH_RES_USER_NAME_OR_PASSWORD_INVALID
-			)
 		
 	def test_save_client_connection_info_to_redis(self):
 		client_connection_info = Mock()

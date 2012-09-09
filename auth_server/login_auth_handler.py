@@ -21,13 +21,25 @@ class LoginAuthHandler(object):
 		response = protocol.client_message_pb2.LoginAuthRes()
 
 		#check if name exist
-		ok, account_id = self.valid_user_name(channel, request, response)
+		ok, account_id = self.valid_user_name(request)
 		if not ok:
+			send_result(
+				channel,
+				response,
+				ClientProtocolID.P_LOGIN_AUTH_RES,
+				ClientProtocolID.R_LOGIN_AUTH_RES_USER_NAME_NOT_EXIST
+				)
 			return
 
 		#check if name and password valid
-		ok = self.valid_user_name_and_password(channel, request, response, account_id)
+		ok = self.valid_user_name_and_password(request, account_id)
 		if not ok:
+			send_result(
+				channel,
+				response,
+				ClientProtocolID.P_LOGIN_AUTH_RES,
+				ClientProtocolID.R_LOGIN_AUTH_RES_USER_NAME_OR_PASSWORD_INVALID
+				)
 			return
 
 		#all check passed
@@ -67,34 +79,22 @@ class LoginAuthHandler(object):
 			ClientProtocolID.R_LOGIN_AUTH_RES_SUCCESS
 			)
 		
-	def valid_user_name(self, channel, request, response):
+	def valid_user_name(self, request):
 		account_id = AuthGlobalData.inst.plain_class_accessor.get_user_name_to_id(
 			AuthGlobalData.inst.redis_cluster.get_account_redis(),
 			request.name
 			)
 		if account_id == 0:
-			send_result(
-				channel,
-				response, 
-				ClientProtocolID.P_LOGIN_AUTH_RES, 
-				ClientProtocolID.R_LOGIN_AUTH_RES_USER_NAME_NOT_EXIST
-				)
 			return False, account_id
 		else:
 			return True, account_id
 		
-	def valid_user_name_and_password(self, channel, request, response, account_id):
+	def valid_user_name_and_password(self, request, account_id):
 		user = AuthGlobalData.inst.plain_class_accessor.get_user(
 			AuthGlobalData.inst.redis_cluster.get_account_redis(),
 			account_id
 			)
 		if user.get_user_name() != request.name or user.get_password() != request.password:
-			send_result(
-				channel,
-				response,
-				ClientProtocolID.P_LOGIN_AUTH_RES,
-				ClientProtocolID.R_LOGIN_AUTH_RES_USER_NAME_OR_PASSWORD_INVALID
-				)
 			return False
 		else:
 			return True

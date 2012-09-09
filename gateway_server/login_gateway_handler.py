@@ -1,6 +1,7 @@
 import protocol.client_message_pb2
 from protocol.client_protocol_id import ClientProtocolID
 from gateway_server.gateway_global_data import GatewayGlobalData
+from common.util import send_result
 
 class LoginGatewayHandler:
 	@staticmethod
@@ -19,24 +20,37 @@ class LoginGatewayHandler:
 
 		#get client connection info from redis
 		#check if token matches
-		r = GatewayGlobalData.inst.redis_cluster.get_redis(request.account_id)
-		client_connection_info = GatewayGlobalData.inst.plain_class_accessor.get_client_connection_info(
-			r,
-			request.account_id
-			)
-		if client_connection_info is None:
-			response.result = ClientProtocolID.R_LOGIN_GATEWAY_RES_TOKEN_EXPIRED
-			channel.send_string(response.SerializeToString(), ClientProtocolID.P_LOGIN_GATEWAY_RES)
-			return
-
-		if client_connection_info.get_token() != request.token:
-			response.result = ClientProtocolID.R_LOGIN_GATEWAY_RES_TOKEN_INVALID
-			channel.send_string(response.SerializeToString(), ClientProtocolID.P_LOGIN_GATEWAY_RES)
+		valid_token, error = self.valid_token(request)
+		if not valid_token:
+			send_result(
+				channel,
+				response,
+				ClientProtocolID.P_LOGIN_GATEWAY_RES,
+				error
+				)
 			return
 
 		#login ok, add channel to channel manager, send result to client
 		channel_manager = channel.get_channel_manager()
 		channel_manager.insert(request.account_id, channel)
 
-		response.result = ClientProtocolID.R_LOGIN_GATEWAY_RES_SUCCESS
-		channel.send_string(response.SerializeToString(), ClientProtocolID.P_LOGIN_GATEWAY_RES)
+		send_result(
+			channel,
+			response,
+			ClientProtocolID.P_LOGIN_GATEWAY_RES,
+			ClientProtocolID.R_LOGIN_GATEWAY_RES_SUCCESS
+			)
+
+	def valid_token(self, request):
+		r = GatewayGlobalData.inst.redis_cluster.get_redis(request.account_id)
+		client_connection_info = GatewayGlobalData.inst.plain_class_accessor.get_client_connection_info(
+			r,
+			request.account_id
+			)
+		if client_connection_info is None:
+			return False, ClientProtocolID.R_LOGIN_GATEWAY_RES_TOKEN_EXPIRED
+
+		if client_connection_info.get_token() != request.token:
+			return False, ClientProtocolID.R_LOGIN_GATEWAY_RES_TOKEN_INVALID
+
+		return True, None
