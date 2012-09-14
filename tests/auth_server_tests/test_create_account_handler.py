@@ -21,7 +21,7 @@ class CreateAccountHandlerTest(unittest.TestCase):
 		AuthGlobalData.inst.plain_class_accessor.setnx_user_name_to_id.return_value = True
 
 		exist = self.create_account_handler.name_exist(self.request)
-		self.assertTrue(exist)
+		self.assertFalse(exist)
 		AuthGlobalData.inst.plain_class_accessor.setnx_user_name_to_id.assert_called_with(
 			1, 'aaa', 0)
 
@@ -37,7 +37,8 @@ class CreateAccountHandlerTest(unittest.TestCase):
 
 		self.create_account_handler.create_account(self.request)
 		self.assertTrue(AuthGlobalData.inst.redis_cluster.get_account_redis.called)
-		self.assertTrue(AuthGlobalData.inst.plain_class_accessor.incr_account_id.called)
+		#self.assertTrue(AuthGlobalData.inst.plain_class_accessor.incr_account_id.called)
+		AuthGlobalData.inst.plain_class_accessor.incr_account_id.assert_called_with(1)
 		AuthGlobalData.inst.plain_class_accessor.set_user_name_to_id.assert_called_with(
 			1, 'aaa', 1)
 		auth_server.create_account_handler.User.assert_called_with(1, 'aaa', 'bbb')

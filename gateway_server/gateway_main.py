@@ -52,5 +52,5 @@ if __name__ == '__main__':
 	endpoint.listen(TwistedProtocolFactory(channel_pipeline_factory, GlobalData.inst.channel_manager))
 	reactor.run()
 	
-	print u'authentication started'
+	print u'gateway started'
 	

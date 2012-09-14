@@ -41,6 +41,12 @@ class Channel:
 
 	def handle_disconnection(self):
 		self.channel_pipeline.handle_disconnection()
+		if self.channel_manager and self.client_connection_info:
+			self.channel_manager.remove(self.client_connection_info.get_client_id())
+		self.channel_pipeline = None
+		self.channel_buffer = None
+		self.client_connection_info = None
+		self.twisted_protocol = None
 
 	def write_to_twisted_protocol(self, data):
 		reactor.callFromThread(Channel.write_to_twisted_protocol_not_safe, self, data)
@@ -64,7 +70,7 @@ class Channel:
 		return self.client_connection_info.get_game_server_name()
 
 	def get_channel_manager(self):
-		return channel_mananger
+		return self.channel_manager
 
 	def set_channel_manager(self, channel_manager):
 		self.channel_manager = channel_manager

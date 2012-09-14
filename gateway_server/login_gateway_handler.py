@@ -19,9 +19,15 @@ class LoginGatewayHandler:
 		response = protocol.client_message_pb2.LoginGatewayRes()
 
 		#get client connection info from redis
+		r = GatewayGlobalData.inst.redis_cluster.get_redis(request.account_id)
+		client_connection_info = GatewayGlobalData.inst.plain_class_accessor.get_client_connection_info(
+			r,
+			request.account_id
+			)
+
 		#check if token matches
-		valid_token, error = self.valid_token(request)
-		if not valid_token:
+		valid, error = self.valid_token(request, client_connection_info)
+		if not valid:
 			send_result(
 				channel,
 				response,
@@ -33,6 +39,7 @@ class LoginGatewayHandler:
 		#login ok, add channel to channel manager, send result to client
 		channel_manager = channel.get_channel_manager()
 		channel_manager.insert(request.account_id, channel)
+		channel.set_client_connection_info(client_connection_info)
 
 		send_result(
 			channel,
@@ -41,12 +48,7 @@ class LoginGatewayHandler:
 			ClientProtocolID.R_LOGIN_GATEWAY_RES_SUCCESS
 			)
 
-	def valid_token(self, request):
-		r = GatewayGlobalData.inst.redis_cluster.get_redis(request.account_id)
-		client_connection_info = GatewayGlobalData.inst.plain_class_accessor.get_client_connection_info(
-			r,
-			request.account_id
-			)
+	def valid_token(self, request, client_connection_info):
 		if client_connection_info is None:
 			return False, ClientProtocolID.R_LOGIN_GATEWAY_RES_TOKEN_EXPIRED
 

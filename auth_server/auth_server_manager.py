@@ -1,36 +1,31 @@
 from common.server_type import ServerType
+from auth_server.server_dispatcher import ServerDispatcher
 
 class AuthServerManager:
 	def __init__(self):
-		self.gateway_servers = []
-		self.game_servers = []
-		self.gateway_server_index = 0
-		self.game_server_index = 0
+		self.dispatchers = {}
+		self.dispatchers[ServerType.GAME_SERVER] = ServerDispatcher(ServerType.GAME_SERVER)
+		self.dispatchers[ServerType.GATEWAY_SERVER] = ServerDispatcher(ServerType.GATEWAY_SERVER)
 		
-	def add_server(self, server):
-		if server.get_type() == ServerType.GATEWAY_SERVER:
-			self.gateway_servers.append(server)
-		elif server.get_type() == ServerType.GAME_SERVER:
-			self.game_servers.append(server)
-		
-	def remove_server(self, server_name):
-		self.game_servers = [server for server in self.game_servers if server.get_name() == server_name]
-		self.gateway_servers = [server for server in self.gateway_servers if server.get_name() == server_name]
-		
-	def dispatch_gateway_server(self):
-		if not self.gateway_servers:
-			return None
-		
-		index = self.gateway_server_index % len(self.gateway_servers)
-		self.gateway_server_index += 1
-		server = self.gateway_servers[index]
-		return server
+	def contain_server(self, server_type, name):
+		dispatcher = self.dispatchers.get(server_type)
+		if dispatcher:
+			return dispatcher.contain_server(name)
+		return False
 
-	def dispatch_game_server(self):
-		if not self.game_servers:
-			return None
+	def add_server(self, server):
+		dispatcher = self.dispatchers.get(server.get_type())
+		if dispatcher:
+			dispatcher.add_server(server)
 		
-		index = self.game_server_index % len(self.game_servers)
-		self.game_server_index += 1
-		server = self.game_servers[index]
-		return server
+	def remove_server(self, server_type, name):
+		dispatcher = self.dispatchers.get(server_type)
+		if dispatcher:
+			dispatcher.remove_server(name)
+	
+	def dispatch_server(self, server_type):
+		dispatcher = self.dispatchers.get(server_type)
+		if dispatcher:
+			return dispatcher.dispatch_server()
+		return None
+			

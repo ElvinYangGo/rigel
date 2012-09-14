@@ -40,20 +40,21 @@ class CreateAccountHandler(object):
 			)
 
 	def name_exist(self, request):
-		exist = AuthGlobalData.inst.plain_class_accessor.setnx_user_name_to_id(
+		result = AuthGlobalData.inst.plain_class_accessor.setnx_user_name_to_id(
 			AuthGlobalData.inst.redis_cluster.get_account_redis(),
 			request.name,
 			0
 			)
-		if exist:
-			return True
-		else:
+		#if hsetnx return 1, the name does not exist
+		if result == 1:
 			return False
+		else:
+			return True 
 
 	def create_account(self, request):
 		#get an account id from redis
 		r = AuthGlobalData.inst.redis_cluster.get_account_redis()
-		account_id = AuthGlobalData.inst.plain_class_accessor.incr_account_id()
+		account_id = AuthGlobalData.inst.plain_class_accessor.incr_account_id(r)
 		#save user to redis
 		AuthGlobalData.inst.plain_class_accessor.set_user_name_to_id(r, request.name, account_id)
 		user = User(account_id, request.name, request.password)

@@ -27,28 +27,25 @@ class LoginGatewayHandlerTest(unittest.TestCase):
 		GatewayGlobalData.inst.redis_cluster.get_redis = Mock()
 		GatewayGlobalData.inst.redis_cluster.get_redis.return_value = 1
 		GatewayGlobalData.inst.plain_class_accessor = Mock()
-		GatewayGlobalData.inst.plain_class_accessor.get_client_connection_info = Mock()
-		GatewayGlobalData.inst.plain_class_accessor.get_client_connection_info.return_value = None
 		request = Mock()
 		request.account_id = 11
 		request.token = 'aaa'
 
-		valid, error = self.login_gateway_handler.valid_token(request)
+		valid, error = self.login_gateway_handler.valid_token(request, None)
 		self.assertFalse(valid)
 		self.assertEqual(error, ClientProtocolID.R_LOGIN_GATEWAY_RES_TOKEN_EXPIRED)
 
 		client_connection_info = Mock()
 		client_connection_info.get_token = Mock()
 		client_connection_info.get_token.return_value = 'bbb'
-		GatewayGlobalData.inst.plain_class_accessor.get_client_connection_info.return_value = client_connection_info
 
-		valid, error = self.login_gateway_handler.valid_token(request)
+		valid, error = self.login_gateway_handler.valid_token(request, client_connection_info)
 		self.assertFalse(valid)
 		self.assertEqual(error, ClientProtocolID.R_LOGIN_GATEWAY_RES_TOKEN_INVALID)
 
 		client_connection_info.get_token.return_value = 'aaa'
 
-		valid, error = self.login_gateway_handler.valid_token(request)
+		valid, error = self.login_gateway_handler.valid_token(request, client_connection_info)
 		self.assertTrue(valid)
 		self.assertEqual(error, None)
 

@@ -28,8 +28,6 @@ class AuthServerInitializerTest(unittest.TestCase):
 		ServerInitializer.init_global_data = Mock()
 		auth_server.auth_server_initializer.GatewayAddress = Mock()
 		self.server_initializer.init_global_data()
-		self.assertEqual(len(GlobalData.inst.server_manager.gateway_servers), 0)
-		self.assertEqual(len(GlobalData.inst.server_manager.game_servers), 0)
 		self.assertEqual(GlobalData.inst.server_name, self.server_name)
 
 	def test_send_init_request(self):

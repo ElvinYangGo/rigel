@@ -8,4 +8,5 @@ class ServerManager:
 		self.servers[server.get_name()] = server
 		
 	def remove_server(self, server_name):
-		self.servers.pop(server_name)
+		if self.servers.has_key(server_name):
+			self.servers.pop(server_name)

@@ -10,7 +10,8 @@ class TwistedProtocol(Protocol):
 	
 	def connectionLost(self, reason):
 		self.channel.handle_disconnection()
-		
+		self.channel = None
+	
 	def dataReceived(self, data):
 		self.channel.append_data(data)
 

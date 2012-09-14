@@ -1,5 +1,7 @@
 from protocol.client_protocol_id import ClientProtocolID
 import protocol.client_message_pb2
+from client_sample.client_global_data import ClientGlobalData
+import client_sample.msg_sender
 
 class LoginAuthHandler:
 	@staticmethod
@@ -16,6 +18,10 @@ class LoginAuthHandler:
 			)
 		if response.result == ClientProtocolID.R_LOGIN_AUTH_RES_SUCCESS:
 			print 'login auth succeeded'
+			#connect gateway
+			ClientGlobalData.server_token = response.server_token
+			ClientGlobalData.account_id = response.account_id
+			ClientGlobalData.status = 2
+			client_sample.msg_sender.connect(response.gateway_ip, response.gateway_port)
 		else:
 			print 'login auth failed, error code: %x' % response.result
-

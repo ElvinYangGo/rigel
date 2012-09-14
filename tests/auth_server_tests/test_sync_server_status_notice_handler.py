@@ -7,7 +7,7 @@ from common.server_type import ServerType
 from common.server_status import ServerStatus
 from network.channel_buffer import ChannelBuffer
 from common.global_data import GlobalData
-from common.server_manager import ServerManager
+from auth_server.auth_server_manager import AuthServerManager
 from common.server import Server
 from mock import Mock
 
@@ -26,30 +26,30 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 		server_net2.status = ServerStatus.SERVER_STATUS_RUNNING
 		
 		GlobalData.inst = Mock()
-		GlobalData.inst.server_manager = ServerManager()
+		GlobalData.inst.server_manager = AuthServerManager()
 		
 		self.handler.handle_running_server(server_net)
 		self.handler.handle_running_server(server_net2)
 		
-		self.assertEqual(len(GlobalData.inst.server_manager.servers), 1)
-		self.assertEqual(GlobalData.inst.server_manager.servers.get('sb').get_name(), 'sb')
-		self.assertEqual(GlobalData.inst.server_manager.servers.get('sb').get_type(), ServerType.GATEWAY_SERVER)
-		self.assertEqual(GlobalData.inst.server_manager.servers.get('sb').get_status(), ServerStatus.SERVER_STATUS_RUNNING)
+		self.assertEqual(len(GlobalData.inst.server_manager.dispatchers[ServerType.GATEWAY_SERVER].servers), 1)
+		self.assertTrue(GlobalData.inst.server_manager.contain_server(ServerType.GATEWAY_SERVER, 'sb'))
+		self.assertEqual(GlobalData.inst.server_manager.dispatchers[ServerType.GATEWAY_SERVER].servers[0].get_type(), ServerType.GATEWAY_SERVER)
+		self.assertEqual(GlobalData.inst.server_manager.dispatchers[ServerType.GATEWAY_SERVER].servers[0].get_status(), ServerStatus.SERVER_STATUS_RUNNING)
 
 	def test_handle_closed_server(self):
 		server = Server('sa', ServerType.GATEWAY_SERVER, ServerStatus.SERVER_STATUS_RUNNING)
 		GlobalData.inst = Mock()
-		GlobalData.inst.server_manager = ServerManager()
+		GlobalData.inst.server_manager = AuthServerManager()
 		GlobalData.inst.server_manager.add_server(server)
 		
 		server_net = protocol.server_data_pb2.Server()
 		server_net.name = 'sa'
 		server_net.type = ServerType.GATEWAY_SERVER
-		server_net.status = ServerStatus.SERVER_STATUS_RUNNING
+		server_net.status = ServerStatus.SERVER_STATUS_CLOSED
 	
 		self.handler.handle_closed_server(server_net)
 		
-		self.assertEqual(len(GlobalData.inst.server_manager.servers), 0)
+		self.assertEqual(len(GlobalData.inst.server_manager.dispatchers[ServerType.GATEWAY_SERVER].servers), 0)
 		
 	def test_handle_message(self):
 		message = protocol.server_message_pb2.SyncServerNotice()

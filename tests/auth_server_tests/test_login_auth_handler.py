@@ -55,7 +55,7 @@ class LoginAuthHandlerTest(unittest.TestCase):
 		AuthGlobalData.inst.plain_class_accessor.set_client_connection_info.assert_called_with(
 			r, 3, client_connection_info)
 		AuthGlobalData.inst.plain_class_accessor.expire_client_connection_info.assert_called_with(
-			r, 3, 10)
+			r, 3, 100)
 		
 	def test_fill_success_response(self):
 		gateway_server = Mock()
