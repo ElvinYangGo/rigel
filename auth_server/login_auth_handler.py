@@ -2,7 +2,7 @@ import uuid
 import protocol.client_message_pb2
 from auth_server.auth_global_data import AuthGlobalData
 from protocol.client_protocol_id import ClientProtocolID
-from plain_class.client_connection_info import ClientConnectionInfo
+from plain_class.client_conn_info import ClientConnInfo
 from common.util import send_result
 from common.server_type import ServerType
 
@@ -68,7 +68,7 @@ class LoginAuthHandler(object):
 		
 		server_token = uuid.uuid1()
 		token = ''.join([request.user_token, str(server_token)])
-		self.save_client_connection_info_to_redis(account_id, token, gateway_server, game_server)
+		self.save_client_conn_info_to_redis(account_id, token, gateway_server, game_server)
 
 		#send to client
 		response = self.fill_success_response(response, account_id, server_token, gateway_server)
@@ -99,8 +99,8 @@ class LoginAuthHandler(object):
 		else:
 			return True
 
-	def save_client_connection_info_to_redis(self, account_id, token, gateway_server, game_server):
-		client_connection_info = ClientConnectionInfo(
+	def save_client_conn_info_to_redis(self, account_id, token, gateway_server, game_server):
+		client_conn_info = ClientConnInfo(
 			account_id,
 			gateway_server.get_name(),
 			game_server.get_name(),
@@ -108,12 +108,12 @@ class LoginAuthHandler(object):
 			)
 		#send to redis by user id
 		r = AuthGlobalData.inst.redis_cluster.get_redis(account_id)
-		AuthGlobalData.inst.plain_class_accessor.set_client_connection_info(
+		AuthGlobalData.inst.plain_class_accessor.set_client_conn_info(
 			r,
 			account_id,
-			client_connection_info
+			client_conn_info
 			)
-		AuthGlobalData.inst.plain_class_accessor.expire_client_connection_info(
+		AuthGlobalData.inst.plain_class_accessor.expire_client_conn_info(
 			r,
 			account_id,
 			100

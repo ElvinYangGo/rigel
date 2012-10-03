@@ -33,7 +33,7 @@ class MasterServerInitializer(ServerInitializer):
 		GlobalData.inst.server_manager = ServerManager()
 		GlobalData.inst.server_option_reader = self.server_option_reader
 		
-		self.init_heart_beat_monitor()
+		#self.init_heart_beat_monitor()
 	
 	def init_rmq(self):	
 		self.rmq = RMQ(self.pub_address, self.sub_address, GlobalData.inst.zmq_context, self.pipeline)

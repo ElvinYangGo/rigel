@@ -32,3 +32,10 @@ def create_account():
 	request.name = 'aaa'
 	request.password = 'ppp'
 	ClientGlobalData.channel.send_string(request.SerializeToString(), ClientProtocolID.P_CREATE_ACCOUNT_REQ)
+
+def create_avatar():
+	request = protocol.client_message_pb2.CreateAvatarReq()
+	request.name = 'aaa'
+	request.gender = 1
+	request.level = 1
+	ClientGlobalData.channel.send_string(request.SerializeToString(), ClientProtocolID.P_CREATE_AVATAR_REQ)

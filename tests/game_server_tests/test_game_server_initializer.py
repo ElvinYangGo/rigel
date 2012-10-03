@@ -37,7 +37,7 @@ class GameServerInitializerTest(unittest.TestCase):
 		message = protocol.server_message_pb2.StartServerInitReq()
 		message.name = self.server_name
 		message.type = ServerType.GAME_SERVER
-		self.server_initializer.rmq.send_message_string.assert_called_with(
+		self.server_initializer.rmq.send_message.assert_called_with(
 			message,
 			u'server_initialization',
 			ServerProtocolID.P_START_SERVER_INIT_REQ

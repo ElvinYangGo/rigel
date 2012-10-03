@@ -43,12 +43,12 @@ class ChannelTest(unittest.TestCase):
 		self.channel.handle_upstream()
 		channel_pipeline.handle_upstream.assert_called_with(self.channel.channel_buffer)
 		
-	def test_send(self):
+	def test_send_channel_buffer(self):
 		channel_pipeline = Mock()
 		channel_pipeline.handle_downstream = Mock()
 		channel_buffer = Mock()
 		self.channel.set_channel_pipeline(channel_pipeline)
-		self.channel.send(channel_buffer)
+		self.channel.send_channel_buffer(channel_buffer)
 		channel_pipeline.handle_downstream.assert_called_with(channel_buffer)
 		
 	def test_get_remote_ip(self):

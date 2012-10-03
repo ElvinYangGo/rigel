@@ -7,11 +7,12 @@ from google.protobuf import descriptor_pb2
 # @@protoc_insertion_point(imports)
 
 
+import auto_data_pb2
 
 DESCRIPTOR = descriptor.FileDescriptor(
   name='client_message.proto',
   package='',
-  serialized_pb='\n\x14\x63lient_message.proto\"B\n\x0cLoginAuthReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x12\n\nuser_token\x18\x03 \x01(\t\"r\n\x0cLoginAuthRes\x12\x0e\n\x06result\x18\x01 \x01(\x05\x12\x14\n\x0cserver_token\x18\x02 \x01(\t\x12\x12\n\ngateway_ip\x18\x03 \x01(\t\x12\x14\n\x0cgateway_port\x18\x04 \x01(\x05\x12\x12\n\naccount_id\x18\x05 \x01(\x05\"4\n\x0fLoginGatewayReq\x12\x12\n\naccount_id\x18\x01 \x01(\x05\x12\r\n\x05token\x18\x02 \x01(\t\"!\n\x0fLoginGatewayRes\x12\x0e\n\x06result\x18\x01 \x01(\x05\"2\n\x10\x43reateAccountReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"\"\n\x10\x43reateAccountRes\x12\x0e\n\x06result\x18\x01 \x01(\x05')
+  serialized_pb='\n\x14\x63lient_message.proto\x1a\x0f\x61uto_data.proto\"B\n\x0cLoginAuthReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\x12\x12\n\nuser_token\x18\x03 \x01(\t\"r\n\x0cLoginAuthRes\x12\x0e\n\x06result\x18\x01 \x01(\x05\x12\x14\n\x0cserver_token\x18\x02 \x01(\t\x12\x12\n\ngateway_ip\x18\x03 \x01(\t\x12\x14\n\x0cgateway_port\x18\x04 \x01(\x05\x12\x12\n\naccount_id\x18\x05 \x01(\x05\"4\n\x0fLoginGatewayReq\x12\x12\n\naccount_id\x18\x01 \x01(\x05\x12\r\n\x05token\x18\x02 \x01(\t\"!\n\x0fLoginGatewayRes\x12\x0e\n\x06result\x18\x01 \x01(\x05\"2\n\x10\x43reateAccountReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x10\n\x08password\x18\x02 \x01(\t\"\"\n\x10\x43reateAccountRes\x12\x0e\n\x06result\x18\x01 \x01(\x05\">\n\x0f\x43reateAvatarReq\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x0e\n\x06gender\x18\x03 \x01(\x05\x12\r\n\x05level\x18\x04 \x01(\x05\"!\n\x0f\x43reateAvatarRes\x12\x0e\n\x06result\x18\x01 \x01(\x05')
 
 
 
@@ -53,8 +54,8 @@ _LOGINAUTHREQ = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=24,
-  serialized_end=90,
+  serialized_start=41,
+  serialized_end=107,
 )
 
 
@@ -109,8 +110,8 @@ _LOGINAUTHRES = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=92,
-  serialized_end=206,
+  serialized_start=109,
+  serialized_end=223,
 )
 
 
@@ -144,8 +145,8 @@ _LOGINGATEWAYREQ = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=208,
-  serialized_end=260,
+  serialized_start=225,
+  serialized_end=277,
 )
 
 
@@ -172,8 +173,8 @@ _LOGINGATEWAYRES = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=262,
-  serialized_end=295,
+  serialized_start=279,
+  serialized_end=312,
 )
 
 
@@ -207,8 +208,8 @@ _CREATEACCOUNTREQ = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=297,
-  serialized_end=347,
+  serialized_start=314,
+  serialized_end=364,
 )
 
 
@@ -235,8 +236,78 @@ _CREATEACCOUNTRES = descriptor.Descriptor(
   options=None,
   is_extendable=False,
   extension_ranges=[],
-  serialized_start=349,
-  serialized_end=383,
+  serialized_start=366,
+  serialized_end=400,
+)
+
+
+_CREATEAVATARREQ = descriptor.Descriptor(
+  name='CreateAvatarReq',
+  full_name='CreateAvatarReq',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='name', full_name='CreateAvatarReq.name', index=0,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=unicode("", "utf-8"),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='gender', full_name='CreateAvatarReq.gender', index=1,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+    descriptor.FieldDescriptor(
+      name='level', full_name='CreateAvatarReq.level', index=2,
+      number=4, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=402,
+  serialized_end=464,
+)
+
+
+_CREATEAVATARRES = descriptor.Descriptor(
+  name='CreateAvatarRes',
+  full_name='CreateAvatarRes',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='result', full_name='CreateAvatarRes.result', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=466,
+  serialized_end=499,
 )
 
 DESCRIPTOR.message_types_by_name['LoginAuthReq'] = _LOGINAUTHREQ
@@ -245,6 +316,8 @@ DESCRIPTOR.message_types_by_name['LoginGatewayReq'] = _LOGINGATEWAYREQ
 DESCRIPTOR.message_types_by_name['LoginGatewayRes'] = _LOGINGATEWAYRES
 DESCRIPTOR.message_types_by_name['CreateAccountReq'] = _CREATEACCOUNTREQ
 DESCRIPTOR.message_types_by_name['CreateAccountRes'] = _CREATEACCOUNTRES
+DESCRIPTOR.message_types_by_name['CreateAvatarReq'] = _CREATEAVATARREQ
+DESCRIPTOR.message_types_by_name['CreateAvatarRes'] = _CREATEAVATARRES
 
 class LoginAuthReq(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
@@ -281,5 +354,17 @@ class CreateAccountRes(message.Message):
   DESCRIPTOR = _CREATEACCOUNTRES
   
   # @@protoc_insertion_point(class_scope:CreateAccountRes)
+
+class CreateAvatarReq(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _CREATEAVATARREQ
+  
+  # @@protoc_insertion_point(class_scope:CreateAvatarReq)
+
+class CreateAvatarRes(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _CREATEAVATARRES
+  
+  # @@protoc_insertion_point(class_scope:CreateAvatarRes)
 
 # @@protoc_insertion_point(module_scope)

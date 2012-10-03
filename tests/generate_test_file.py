@@ -16,7 +16,8 @@ if '__main__' == __name__:
 
 	test_file.write('import unittest\n')
 	test_file.write('import tests.auxiliary\n')
-	test_file.write('from mock import Mock\n\n')
+	test_file.write('from mock import Mock\n')
+	test_file.write('from {}.{} import {}\n\n'.format(package_name, file_name, class_name))
 
 	test_file.write('class ' + class_name + 'Test(unittest.TestCase):\n')
 	test_file.write('	def setUp(self):\n')

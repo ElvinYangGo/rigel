@@ -3,21 +3,33 @@ from common.mq_reader import MQReader
 from network.channel_pipeline import ChannelPipeline
 from common.handler_dispatcher import HandlerDispatcher
 from common.auto_handler_register import AutoHandlerRegister
+from common.protocol_wrapper_handler import ProtocolWrapperHandler
 
 if __name__ == '__main__':
 	mq_reader = MQReader('../config/mq.xml')
 	mq_reader.parse()
 	mq_config = mq_reader.get_mq_config_list()[0]
 
-	server_handler_dispatcher = AutoHandlerRegister().register(
+	handler_register = AutoHandlerRegister()
+	server_handler_dispatcher = HandlerDispatcher()
+	server_handler_dispatcher = handler_register.register(
 		'game_server',
 		'.',
 		'register_server_handler',
-		HandlerDispatcher()
+		server_handler_dispatcher
 		)
+	
+	client_handler_dispatcher = HandlerDispatcher()
+	client_handler_dispatcher = handler_register.register(
+		'game_server',
+		'.',
+		'register_client_handler',
+		client_handler_dispatcher
+		)
+	protocol_wrapper_handler = ProtocolWrapperHandler(client_handler_dispatcher)
 	rmq_pipeline = ChannelPipeline()
-	#rmq_pipeline.append_handler('server_message_relay', ServerMessageRelay())
-	rmq_pipeline.append_handler('handler_dispatcher', server_handler_dispatcher)
+	rmq_pipeline.append_handler('protocol_wrapper_handler', protocol_wrapper_handler)
+	rmq_pipeline.append_handler('server_handler_dispatcher', server_handler_dispatcher)
 
 	server_initializer = GameServerInitializer(
 		mq_config.get_pub_address(), 

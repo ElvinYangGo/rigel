@@ -51,7 +51,7 @@
 	},
 
 	{
-		"table_name": "client_connection_info",
+		"table_name": "client_conn_info",
 		"table_type": "map",
 		"table_field":
 			[
@@ -66,5 +66,17 @@
 		"table_name": "account_id",
 		"table_type": "global_id",
 		"data_type": "int"
+	},
+
+	{
+		"table_name": "avatar",
+		"table_type": "map",
+		"table_field":
+			[
+				{"field_name": "account_id", "data_type": "int", "default": 0},
+				{"field_name": "avatar_name", "data_type": "string", "default": ""},
+				{"field_name": "gender", "data_type": "int", "default": 0},
+				{"field_name": "level", "data_type": "int", "default": 0}
+			]
 	}
 ]

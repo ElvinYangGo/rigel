@@ -39,7 +39,7 @@ class GatewayStartServerInitResponseHandlerTest(unittest.TestCase):
 			)
 		
 		GlobalData.inst.rmq.subscribe.assert_called_with(u'server_status')
-		GlobalData.inst.rmq.send_message_string.assert_called_with(
+		GlobalData.inst.rmq.send_message.assert_called_with(
 			message, u'server_initialization', ServerProtocolID.P_END_SERVER_INIT_NOTICE
 			)
 		self.assertTrue(self.handler.init_heart_beat.called)

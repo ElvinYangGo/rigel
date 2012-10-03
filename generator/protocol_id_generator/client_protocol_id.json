@@ -1,6 +1,7 @@
 {
 	"cauth":
 		{
+			"id_prefix":"0x0000",
 			"id_start":"0x0001",
 			"id_list":
 				[
@@ -31,6 +32,7 @@
 		},
 	"cgateway":
 		{
+			"id_prefix":"0x0100",
 			"id_start":"0x0101",
 			"id_list":
 				[
@@ -47,9 +49,24 @@
 					}
 				]
 		},
+	"ccenter":
+		{
+			"id_prefix":"0x0200",
+			"id_start":"0x0201",
+			"id_list":[]
+		},
 	"cgame":
 		{
 			"id_start":"0x1001",
-			"id_list":[]
+			"id_list":
+				[
+					{
+						"id":"CREATE_AVATAR_REQ"
+					},
+					{
+						"id":"CREATE_AVATAR_RES",
+						"result":[]
+					}		
+				]
 		}
 }

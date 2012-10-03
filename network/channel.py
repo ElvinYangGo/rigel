@@ -4,7 +4,7 @@ from network.channel_buffer import ChannelBuffer
 class Channel:
 	def __init__(self):
 		self.channel_buffer = ChannelBuffer()
-		self.client_connection_info = None
+		self.client_conn_info = None
 		self.channel_manager = None
 	
 	def set_channel_pipeline(self, channel_pipeline):
@@ -28,24 +28,30 @@ class Channel:
 
 	def send_string(self, message_string, message_id=0):
 		channel_buffer = ChannelBuffer(message_string)
-		self.send(channel_buffer, message_id)
+		self.send_channel_buffer(channel_buffer, message_id)
 	
-	def send(self, channel_buffer, message_id=0):
+	def send_channel_buffer(self, channel_buffer, message_id=0):
 		if message_id != 0:
 			buffer_with_message_id = ChannelBuffer()
 			buffer_with_message_id.write_int(message_id)
 			buffer_with_message_id.append(channel_buffer.get_all_data())
-			self.channel_pipeline.handle_downstream(buffer_with_message_id)
+			self.send(buffer_with_message_id)
+			#self.channel_pipeline.handle_downstream(buffer_with_message_id)
 		else:
-			self.channel_pipeline.handle_downstream(channel_buffer)
+			#self.channel_pipeline.handle_downstream(channel_buffer)
+			self.send(channel_buffer)
+
+	def send(self, channel_buffer):
+		buffer_to_send = self.channel_pipeline.handle_downstream(channel_buffer)
+		self.write_to_twisted_protocol(buffer_to_send.read_all_data())
 
 	def handle_disconnection(self):
 		self.channel_pipeline.handle_disconnection()
-		if self.channel_manager and self.client_connection_info:
-			self.channel_manager.remove(self.client_connection_info.get_client_id())
+		if self.channel_manager and self.client_conn_info:
+			self.channel_manager.remove(self.client_conn_info.get_client_id())
 		self.channel_pipeline = None
 		self.channel_buffer = None
-		self.client_connection_info = None
+		self.client_conn_info = None
 		self.twisted_protocol = None
 
 	def write_to_twisted_protocol(self, data):
@@ -60,15 +66,18 @@ class Channel:
 	def get_remote_port(self):
 		return self.twisted_protocol.get_remote_port()
 
-	def set_client_connection_info(self, client_connection_info):
-		self.client_connection_info = client_connection_info
+	def set_client_conn_info(self, client_conn_info):
+		self.client_conn_info = client_conn_info
+		
+	def get_client_conn_info(self):
+		return self.client_conn_info
 
 	def get_client_id(self):
-		return self.client_connection_info.get_client_id()
+		return self.client_conn_info.get_client_id()
 
 	def get_game_server_name(self):
-		return self.client_connection_info.get_game_server_name()
-
+		return self.client_conn_info.get_game_server_name()
+	
 	def get_channel_manager(self):
 		return self.channel_manager
 

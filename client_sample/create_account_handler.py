@@ -1,5 +1,6 @@
 from protocol.client_protocol_id import ClientProtocolID
 import protocol.client_message_pb2
+import client_sample.msg_sender
 
 class CreateAccountHandler:
 	@staticmethod
@@ -16,5 +17,6 @@ class CreateAccountHandler:
 			)
 		if response.result == ClientProtocolID.R_CREATE_ACCOUNT_RES_SUCCESS:
 			print 'create account succeeded'
+			client_sample.msg_sender.send_login_auth_message()
 		else:
 			print 'create account failed, error code: %x' % response.result

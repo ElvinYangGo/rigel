@@ -22,11 +22,19 @@ message FriendManager
 	repeated Friend friends = 1;
 }
 
-message ClientConnectionInfo
+message ClientConnInfo
 {
 	optional int32 client_id = 1;
 	optional string gateway_server_name = 2;
 	optional string game_server_name = 3;
 	optional string token = 4;
+}
+
+message Avatar
+{
+	optional int32 account_id = 1;
+	optional string avatar_name = 2;
+	optional int32 gender = 3;
+	optional int32 level = 4;
 }
 

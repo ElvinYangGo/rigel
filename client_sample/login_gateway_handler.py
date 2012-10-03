@@ -1,5 +1,6 @@
 from protocol.client_protocol_id import ClientProtocolID
 import protocol.client_message_pb2
+import client_sample.msg_sender
 
 class LoginGatewayHandler:
 	@staticmethod
@@ -16,6 +17,7 @@ class LoginGatewayHandler:
 			)
 		if response.result == ClientProtocolID.R_LOGIN_GATEWAY_RES_SUCCESS:
 			print 'login gateway succeeded'
+			client_sample.msg_sender.create_avatar()
 		else:
 			print 'login gateway failed, error code: %x' % response.result
 

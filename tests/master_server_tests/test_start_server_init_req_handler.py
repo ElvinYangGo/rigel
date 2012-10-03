@@ -33,7 +33,7 @@ class StartServerInitReqHandlerTest(unittest.TestCase):
 		self.handler.handle_message(1, channel_buffer, channel_name=u'test_channel')
 		
 		self.assertEqual(len(GlobalData.inst.server_manager.servers), 1)
-		GlobalData.inst.rmq.send_message_string.assert_called_with(
+		GlobalData.inst.rmq.send_message.assert_called_with(
 			message_to_send, u'sa', ServerProtocolID.P_START_SERVER_INIT_RES
 			)
 		

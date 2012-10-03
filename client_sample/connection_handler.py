@@ -7,7 +7,6 @@ class ConnectionHandler(object):
 		ClientGlobalData.channel = channel
 
 		#send login request
-		#client_sample.msg_sender.create_account()
 		if ClientGlobalData.status == 1:
 			client_sample.msg_sender.send_login_auth_message()
 		elif ClientGlobalData.status == 2:

@@ -24,6 +24,6 @@ class AuthStartServerInitResHandler(StartServerInitResHandler):
 		GlobalData.inst.rmq.subscribe(ChannelName.SERVER_STATUS)
 		message_to_send = protocol.server_message_pb2.EndServerInitNotice()
 		message_to_send.name = GlobalData.inst.server_name
-		GlobalData.inst.rmq.send_message_string(
+		GlobalData.inst.rmq.send_message(
 			message_to_send, ChannelName.SERVER_INITIALIZATION, ServerProtocolID.P_END_SERVER_INIT_NOTICE
 			)

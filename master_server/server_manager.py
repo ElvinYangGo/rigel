@@ -14,9 +14,9 @@ class ServerManager:
 	
 	def running_server_to_net(self):
 		server_message_list = [server.to_net() for server in self.servers.itervalues()]
-		synchronize_server_notification_message = protocol.server_message_pb2.SyncServerNotice()
-		synchronize_server_notification_message.servers.extend(server_message_list)
-		return synchronize_server_notification_message
+		sync_server_notice_message = protocol.server_message_pb2.SyncServerNotice()
+		sync_server_notice_message.servers.extend(server_message_list)
+		return sync_server_notice_message
 		
 	def get_all_servers(self):
 		return self.servers

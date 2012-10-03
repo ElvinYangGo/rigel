@@ -20,13 +20,13 @@ class LoginGatewayHandler:
 
 		#get client connection info from redis
 		r = GatewayGlobalData.inst.redis_cluster.get_redis(request.account_id)
-		client_connection_info = GatewayGlobalData.inst.plain_class_accessor.get_client_connection_info(
+		client_conn_info = GatewayGlobalData.inst.plain_class_accessor.get_client_conn_info(
 			r,
 			request.account_id
 			)
 
 		#check if token matches
-		valid, error = self.valid_token(request, client_connection_info)
+		valid, error = self.valid_token(request, client_conn_info)
 		if not valid:
 			send_result(
 				channel,
@@ -39,7 +39,7 @@ class LoginGatewayHandler:
 		#login ok, add channel to channel manager, send result to client
 		channel_manager = channel.get_channel_manager()
 		channel_manager.insert(request.account_id, channel)
-		channel.set_client_connection_info(client_connection_info)
+		channel.set_client_conn_info(client_conn_info)
 
 		send_result(
 			channel,

@@ -2,6 +2,7 @@ from protocol.server_protocol_id import ServerProtocolID
 import protocol.server_message_pb2
 from common.start_server_init_res_handler import StartServerInitResHandler
 from common.global_data import GlobalData
+from common.channel_name import ChannelName
 
 class GatewayStartServerInitResHandler(StartServerInitResHandler):
 	@staticmethod
@@ -23,6 +24,6 @@ class GatewayStartServerInitResHandler(StartServerInitResHandler):
 		GlobalData.inst.rmq.subscribe(u'server_status')
 		message = protocol.server_message_pb2.EndServerInitNotice()
 		message.name = GlobalData.inst.server_name
-		GlobalData.inst.rmq.send_message_string(
-			message, u'server_initialization', ServerProtocolID.P_END_SERVER_INIT_NOTICE
+		GlobalData.inst.rmq.send_message(
+			message, ChannelName.SERVER_INITIALIZATION, ServerProtocolID.P_END_SERVER_INIT_NOTICE
 			)

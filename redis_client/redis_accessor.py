@@ -170,70 +170,134 @@ class RedisAccessor(object):
 	def setnx_user_name_to_id(self, redis, field, value_string):
 		return redis.hsetnx(self.redis_key.get_user_name_to_id_key(), field, value_string)
 
-	def get_client_connection_info(self, redis, id_string):
-		return redis.hgetall(self.redis_key.get_client_connection_info_key(id_string))
+	def get_client_conn_info(self, redis, id_string):
+		return redis.hgetall(self.redis_key.get_client_conn_info_key(id_string))
 
-	def set_client_connection_info(self, redis, id_string, d):
-		redis.hmset(self.redis_key.get_client_connection_info_key(id_string), d)
+	def set_client_conn_info(self, redis, id_string, d):
+		redis.hmset(self.redis_key.get_client_conn_info_key(id_string), d)
 
-	def pexpire_client_connection_info(self, redis, id_string, milliseconds):
-		self.pexpire(redis, self.redis_key.get_client_connection_info_key(id_string), milliseconds)
+	def pexpire_client_conn_info(self, redis, id_string, milliseconds):
+		self.pexpire(redis, self.redis_key.get_client_conn_info_key(id_string), milliseconds)
 
-	def expire_client_connection_info(self, redis, id_string, seconds):
-		self.expire(redis, self.redis_key.get_client_connection_info_key(id_string), seconds)
+	def expire_client_conn_info(self, redis, id_string, seconds):
+		self.expire(redis, self.redis_key.get_client_conn_info_key(id_string), seconds)
 
-	def get_client_connection_info_table_client_id(self, redis, id_string):
+	def get_client_conn_info_table_client_id(self, redis, id_string):
 		return redis.hget(
-			self.redis_key.get_client_connection_info_key(id_string),
-			self.redis_key.get_client_connection_info_table_client_id_field()
+			self.redis_key.get_client_conn_info_key(id_string),
+			self.redis_key.get_client_conn_info_table_client_id_field()
 			)
 
-	def set_client_connection_info_table_client_id(self, redis, id_string, client_id_string):
+	def set_client_conn_info_table_client_id(self, redis, id_string, client_id_string):
 		redis.hset(
-			self.redis_key.get_client_connection_info_key(id_string),
-			self.redis_key.get_client_connection_info_table_client_id_field(),
+			self.redis_key.get_client_conn_info_key(id_string),
+			self.redis_key.get_client_conn_info_table_client_id_field(),
 			client_id_string
 			)
 
-	def get_client_connection_info_table_gateway_server_name(self, redis, id_string):
+	def get_client_conn_info_table_gateway_server_name(self, redis, id_string):
 		return redis.hget(
-			self.redis_key.get_client_connection_info_key(id_string),
-			self.redis_key.get_client_connection_info_table_gateway_server_name_field()
+			self.redis_key.get_client_conn_info_key(id_string),
+			self.redis_key.get_client_conn_info_table_gateway_server_name_field()
 			)
 
-	def set_client_connection_info_table_gateway_server_name(self, redis, id_string, gateway_server_name_string):
+	def set_client_conn_info_table_gateway_server_name(self, redis, id_string, gateway_server_name_string):
 		redis.hset(
-			self.redis_key.get_client_connection_info_key(id_string),
-			self.redis_key.get_client_connection_info_table_gateway_server_name_field(),
+			self.redis_key.get_client_conn_info_key(id_string),
+			self.redis_key.get_client_conn_info_table_gateway_server_name_field(),
 			gateway_server_name_string
 			)
 
-	def get_client_connection_info_table_game_server_name(self, redis, id_string):
+	def get_client_conn_info_table_game_server_name(self, redis, id_string):
 		return redis.hget(
-			self.redis_key.get_client_connection_info_key(id_string),
-			self.redis_key.get_client_connection_info_table_game_server_name_field()
+			self.redis_key.get_client_conn_info_key(id_string),
+			self.redis_key.get_client_conn_info_table_game_server_name_field()
 			)
 
-	def set_client_connection_info_table_game_server_name(self, redis, id_string, game_server_name_string):
+	def set_client_conn_info_table_game_server_name(self, redis, id_string, game_server_name_string):
 		redis.hset(
-			self.redis_key.get_client_connection_info_key(id_string),
-			self.redis_key.get_client_connection_info_table_game_server_name_field(),
+			self.redis_key.get_client_conn_info_key(id_string),
+			self.redis_key.get_client_conn_info_table_game_server_name_field(),
 			game_server_name_string
 			)
 
-	def get_client_connection_info_table_token(self, redis, id_string):
+	def get_client_conn_info_table_token(self, redis, id_string):
 		return redis.hget(
-			self.redis_key.get_client_connection_info_key(id_string),
-			self.redis_key.get_client_connection_info_table_token_field()
+			self.redis_key.get_client_conn_info_key(id_string),
+			self.redis_key.get_client_conn_info_table_token_field()
 			)
 
-	def set_client_connection_info_table_token(self, redis, id_string, token_string):
+	def set_client_conn_info_table_token(self, redis, id_string, token_string):
 		redis.hset(
-			self.redis_key.get_client_connection_info_key(id_string),
-			self.redis_key.get_client_connection_info_table_token_field(),
+			self.redis_key.get_client_conn_info_key(id_string),
+			self.redis_key.get_client_conn_info_table_token_field(),
 			token_string
 			)
 
 	def incr_account_id(self, redis):
 		return redis.incr(self.redis_key.get_account_id_key())
+
+	def get_avatar(self, redis, id_string):
+		return redis.hgetall(self.redis_key.get_avatar_key(id_string))
+
+	def set_avatar(self, redis, id_string, d):
+		redis.hmset(self.redis_key.get_avatar_key(id_string), d)
+
+	def pexpire_avatar(self, redis, id_string, milliseconds):
+		self.pexpire(redis, self.redis_key.get_avatar_key(id_string), milliseconds)
+
+	def expire_avatar(self, redis, id_string, seconds):
+		self.expire(redis, self.redis_key.get_avatar_key(id_string), seconds)
+
+	def get_avatar_table_account_id(self, redis, id_string):
+		return redis.hget(
+			self.redis_key.get_avatar_key(id_string),
+			self.redis_key.get_avatar_table_account_id_field()
+			)
+
+	def set_avatar_table_account_id(self, redis, id_string, account_id_string):
+		redis.hset(
+			self.redis_key.get_avatar_key(id_string),
+			self.redis_key.get_avatar_table_account_id_field(),
+			account_id_string
+			)
+
+	def get_avatar_table_avatar_name(self, redis, id_string):
+		return redis.hget(
+			self.redis_key.get_avatar_key(id_string),
+			self.redis_key.get_avatar_table_avatar_name_field()
+			)
+
+	def set_avatar_table_avatar_name(self, redis, id_string, avatar_name_string):
+		redis.hset(
+			self.redis_key.get_avatar_key(id_string),
+			self.redis_key.get_avatar_table_avatar_name_field(),
+			avatar_name_string
+			)
+
+	def get_avatar_table_gender(self, redis, id_string):
+		return redis.hget(
+			self.redis_key.get_avatar_key(id_string),
+			self.redis_key.get_avatar_table_gender_field()
+			)
+
+	def set_avatar_table_gender(self, redis, id_string, gender_string):
+		redis.hset(
+			self.redis_key.get_avatar_key(id_string),
+			self.redis_key.get_avatar_table_gender_field(),
+			gender_string
+			)
+
+	def get_avatar_table_level(self, redis, id_string):
+		return redis.hget(
+			self.redis_key.get_avatar_key(id_string),
+			self.redis_key.get_avatar_table_level_field()
+			)
+
+	def set_avatar_table_level(self, redis, id_string, level_string):
+		redis.hset(
+			self.redis_key.get_avatar_key(id_string),
+			self.redis_key.get_avatar_table_level_field(),
+			level_string
+			)
 

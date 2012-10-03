@@ -120,9 +120,9 @@ class ChannelPipelineTest(unittest.TestCase):
 		self.channel_pipeline.append_handler('handler_a', handler_a)
 		self.channel_pipeline.append_handler('handler_b', handler_b)
 		self.channel_pipeline.append_handler('handler_c', handler_c)
-		self.channel_pipeline.handle_downstream(channel_buffer)
-		channel.write_to_twisted_protocol.assert_called_with(3)
-		self.assertEqual(12, channel_buffer.v)
+		buff = self.channel_pipeline.handle_downstream(channel_buffer)
+		#channel.write_to_twisted_protocol.assert_called_with(3)
+		self.assertEqual(12, buff.v)
 		
 def get_tests():
 	return unittest.makeSuite(ChannelPipelineTest)

@@ -1,4 +1,5 @@
 import "server_data.proto";
+import "auto_data.proto";
 
 message StartServerInitReq
 {
@@ -24,4 +25,11 @@ message SyncServerNotice
 message HeartBeatNotice
 {
 	optional string name = 1;
+}
+
+message ProtocolWrapper
+{
+	optional int32 protocol_id = 1;
+	optional ClientConnInfo client_conn_info = 2;
+	optional bytes inner_protocol = 3;
 }

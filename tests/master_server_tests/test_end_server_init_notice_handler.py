@@ -24,7 +24,7 @@ class EndServerInitNoticeHandlerTest(unittest.TestCase):
 	def test_send_other_servers_to_this_server(self):
 		server_list_message = GlobalData.inst.server_manager.running_server_to_net()
 		self.handler.send_other_servers_to_this_server('sb')
-		GlobalData.inst.rmq.send_message_string.assert_called_with(
+		GlobalData.inst.rmq.send_message.assert_called_with(
 			server_list_message, 'sb', ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE
 			)
 	
@@ -33,7 +33,7 @@ class EndServerInitNoticeHandlerTest(unittest.TestCase):
 		this_server_message.servers.extend([GlobalData.inst.server_manager.get_server('sb').to_net()])
 		
 		self.handler.send_this_server_to_other_servers(GlobalData.inst.server_manager.get_server('sb'))
-		GlobalData.inst.rmq.send_message_string.assert_called_with(
+		GlobalData.inst.rmq.send_message.assert_called_with(
 			this_server_message, 'server_status', ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE
 			)
 		

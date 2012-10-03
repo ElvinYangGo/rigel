@@ -19,7 +19,7 @@ class RMQSub(threading.Thread):
 	def run(self):
 		while True:
 			message = self.sub_socket.recv()
-			print message
+			#print message
 			more = self.sub_socket.getsockopt(zmq.RCVMORE)
 			if more:
 				channel_name = common.utf8_codec.utf8_decode(message)

@@ -14,7 +14,7 @@ class HeartBeat(threading.Thread):
 		while True:
 			message = protocol.server_message_pb2.HeartBeatNotice()
 			message.name = GlobalData.inst.server_name
-			GlobalData.inst.rmq.send_message_string(
+			GlobalData.inst.rmq.send_message(
 				message, ChannelName.HEART_BEAT, ServerProtocolID.P_HEART_BEAT_NOTICE
 				)
 			time.sleep(self.heart_beat_interval/1000)

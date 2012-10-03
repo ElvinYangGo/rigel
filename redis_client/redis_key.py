@@ -39,21 +39,36 @@ class RedisKey(object):
 	def get_user_name_to_id_key(self):
 		return 'user_name_to_id'
 
-	def get_client_connection_info_key(self, id_string):
-		return 'client_connection_info:' + id_string
+	def get_client_conn_info_key(self, id_string):
+		return 'client_conn_info:' + id_string
 
-	def get_client_connection_info_table_client_id_field(self):
+	def get_client_conn_info_table_client_id_field(self):
 		return 'client_id'
 
-	def get_client_connection_info_table_gateway_server_name_field(self):
+	def get_client_conn_info_table_gateway_server_name_field(self):
 		return 'gateway_server_name'
 
-	def get_client_connection_info_table_game_server_name_field(self):
+	def get_client_conn_info_table_game_server_name_field(self):
 		return 'game_server_name'
 
-	def get_client_connection_info_table_token_field(self):
+	def get_client_conn_info_table_token_field(self):
 		return 'token'
 
 	def get_account_id_key(self):
 		return 'account_id'
+
+	def get_avatar_key(self, id_string):
+		return 'avatar:' + id_string
+
+	def get_avatar_table_account_id_field(self):
+		return 'account_id'
+
+	def get_avatar_table_avatar_name_field(self):
+		return 'avatar_name'
+
+	def get_avatar_table_gender_field(self):
+		return 'gender'
+
+	def get_avatar_table_level_field(self):
+		return 'level'
 

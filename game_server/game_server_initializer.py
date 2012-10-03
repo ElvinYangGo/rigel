@@ -35,7 +35,7 @@ class GameServerInitializer(ServerInitializer):
 		message = protocol.server_message_pb2.StartServerInitReq()
 		message.name = GlobalData.inst.server_name
 		message.type = ServerType.GAME_SERVER
-		self.rmq.send_message_string(
+		self.rmq.send_message(
 			message, u'server_initialization', ServerProtocolID.P_START_SERVER_INIT_REQ
 			)
 

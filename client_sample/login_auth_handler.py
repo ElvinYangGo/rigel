@@ -23,5 +23,7 @@ class LoginAuthHandler:
 			ClientGlobalData.account_id = response.account_id
 			ClientGlobalData.status = 2
 			client_sample.msg_sender.connect(response.gateway_ip, response.gateway_port)
+		elif response.result == ClientProtocolID.R_LOGIN_AUTH_RES_USER_NAME_NOT_EXIST:
+			client_sample.msg_sender.create_account()
 		else:
 			print 'login auth failed, error code: %x' % response.result

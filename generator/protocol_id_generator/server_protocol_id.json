@@ -20,10 +20,13 @@
 						"id":"HEART_BEAT_NOTICE"
 					},
 					{
-						"id":"CLIENT_TO_GAME_SERVER_RELAY"
+						"id":"CLIENT_TO_SERVER_RELAY"
 					},
 					{
-						"id":"GAME_SERVER_TO_CLIENT_RELAY"
+						"id":"SERVER_TO_CLIENT_RELAY"
+					},
+					{
+						"id":"PREPARE_AVATAR_NOTICE"
 					}
 				]
 		}

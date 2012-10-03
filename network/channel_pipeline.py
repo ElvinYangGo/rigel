@@ -41,7 +41,9 @@ class ChannelPipeline:
 		for entry in self.handlers:
 			if hasattr(entry[1], 'handle_downstream'):
 				channel_buffer = entry[1].handle_downstream(channel_buffer, channel=self.channel, **kwargs)
+		return channel_buffer
+		"""
 		if isinstance(self.channel, Channel):
 			self.channel.write_to_twisted_protocol(channel_buffer.read_all_data())
 		else:
-			pass
+			pass"""

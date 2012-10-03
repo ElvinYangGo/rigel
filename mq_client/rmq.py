@@ -3,5 +3,5 @@ from mq_client.rmq_sub import RMQSub
 
 class RMQ(RMQPub, RMQSub):
 	def __init__(self, pub_address, sub_address, context, pipeline):
-		RMQPub.__init__(self, pub_address, context)
+		RMQPub.__init__(self, pub_address, context, pipeline)
 		RMQSub.__init__(self, sub_address, context, pipeline)

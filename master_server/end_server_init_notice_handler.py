@@ -28,13 +28,13 @@ class EndServerInitNoticeHandler:
 		
 	def send_other_servers_to_this_server(self, this_server_name):
 		server_list_message = GlobalData.inst.server_manager.running_server_to_net()
-		GlobalData.inst.rmq.send_message_string(
+		GlobalData.inst.rmq.send_message(
 			server_list_message, this_server_name, ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE
 			)
 
 	def send_this_server_to_other_servers(self, this_server):
 		this_server_message = protocol.server_message_pb2.SyncServerNotice()
 		this_server_message.servers.extend([this_server.to_net()])
-		GlobalData.inst.rmq.send_message_string(
+		GlobalData.inst.rmq.send_message(
 			this_server_message, ChannelName.SERVER_STATUS, ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE
 			)

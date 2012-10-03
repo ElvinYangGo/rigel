@@ -20,7 +20,7 @@ class StartServerInitReqHandler:
 		
 		message_to_send = protocol.server_message_pb2.StartServerInitRes()
 		message_to_send.config = self.create_config_xml_string()
-		GlobalData.inst.rmq.send_message_string(
+		GlobalData.inst.rmq.send_message(
 			message_to_send, message.name, ServerProtocolID.P_START_SERVER_INIT_RES
 			)
 

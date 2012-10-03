@@ -25,7 +25,7 @@ class HeartBeatMonitor(threading.Thread):
 				server_message = protocol.server_message_pb2.SyncServerNotice()
 				for closed_server in closed_server_list:
 					server_message.servers.extend([closed_server.to_net()])
-				GlobalData.inst.rmq.send_message_string(
+				GlobalData.inst.rmq.send_message(
 					server_message, ChannelName.SERVER_STATUS, ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE
 					)
 		
