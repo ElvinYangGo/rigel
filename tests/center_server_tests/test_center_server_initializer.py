@@ -8,6 +8,7 @@ from center_server.center_server_initializer import CenterServerInitializer
 from common.global_data import GlobalData
 from center_server.center_global_data import CenterGlobalData
 from common.server_initializer import ServerInitializer
+from common.channel_name import ChannelName
 
 class CenterServerInitializerTest(unittest.TestCase):
 	def setUp(self):
@@ -39,7 +40,7 @@ class CenterServerInitializerTest(unittest.TestCase):
 		message.type = ServerType.CENTER_SERVER
 		self.server_initializer.rmq.send_message.assert_called_with(
 			message,
-			u'server_initialization',
+			ChannelName.SERVER_INIT,
 			ServerProtocolID.P_START_SERVER_INIT_REQ
 			)
 

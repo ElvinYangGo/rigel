@@ -6,6 +6,7 @@ from common.global_data import GlobalData
 from auth_server.auth_global_data import AuthGlobalData
 from auth_server.gateway_address import GatewayAddress
 from auth_server.auth_server_manager import AuthServerManager
+from common.channel_name import ChannelName
 
 class AuthServerInitializer(ServerInitializer):
 	def __init__(
@@ -39,5 +40,5 @@ class AuthServerInitializer(ServerInitializer):
 		message = protocol.server_message_pb2.StartServerInitReq()
 		message.name = GlobalData.inst.server_name
 		message.type = ServerType.AUTHENTICATION_SERVER
-		self.rmq.send_message(message, u'server_initialization', ServerProtocolID.P_START_SERVER_INIT_REQ)
+		self.rmq.send_message(message, ChannelName.SERVER_INIT, ServerProtocolID.P_START_SERVER_INIT_REQ)
 

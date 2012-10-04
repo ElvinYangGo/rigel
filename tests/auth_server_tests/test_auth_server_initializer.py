@@ -9,6 +9,7 @@ from common.global_data import GlobalData
 from auth_server.auth_global_data import AuthGlobalData
 from common.server_initializer import ServerInitializer
 import auth_server.auth_server_initializer
+from common.channel_name import ChannelName
 
 class AuthServerInitializerTest(unittest.TestCase):
 	def setUp(self):
@@ -41,7 +42,7 @@ class AuthServerInitializerTest(unittest.TestCase):
 		message.type = ServerType.AUTHENTICATION_SERVER
 		self.server_initializer.rmq.send_message.assert_called_with(
 			message,
-			u'server_initialization',
+			ChannelName.SERVER_INIT,
 			ServerProtocolID.P_START_SERVER_INIT_REQ
 			)
 

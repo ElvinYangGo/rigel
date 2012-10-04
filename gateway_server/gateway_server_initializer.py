@@ -7,6 +7,7 @@ from common.server_type import ServerType
 from network.channel_manager import ChannelManager
 from mq_client.rmq_pub import RMQPub
 from common.global_data import GlobalData
+from common.channel_name import ChannelName
 
 class GatewayServerInitializer(ServerInitializer):
 	def __init__(
@@ -44,6 +45,6 @@ class GatewayServerInitializer(ServerInitializer):
 		message.name = GlobalData.inst.server_name
 		message.type = ServerType.GATEWAY_SERVER
 		self.rmq.send_message(
-			message, u'server_initialization', ServerProtocolID.P_START_SERVER_INIT_REQ
+			message, ChannelName.SERVER_INIT, ServerProtocolID.P_START_SERVER_INIT_REQ
 			)
 

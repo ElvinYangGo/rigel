@@ -5,6 +5,7 @@ import protocol.server_message_pb2
 from common.server_type import ServerType
 from center_server.center_global_data import CenterGlobalData
 from common.global_data import GlobalData
+from common.channel_name import ChannelName
 
 class CenterServerInitializer(ServerInitializer):
 	def __init__(
@@ -36,6 +37,6 @@ class CenterServerInitializer(ServerInitializer):
 		message.name = GlobalData.inst.server_name
 		message.type = ServerType.CENTER_SERVER
 		self.rmq.send_message(
-			message, u'server_initialization', ServerProtocolID.P_START_SERVER_INIT_REQ
+			message, ChannelName.SERVER_INIT, ServerProtocolID.P_START_SERVER_INIT_REQ
 			)
 

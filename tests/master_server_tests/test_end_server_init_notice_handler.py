@@ -9,6 +9,7 @@ import protocol.server_message_pb2
 from network.channel_buffer import ChannelBuffer
 from mock import Mock
 from protocol.server_protocol_id import ServerProtocolID
+from common.channel_name import ChannelName
 
 class EndServerInitNoticeHandlerTest(unittest.TestCase):
 	def setUp(self):
@@ -42,7 +43,7 @@ class EndServerInitNoticeHandlerTest(unittest.TestCase):
 		message.name = 'sb'
 		channel_buffer = ChannelBuffer(message.SerializeToString())
 		
-		self.handler.handle_message(1, channel_buffer, channel_name='server_initialization')
+		self.handler.handle_message(1, channel_buffer, channel_name=ChannelName.SERVER_INIT)
 		self.assertEqual(
 			GlobalData.inst.server_manager.get_server('sb').get_status(),
 			ServerStatus.SERVER_STATUS_RUNNING

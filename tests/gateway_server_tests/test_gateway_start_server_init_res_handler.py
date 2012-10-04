@@ -6,6 +6,7 @@ from protocol.server_protocol_id import ServerProtocolID
 from network.channel_buffer import ChannelBuffer
 from gateway_server.gateway_start_server_init_res_handler import GatewayStartServerInitResHandler
 from common.global_data import GlobalData
+from common.channel_name import ChannelName
 
 class GatewayStartServerInitResponseHandlerTest(unittest.TestCase):
 	def setUp(self):
@@ -40,7 +41,9 @@ class GatewayStartServerInitResponseHandlerTest(unittest.TestCase):
 		
 		GlobalData.inst.rmq.subscribe.assert_called_with(u'server_status')
 		GlobalData.inst.rmq.send_message.assert_called_with(
-			message, u'server_initialization', ServerProtocolID.P_END_SERVER_INIT_NOTICE
+			message,
+			ChannelName.SERVER_INIT,
+			ServerProtocolID.P_END_SERVER_INIT_NOTICE
 			)
 		self.assertTrue(self.handler.init_heart_beat.called)
 		

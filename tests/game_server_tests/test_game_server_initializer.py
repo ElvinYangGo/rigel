@@ -8,6 +8,7 @@ from game_server.game_server_initializer import GameServerInitializer
 from game_server.game_global_data import GameGlobalData
 from common.global_data import GlobalData
 from common.server_initializer import ServerInitializer
+from common.channel_name import ChannelName
 
 class GameServerInitializerTest(unittest.TestCase):
 	def setUp(self):
@@ -39,7 +40,7 @@ class GameServerInitializerTest(unittest.TestCase):
 		message.type = ServerType.GAME_SERVER
 		self.server_initializer.rmq.send_message.assert_called_with(
 			message,
-			u'server_initialization',
+			ChannelName.SERVER_INIT,
 			ServerProtocolID.P_START_SERVER_INIT_REQ
 			)
 

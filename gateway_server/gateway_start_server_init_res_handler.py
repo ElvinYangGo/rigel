@@ -25,5 +25,5 @@ class GatewayStartServerInitResHandler(StartServerInitResHandler):
 		message = protocol.server_message_pb2.EndServerInitNotice()
 		message.name = GlobalData.inst.server_name
 		GlobalData.inst.rmq.send_message(
-			message, ChannelName.SERVER_INITIALIZATION, ServerProtocolID.P_END_SERVER_INIT_NOTICE
+			message, ChannelName.SERVER_INIT, ServerProtocolID.P_END_SERVER_INIT_NOTICE
 			)
