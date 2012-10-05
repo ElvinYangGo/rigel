@@ -8,7 +8,7 @@ from network.channel_buffer import ChannelBuffer
 from common.global_data import GlobalData
 from common.channel_name import ChannelName
 
-class CenterStartServerInitResponseHandlerTest(unittest.TestCase):
+class CenterStartServerInitResHandlerTest(unittest.TestCase):
 	def setUp(self):
 		self.handler = CenterStartServerInitResHandler()
 	
@@ -50,7 +50,7 @@ class CenterStartServerInitResponseHandlerTest(unittest.TestCase):
 		self.assertTrue(self.handler.init_heart_beat.called)
 		
 def get_tests():
-	return unittest.makeSuite(CenterStartServerInitResponseHandlerTest)
+	return unittest.makeSuite(CenterStartServerInitResHandlerTest)
 
 if '__main__' == __name__:
 	unittest.main()
