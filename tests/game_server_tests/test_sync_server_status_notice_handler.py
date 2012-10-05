@@ -18,7 +18,7 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 	def test_handle_running_server(self):
 		server_net = protocol.server_data_pb2.Server()
 		server_net.name = 'sa'
-		server_net.type = ServerType.AUTHENTICATION_SERVER
+		server_net.type = ServerType.AUTH_SERVER
 		server_net.status = ServerStatus.SERVER_STATUS_RUNNING
 		server_net2 = protocol.server_data_pb2.Server()
 		server_net2.name = 'sb'

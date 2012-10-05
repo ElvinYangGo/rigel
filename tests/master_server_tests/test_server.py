@@ -7,11 +7,11 @@ import protocol.server_data_pb2
 
 class ServerTest(unittest.TestCase):
 	def setUp(self):
-		self.server = Server('aaa', ServerType.AUTHENTICATION_SERVER)
+		self.server = Server('aaa', ServerType.AUTH_SERVER)
 	
 	def test_construction(self):
 		self.assertTrue(self.server.starting())
-		self.assertEqual(self.server.get_type(), ServerType.AUTHENTICATION_SERVER)
+		self.assertEqual(self.server.get_type(), ServerType.AUTH_SERVER)
 		self.assertEqual(self.server.get_status(), ServerStatus.SERVER_STATUS_STARTING)
 		
 	def test_set_status(self):

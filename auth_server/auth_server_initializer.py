@@ -39,6 +39,6 @@ class AuthServerInitializer(ServerInitializer):
 	def send_init_request(self):
 		message = protocol.server_message_pb2.StartServerInitReq()
 		message.name = GlobalData.inst.server_name
-		message.type = ServerType.AUTHENTICATION_SERVER
+		message.type = ServerType.AUTH_SERVER
 		self.rmq.send_message(message, ChannelName.SERVER_INIT, ServerProtocolID.P_START_SERVER_INIT_REQ)
 

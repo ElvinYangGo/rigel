@@ -18,7 +18,7 @@ class EndServerInitNoticeHandlerTest(unittest.TestCase):
 		GlobalData.inst = GlobalData()
 		GlobalData.inst.server_manager = ServerManager()
 		GlobalData.inst.server_manager.add_server('sa', ServerType.GATEWAY_SERVER)
-		GlobalData.inst.server_manager.add_server('sb', ServerType.AUTHENTICATION_SERVER)
+		GlobalData.inst.server_manager.add_server('sb', ServerType.AUTH_SERVER)
 		GlobalData.inst.rmq = Mock()
 		GlobalData.inst.rmq.send_message_string = Mock()
 	

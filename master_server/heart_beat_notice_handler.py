@@ -17,5 +17,3 @@ class HeartBeatNoticeHandler:
 		server = GlobalData.inst.server_manager.get_server(message.name)
 		if server is not None:
 			server.set_heart_beat_time(time.time())
-			#if server.closed():
-			#	server.set_status(ServerStatus.SERVER_STATUS_RUNNING)

@@ -17,7 +17,7 @@ class StartServerInitReqHandlerTest(unittest.TestCase):
 	def test_handle_message(self):
 		message = protocol.server_message_pb2.StartServerInitReq()
 		message.name = u'sa'
-		message.type = ServerType.AUTHENTICATION_SERVER
+		message.type = ServerType.AUTH_SERVER
 		channel_buffer = ChannelBuffer(message.SerializeToString())
 		
 		GlobalData.inst = GlobalData()

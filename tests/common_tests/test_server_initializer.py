@@ -8,7 +8,7 @@ class ServerInitializerTest(unittest.TestCase):
 	def setUp(self):
 		GlobalData.inst = GlobalData()
 		self.channel_pipeline = Mock()
-		self.server_name = u'authentication_server'
+		self.server_name = u'auth_server'
 		self.server_initializer = ServerInitializer(
 			'localhost:34510',
 			'localhost:34511', 

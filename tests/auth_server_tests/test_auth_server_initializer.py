@@ -39,7 +39,7 @@ class AuthServerInitializerTest(unittest.TestCase):
 		
 		message = protocol.server_message_pb2.StartServerInitReq()
 		message.name = self.server_name
-		message.type = ServerType.AUTHENTICATION_SERVER
+		message.type = ServerType.AUTH_SERVER
 		self.server_initializer.rmq.send_message.assert_called_with(
 			message,
 			ChannelName.SERVER_INIT,
