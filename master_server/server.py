@@ -3,9 +3,12 @@ import protocol.server_data_pb2
 
 class Server:
 	def __init__(self, name, type):
-		self.status = ServerStatus.SERVER_STATUS_STARTING
 		self.name = name
 		self.type = type
+		self.clear()
+
+	def clear(self):
+		self.status = ServerStatus.SERVER_STATUS_STARTING
 		self.heart_beat_time = 0
 		
 	def get_name(self):

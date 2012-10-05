@@ -4,6 +4,8 @@ from mock import Mock
 from game_server.create_avatar_handler import CreateAvatarHandler
 from game_server.game_global_data import GameGlobalData
 import protocol.client_message_pb2
+from protocol.client_protocol_id import ClientProtocolID
+from protocol.server_protocol_id import ServerProtocolID
 
 class CreateAvatarHandlerTest(unittest.TestCase):
 	def setUp(self):
@@ -16,6 +18,7 @@ class CreateAvatarHandlerTest(unittest.TestCase):
 		request.name = 'a'
 		request.gender = 1
 		request.level = 2
+		GameGlobalData.inst = Mock()
 		self.create_avatar_handler.create_avatar(self.client_conn_info, request)
 
 	def test_handle_message(self):

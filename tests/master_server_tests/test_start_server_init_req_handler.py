@@ -38,11 +38,12 @@ class StartServerInitReqHandlerTest(unittest.TestCase):
 			)
 		
 	def test_config_xml_string(self):
-		content = u"""<config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout></config>"""
+		content = u"""<config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout><heart_beat_alive>15000</heart_beat_alive></config>"""
 		"""
 		<config>
 			<heart_beat_interval>10000</heart_beat_interval>
 			<heart_beat_timeout>120000</heart_beat_timeout>
+			<heart_beat_alive>15000</heart_beat_alive>
 		</config>
 		"""
 		
@@ -51,7 +52,7 @@ class StartServerInitReqHandlerTest(unittest.TestCase):
 		GlobalData.inst.server_option_reader.parse()
 		config_xml_string = self.handler.create_config_xml_string()
 		
-		config_should_be = u'<?xml version="1.0" encoding="utf-8"?><config><server_option_config><config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout></config></server_option_config></config>'
+		config_should_be = u'<?xml version="1.0" encoding="utf-8"?><config><server_option_config><config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout><heart_beat_alive>15000</heart_beat_alive></config></server_option_config></config>'
 		self.assertEqual(config_xml_string, config_should_be)
 		
 def get_tests():

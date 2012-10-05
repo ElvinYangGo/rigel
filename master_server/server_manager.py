@@ -6,8 +6,11 @@ class ServerManager:
 		self.servers = {}
 		
 	def add_server(self, server_name, type):
-		server = Server(server_name, type)
-		self.servers[server_name] = server
+		if self.servers.has_key(server_name):
+			self.servers[server_name].clear()
+		else:
+			server = Server(server_name, type)
+			self.servers[server_name] = server
 		
 	def get_server(self, server_name):
 		return self.servers.get(server_name)

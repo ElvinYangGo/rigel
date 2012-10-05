@@ -49,6 +49,11 @@ class MasterServerInitializer(ServerInitializer):
 	def init_heart_beat_monitor(self):
 		heart_beat_interval = self.server_option_reader.get_server_option_config().get_heart_beat_interval()
 		heart_beat_timeout = self.server_option_reader.get_server_option_config().get_heart_beat_timeout()
-		GlobalData.inst.heart_beat_monitor = HeartBeatMonitor(heart_beat_interval, heart_beat_timeout)
+		heart_beat_alive = self.server_option_reader.get_server_option_config().get_heart_beat_alive()
+		GlobalData.inst.heart_beat_monitor = HeartBeatMonitor(
+			heart_beat_interval,
+			heart_beat_timeout,
+			heart_beat_alive
+			)
 		GlobalData.inst.heart_beat_monitor.start()
 	

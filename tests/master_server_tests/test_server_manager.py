@@ -5,6 +5,7 @@ from master_server.server import Server
 import protocol.server_message_pb2
 from common.server_status import ServerStatus
 from common.server_type import ServerType
+from mock import Mock
 
 class ServerManagerTest(unittest.TestCase):
 	def setUp(self):
@@ -16,6 +17,12 @@ class ServerManagerTest(unittest.TestCase):
 		self.assertTrue(server.starting())
 		self.assertEqual(server.get_name(), 'aaa')
 		self.assertEqual(server.get_type(), ServerType.GATEWAY_SERVER)
+
+		ServerManager.Server = Mock()
+		server.set_status(ServerStatus.SERVER_STATUS_CLOSED)
+		self.server_manager.add_server('aaa', ServerType.GATEWAY_SERVER)
+		self.assertFalse(ServerManager.Server.called)
+		self.assertEqual(server.get_status(), ServerStatus.SERVER_STATUS_STARTING)
 		
 	def test_running_server_to_net(self):
 		self.server_manager.add_server('aaa', ServerType.GATEWAY_SERVER)

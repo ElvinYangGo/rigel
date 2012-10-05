@@ -47,7 +47,7 @@ if __name__ == '__main__':
 	
 	endpoint = TCP4ServerEndpoint(reactor, 34500)
 	endpoint.listen(TwistedProtocolFactory(channel_pipeline_factory, None))
-	reactor.run()
 	
 	print u'auth server started'
 	
+	reactor.run()

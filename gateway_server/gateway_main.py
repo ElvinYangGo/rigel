@@ -50,7 +50,7 @@ if __name__ == '__main__':
 
 	endpoint = TCP4ServerEndpoint(reactor, 34600)
 	endpoint.listen(TwistedProtocolFactory(channel_pipeline_factory, GlobalData.inst.channel_manager))
-	reactor.run()
 	
 	print u'gateway started'
 	
+	reactor.run()

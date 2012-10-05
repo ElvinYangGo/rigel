@@ -5,6 +5,7 @@ import protocol.server_message_pb2
 from common.server_type import ServerType
 from game_server.game_global_data import GameGlobalData
 from common.global_data import GlobalData
+from common.channel_name import ChannelName
 
 class GameServerInitializer(ServerInitializer):
 	def __init__(

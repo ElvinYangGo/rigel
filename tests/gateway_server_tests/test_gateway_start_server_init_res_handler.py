@@ -25,6 +25,7 @@ class GatewayStartServerInitResponseHandlerTest(unittest.TestCase):
 				<config>
 					<heart_beat_interval>10000</heart_beat_interval>
 					<heart_beat_timeout>120000</heart_beat_timeout>
+					<heart_beat_alive>15000</heart_beat_alive>
 				</config>
 			</server_option_config>
 		</config>

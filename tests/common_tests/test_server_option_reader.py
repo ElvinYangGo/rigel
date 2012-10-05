@@ -7,11 +7,12 @@ class ServerOptionReaderTest(unittest.TestCase):
 		pass
 
 	def test_parse(self):
-		content = u"""<config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout></config>"""
+		content = u"""<config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout><heart_beat_alive>15000</heart_beat_alive></config>"""
 		"""
 		<config>
 			<heart_beat_interval>10000</heart_beat_interval>
 			<heart_beat_timeout>120000</heart_beat_timeout>
+			<heart_beat_alive>15000</heart_beat_alive>
 		</config>
 		"""
 		server_option_reader = ServerOptionReader(string_content=content)

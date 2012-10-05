@@ -1,3 +1,4 @@
+import time
 from master_server.server_manager import ServerManager
 from master_server.server import Server
 from common.server_status import ServerStatus
@@ -21,10 +22,11 @@ class EndServerInitNoticeHandler:
 			)
 
 		self.send_other_servers_to_this_server(message.name)
-		self.send_this_server_to_other_servers(server)
-
+		
 		server = GlobalData.inst.server_manager.get_server(message.name)
+		server.set_heart_beat_time(time.time())
 		server.set_status(ServerStatus.SERVER_STATUS_RUNNING)
+		self.send_this_server_to_other_servers(server)
 		
 	def send_other_servers_to_this_server(self, this_server_name):
 		server_list_message = GlobalData.inst.server_manager.running_server_to_net()

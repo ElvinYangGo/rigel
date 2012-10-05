@@ -25,9 +25,11 @@ class SyncServerStatusNoticeHandler:
 				
 	def handle_running_server(self, server_net):
 		if server_net.type == ServerType.GATEWAY_SERVER or server_net.type == ServerType.GAME_SERVER:
+			print '%s running' % (server_net.name)
 			server = Server(server_net.name, server_net.type, server_net.status)
 			GlobalData.inst.server_manager.add_server(server)
 	
 	def handle_closed_server(self, server_net):
 		if server_net.type == ServerType.GATEWAY_SERVER or server_net.type == ServerType.GAME_SERVER:
+			print '%s closed' % (server_net.name)
 			GlobalData.inst.server_manager.remove_server(server_net.type, server_net.name)

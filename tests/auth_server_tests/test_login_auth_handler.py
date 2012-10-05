@@ -43,18 +43,18 @@ class LoginAuthHandlerTest(unittest.TestCase):
 		self.assertFalse(ok)
 		
 	def test_save_client_connection_info_to_redis(self):
-		client_connection_info = Mock()
-		auth_server.login_auth_handler.ClientConnectionInfo = Mock()
-		auth_server.login_auth_handler.ClientConnectionInfo.return_value = client_connection_info
+		client_conn_info = Mock()
+		auth_server.login_auth_handler.ClientConnInfo = Mock()
+		auth_server.login_auth_handler.ClientConnInfo.return_value = client_conn_info
 		AuthGlobalData.inst.redis_cluster.get_redis = Mock()
 		r = Mock()
 		AuthGlobalData.inst.redis_cluster.get_redis.return_value = r
-		AuthGlobalData.inst.plain_class_accessor.set_client_connection_info = Mock()
-		AuthGlobalData.inst.plain_class_accessor.expire_client_connection_info = Mock()
-		self.login_auth_handler.save_client_connection_info_to_redis(3, 'aaa', Mock(), Mock())
-		AuthGlobalData.inst.plain_class_accessor.set_client_connection_info.assert_called_with(
-			r, 3, client_connection_info)
-		AuthGlobalData.inst.plain_class_accessor.expire_client_connection_info.assert_called_with(
+		AuthGlobalData.inst.plain_class_accessor.set_client_conn_info = Mock()
+		AuthGlobalData.inst.plain_class_accessor.expire_client_conn_info = Mock()
+		self.login_auth_handler.save_client_conn_info_to_redis(3, 'aaa', Mock(), Mock())
+		AuthGlobalData.inst.plain_class_accessor.set_client_conn_info.assert_called_with(
+			r, 3, client_conn_info)
+		AuthGlobalData.inst.plain_class_accessor.expire_client_conn_info.assert_called_with(
 			r, 3, 100)
 		
 	def test_fill_success_response(self):

@@ -31,10 +31,16 @@ class ServerOptionReader:
 
 		heart_beat_interval_element = self.root_element.getElementsByTagName('heart_beat_interval')[0]
 		heart_beat_timeout_element = self.root_element.getElementsByTagName('heart_beat_timeout')[0]
+		heart_beat_alive_element = self.root_element.getElementsByTagName('heart_beat_alive')[0]
 		heart_beat_interval = int(heart_beat_interval_element.firstChild.data)
 		heart_beat_timeout = int(heart_beat_timeout_element.firstChild.data)
+		heart_beat_alive = int(heart_beat_alive_element.firstChild.data)
 		
-		self.server_option_config = ServerOptionConfig(heart_beat_interval, heart_beat_timeout)
+		self.server_option_config = ServerOptionConfig(
+				heart_beat_interval,
+				heart_beat_timeout,
+				heart_beat_alive
+				)
 
 	def get_server_option_config(self):
 		return self.server_option_config

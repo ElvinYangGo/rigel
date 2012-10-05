@@ -6,13 +6,14 @@ from common.server_option_reader import ServerOptionReader
 class StartServerInitResHandlerTest(unittest.TestCase):
 	def setUp(self):
 		self.start_server_init_response_handler = StartServerInitResHandler()
-		self.config = u'<config><server_option_config><config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout></config></server_option_config></config>'
+		self.config = u'<config><server_option_config><config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout><heart_beat_alive>15000</heart_beat_alive></config></server_option_config></config>'
 		"""
 		<config>
 			<server_option_config>
 				<config>
 					<heart_beat_interval>10000</heart_beat_interval>
 					<heart_beat_timeout>120000</heart_beat_timeout>
+					<heart_beat_alive>15000</heart_beat_alive>
 				</config>
 			</server_option_config>
 		</config>
