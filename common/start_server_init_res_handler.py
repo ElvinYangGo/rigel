@@ -1,42 +1,12 @@
+import json
 from common.heart_beat import HeartBeat
-import xml.dom.minidom
-from common.server_option_reader import ServerOptionReader
 from common.global_data import GlobalData
+from common.channel_name import ChannelName
+import protocol.server_message_pb2
+from protocol.server_protocol_id import ServerProtocolID
+from common.server_option_config import ServerOptionConfig
 
-class StartServerInitResHandler:
-	def __init__(self):
-		pass
-
-	def has_config(self, config, config_name):
-		xmldoc = xml.dom.minidom.parseString(config)
-		root_element_list = xmldoc.getElementsByTagName(u'config')
-		if root_element_list.length != 0:
-			root_element = root_element_list[0]
-		else:
-			return False
-		
-		config_element_list = root_element.getElementsByTagName(config_name)
-		if config_element_list.length == 0:
-			return False
-		
-		return True
-	
-	def get_config_string(self, config, config_name):
-		xmldoc = xml.dom.minidom.parseString(config)
-		root_element_list = xmldoc.getElementsByTagName(u'config')
-		if root_element_list.length != 0:
-			root_element = root_element_list[0]
-		else:
-			return None
-		
-		outter_config_element_list = root_element.getElementsByTagName(config_name)
-		if outter_config_element_list.length == 0:
-			return None
-		
-		inner_config_element_list = outter_config_element_list[0].getElementsByTagName(u'config')
-		config_element = inner_config_element_list[0]
-		return config_element.toxml('utf-8')
-
+class StartServerInitResHandler(object):
 	def init_heart_beat(self, server_option_config):
 		heart_beat_interval = server_option_config.get_heart_beat_interval()
 		if not hasattr(GlobalData.inst, u'heart_beat'):
@@ -44,11 +14,20 @@ class StartServerInitResHandler:
 			GlobalData.inst.heart_beat.start()
 		else:
 			GlobalData.inst.heart_beat.set_heart_beat_interval(heart_beat_interval)
-	
-	def get_server_option_reader(self, config):
-		server_option_string = self.get_config_string(config, u'server_option_config')
-		server_option_reader = ServerOptionReader(string_content=server_option_string)
-		server_option_reader.parse()
-		
-		return server_option_reader
-	
+
+	def handle_message(self, message_id, channel_buffer, **kwargs):
+		message = protocol.server_message_pb2.StartServerInitRes.FromString(
+			channel_buffer.read_all_data()
+			)
+		if message.HasField('config'):
+			config = json.loads(message.config)
+			if config.has_key(u'server_option_config'):
+				server_option_config = ServerOptionConfig(config_string=config['server_option_config'])
+				self.init_heart_beat(server_option_config)
+
+		GlobalData.inst.rmq.subscribe(ChannelName.SERVER_STATUS)
+		message_to_send = protocol.server_message_pb2.EndServerInitNotice()
+		message_to_send.name = GlobalData.inst.server_name
+		GlobalData.inst.rmq.send_message(
+			message_to_send, ChannelName.SERVER_INIT, ServerProtocolID.P_END_SERVER_INIT_NOTICE
+			)

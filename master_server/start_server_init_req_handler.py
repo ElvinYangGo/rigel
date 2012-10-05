@@ -1,4 +1,4 @@
-import xml.dom.minidom
+import json
 import protocol.server_message_pb2
 from protocol.server_protocol_id import ServerProtocolID
 from common.global_data import GlobalData
@@ -17,20 +17,15 @@ class StartServerInitReqHandler:
 			)
 
 		GlobalData.inst.server_manager.add_server(message.name, message.type)
+		print '%s, starting' % (message.name)
 		
 		message_to_send = protocol.server_message_pb2.StartServerInitRes()
-		message_to_send.config = self.create_config_xml_string()
+		message_to_send.config = self.create_config_string()
 		GlobalData.inst.rmq.send_message(
 			message_to_send, message.name, ServerProtocolID.P_START_SERVER_INIT_RES
 			)
 
-	def create_config_xml_string(self):
-		doc = xml.dom.minidom.Document()
-		config_element = doc.createElement('config')
-		doc.appendChild(config_element)
-		server_option_element = doc.createElement('server_option_config')
-		config_element.appendChild(server_option_element)
-		if GlobalData.inst.server_option_reader.get_root_element() is not None:
-			server_option_element.appendChild(GlobalData.inst.server_option_reader.get_root_element())
-		
-		return doc.toxml('utf-8')
+	def create_config_string(self):
+		config_string = {}
+		config_string['server_option_config'] = GlobalData.inst.server_option_config.to_json_string()
+		return json.dumps(config_string)

@@ -5,6 +5,7 @@ from mq_client.rmq import RMQ
 from common.channel_name import ChannelName
 from master_server.heart_beat_monitor import HeartBeatMonitor
 from common.global_data import GlobalData
+from common.server_option_config import ServerOptionConfig
 
 class MasterServerInitializer(ServerInitializer):
 	def __init__(
@@ -15,7 +16,7 @@ class MasterServerInitializer(ServerInitializer):
 		pipeline,
 		redis_server_file_name,
 		redis_partition_file_name,
-		server_option_reader
+		server_option_file_name
 		):
 		super(MasterServerInitializer, self).__init__(
 			pub_address,
@@ -25,13 +26,13 @@ class MasterServerInitializer(ServerInitializer):
 			redis_server_file_name,
 			redis_partition_file_name
 			)
-		self.server_option_reader = server_option_reader
+		self.server_option_file_name = server_option_file_name
 			
 	def init_global_data(self):
 		GlobalData.inst = MasterGlobalData()
 		super(MasterServerInitializer, self).init_global_data()
 		GlobalData.inst.server_manager = ServerManager()
-		GlobalData.inst.server_option_reader = self.server_option_reader
+		GlobalData.inst.server_option_config = ServerOptionConfig(config_file_name=self.server_option_file_name)
 		
 		self.init_heart_beat_monitor()
 	
@@ -47,9 +48,9 @@ class MasterServerInitializer(ServerInitializer):
 		self.rmq.subscribe(ChannelName.HEART_BEAT)
 
 	def init_heart_beat_monitor(self):
-		heart_beat_interval = self.server_option_reader.get_server_option_config().get_heart_beat_interval()
-		heart_beat_timeout = self.server_option_reader.get_server_option_config().get_heart_beat_timeout()
-		heart_beat_alive = self.server_option_reader.get_server_option_config().get_heart_beat_alive()
+		heart_beat_interval = GlobalData.inst.server_option_config.get_heart_beat_interval()
+		heart_beat_timeout = GlobalData.inst.server_option_config.get_heart_beat_timeout()
+		heart_beat_alive = GlobalData.inst.server_option_config.get_heart_beat_alive()
 		GlobalData.inst.heart_beat_monitor = HeartBeatMonitor(
 			heart_beat_interval,
 			heart_beat_timeout,

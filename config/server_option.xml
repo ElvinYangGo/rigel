@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<config>
-	<heart_beat_interval>10000</heart_beat_interval>
-	<heart_beat_timeout>60000</heart_beat_timeout>
-	<heart_beat_alive>15000</heart_beat_alive>
-</config>

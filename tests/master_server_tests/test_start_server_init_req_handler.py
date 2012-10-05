@@ -8,7 +8,7 @@ from mock import Mock
 from common.global_data import GlobalData
 from master_server.server_manager import ServerManager
 from protocol.server_protocol_id import ServerProtocolID
-from common.server_option_reader import ServerOptionReader
+from common.server_option_config import ServerOptionConfig
 
 class StartServerInitReqHandlerTest(unittest.TestCase):
 	def setUp(self):
@@ -28,8 +28,8 @@ class StartServerInitReqHandlerTest(unittest.TestCase):
 		message_to_send = protocol.server_message_pb2.StartServerInitRes()
 		message_to_send.config = ''
 		
-		self.handler.create_config_xml_string = Mock()
-		self.handler.create_config_xml_string.return_value = ''
+		self.handler.create_config_string = Mock()
+		self.handler.create_config_string.return_value = ''
 		self.handler.handle_message(1, channel_buffer, channel_name=u'test_channel')
 		
 		self.assertEqual(len(GlobalData.inst.server_manager.servers), 1)
@@ -37,22 +37,13 @@ class StartServerInitReqHandlerTest(unittest.TestCase):
 			message_to_send, u'sa', ServerProtocolID.P_START_SERVER_INIT_RES
 			)
 		
-	def test_config_xml_string(self):
-		content = u"""<config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout><heart_beat_alive>15000</heart_beat_alive></config>"""
-		"""
-		<config>
-			<heart_beat_interval>10000</heart_beat_interval>
-			<heart_beat_timeout>120000</heart_beat_timeout>
-			<heart_beat_alive>15000</heart_beat_alive>
-		</config>
-		"""
-		
+	def test_create_config_string(self):
+		content = u'{"heart_beat_timeout": 60000, "heart_beat_interval": 10000}'
 		GlobalData.inst = GlobalData()
-		GlobalData.inst.server_option_reader = ServerOptionReader(string_content=content)
-		GlobalData.inst.server_option_reader.parse()
-		config_xml_string = self.handler.create_config_xml_string()
+		GlobalData.inst.server_option_config = ServerOptionConfig(config_string=content)
+		config_xml_string = self.handler.create_config_string()
 		
-		config_should_be = u'<?xml version="1.0" encoding="utf-8"?><config><server_option_config><config><heart_beat_interval>10000</heart_beat_interval><heart_beat_timeout>120000</heart_beat_timeout><heart_beat_alive>15000</heart_beat_alive></config></server_option_config></config>'
+		config_should_be = u'{"server_option_config": "{\\"heart_beat_timeout\\": 60000, \\"heart_beat_interval\\": 10000}"}'
 		self.assertEqual(config_xml_string, config_should_be)
 		
 def get_tests():
