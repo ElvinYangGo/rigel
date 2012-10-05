@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<config>
-	<mq>
-		<pub_address>localhost:34510</pub_address>
-		<sub_address>localhost:34511</sub_address>
-	</mq>
-</config>

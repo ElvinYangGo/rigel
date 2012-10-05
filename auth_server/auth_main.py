@@ -5,14 +5,12 @@ from network.channel_pipeline_factory import ChannelPipelineFactory
 from network.buffer_head_codec import BufferHeadCodec
 from common.handler_dispatcher import HandlerDispatcher
 from auth_server.auth_server_initializer import AuthServerInitializer
-from common.mq_reader import MQReader
+from common.mq_config import MQConfig
 from network.channel_pipeline import ChannelPipeline
 from common.auto_handler_register import AutoHandlerRegister
 
 if __name__ == '__main__':
-	mq_reader = MQReader('../config/mq.xml')
-	mq_reader.parse()
-	mq_config = mq_reader.get_mq_config_list()[0]
+	mq_config = MQConfig(config_file_name='../config/mq.json')
 
 	server_handler_dispatcher = AutoHandlerRegister().register(
 		'auth_server',

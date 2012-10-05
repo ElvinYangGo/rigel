@@ -1,13 +1,11 @@
-from common.mq_reader import MQReader
+from common.mq_config import MQConfig
 from center_server.center_server_initializer import CenterServerInitializer
 from network.channel_pipeline import ChannelPipeline
 from common.handler_dispatcher import HandlerDispatcher
 from common.auto_handler_register import AutoHandlerRegister
 
 if __name__ == '__main__':
-	mq_reader = MQReader('../config/mq.xml')
-	mq_reader.parse()
-	mq_config = mq_reader.get_mq_config_list()[0]
+	mq_config = MQConfig(config_file_name='../config/mq.json')
 
 	server_handler_dispatcher = AutoHandlerRegister().register(
 		'center_server',
