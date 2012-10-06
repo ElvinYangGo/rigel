@@ -36,7 +36,6 @@ class MasterServerInitializerTest(unittest.TestCase):
 			GlobalData.inst.server_option_config,
 			master_server.master_server_initializer.ServerOptionConfig.return_value
 			)
-		self.assertTrue(self.server_initializer.init_heart_beat_monitor.called)
 		master_server.master_server_initializer.ServerOptionConfig.assert_called_with(config_file_name='config_file_name')
 		
 def get_tests():

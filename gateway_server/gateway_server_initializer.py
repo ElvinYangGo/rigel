@@ -37,8 +37,7 @@ class GatewayServerInitializer(ServerInitializer):
 	
 	def init_rmq(self):
 		super(GatewayServerInitializer, self).init_rmq()
-		rmq_pub = RMQPub(self.pub_address, GlobalData.inst.zmq_context, self.pipeline)
-		GlobalData.inst.rmq_pub = rmq_pub
+		GlobalData.inst.client_rmq_pub = RMQPub(self.pub_address, GlobalData.inst.zmq_context, self.pipeline)
 
 	def send_init_request(self):
 		message = protocol.server_message_pb2.StartServerInitReq()

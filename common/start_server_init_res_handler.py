@@ -31,3 +31,4 @@ class StartServerInitResHandler(object):
 		GlobalData.inst.rmq.send_message(
 			message_to_send, ChannelName.SERVER_INIT, ServerProtocolID.P_END_SERVER_INIT_NOTICE
 			)
+		print '%s send end_server_init_notice' % (GlobalData.inst.server_name)

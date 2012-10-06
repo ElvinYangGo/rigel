@@ -23,7 +23,11 @@ class RMQSub(threading.Thread):
 			more = self.sub_socket.getsockopt(zmq.RCVMORE)
 			if more:
 				channel_name = common.utf8_codec.utf8_decode(message)
+				if channel_name == u'server_init':
+					print 'channel name: %s' % (channel_name)
 			else:
+				if channel_name == u'server_init':
+					print 'channel name: %s, message: %s' % (channel_name, message)
 				channel_buffer = ChannelBuffer(message)
 				self.pipeline.handle_upstream(channel_buffer, channel_name=channel_name)
 				channel_name = u''

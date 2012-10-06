@@ -14,7 +14,7 @@ class ClientMessageRelay:
 		protocol_wrapper.client_conn_info.game_server_name = channel.get_client_conn_info().get_game_server_name()
 		protocol_wrapper.inner_protocol = channel_buffer.get_all_data()
 		channel_name = self.get_channel_name(channel, message_id)
-		GatewayGlobalData.inst.rmq.send_message(
+		GatewayGlobalData.inst.client_rmq_pub.send_message(
 			protocol_wrapper,
 			channel_name,
 			ServerProtocolID.P_CLIENT_TO_SERVER_RELAY

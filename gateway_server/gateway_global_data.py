@@ -5,5 +5,5 @@ class GatewayGlobalData(GlobalData):
 		super(GatewayGlobalData, self).__init__()
 		self.server_manager = None
 		self.server_name = None
-		self.rmq_pub = None
+		self.client_rmq_pub = None
 		self.channel_manager = None

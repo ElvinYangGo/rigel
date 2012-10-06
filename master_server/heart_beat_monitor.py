@@ -36,7 +36,7 @@ class HeartBeatMonitor(threading.Thread):
 			server_message = protocol.server_message_pb2.SyncServerNotice()
 			for changed_server in changed_server_list:
 				server_message.servers.extend([changed_server.to_net()])
-			GlobalData.inst.rmq.send_message(
+			GlobalData.inst.heart_beat_rmq_pub.send_message(
 				server_message,
 				ChannelName.SERVER_STATUS,
 				ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE

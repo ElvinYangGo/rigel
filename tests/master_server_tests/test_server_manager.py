@@ -26,10 +26,13 @@ class ServerManagerTest(unittest.TestCase):
 		
 	def test_running_server_to_net(self):
 		self.server_manager.add_server('aaa', ServerType.GATEWAY_SERVER)
+		self.server_manager.add_server('bbb', ServerType.GATEWAY_SERVER)
+		server = self.server_manager.get_server('aaa')
+		server.set_status(ServerStatus.SERVER_STATUS_RUNNING)
 		net_string = self.server_manager.running_server_to_net()
 		self.assertEqual(len(net_string.servers), 1)
 		self.assertEqual(net_string.servers[0].name, 'aaa')
-		self.assertEqual(net_string.servers[0].status, ServerStatus.SERVER_STATUS_STARTING)
+		self.assertEqual(net_string.servers[0].status, ServerStatus.SERVER_STATUS_RUNNING)
 		self.assertEqual(net_string.servers[0].type, ServerType.GATEWAY_SERVER)
 
 def get_tests():
