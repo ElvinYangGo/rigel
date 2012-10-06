@@ -19,17 +19,23 @@ class AuthServerInitializerTest(unittest.TestCase):
 			'localhost:34510',
 			'localhost:34511',
 			self.server_name,
-			Mock(),
-			Mock(),
-			Mock(),
-			Mock()
+			'a',
+			'b',
+			'c',
+			'd',
+			'e'
 			)
 		
 	def test_init_global_data(self):
 		ServerInitializer.init_global_data = Mock()
 		auth_server.auth_server_initializer.GatewayAddress = Mock()
+		auth_server.auth_server_initializer.GatewayAddress.return_value = Mock()
 		self.server_initializer.init_global_data()
-		self.assertEqual(GlobalData.inst.server_name, self.server_name)
+		self.assertNotEqual(GlobalData.inst.server_manager, None)
+		self.assertEqual(
+			GlobalData.inst.gateway_address,
+			auth_server.auth_server_initializer.GatewayAddress.return_value
+			)
 
 	def test_send_init_request(self):
 		self.server_initializer.rmq = Mock()
@@ -37,13 +43,13 @@ class AuthServerInitializerTest(unittest.TestCase):
 		GlobalData.inst.server_name = self.server_name
 		self.server_initializer.send_init_request()
 		
-		message = protocol.server_message_pb2.StartServerInitReq()
+		message = protocol.server_message_pb2.InitServerReq()
 		message.name = self.server_name
 		message.type = ServerType.AUTH_SERVER
 		self.server_initializer.rmq.send_message.assert_called_with(
 			message,
 			ChannelName.SERVER_INIT,
-			ServerProtocolID.P_START_SERVER_INIT_REQ
+			ServerProtocolID.P_INIT_SERVER_REQ
 			)
 
 def get_tests():

@@ -1,20 +1,10 @@
 import "server_data.proto";
 import "auto_data.proto";
 
-message StartServerInitReq
+message InitServerReq
 {
 	optional string name = 1;
 	optional int32 type = 2;
-}
-
-message StartServerInitRes
-{
-	optional string config = 1;
-}
-
-message EndServerInitNotice
-{
-	optional string name = 1;
 }
 
 message SyncServerNotice

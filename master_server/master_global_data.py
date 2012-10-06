@@ -4,5 +4,4 @@ class MasterGlobalData(GlobalData):
 	def __init__(self):
 		super(MasterGlobalData, self).__init__()
 		self.server_manager = None
-		self.server_option_config = None
 		self.heart_beat_monitor = None

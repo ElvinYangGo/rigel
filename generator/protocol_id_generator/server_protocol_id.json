@@ -5,6 +5,12 @@
 			"id_list":
 				[
 					{
+						"id":"INIT_SERVER_REQ"
+					},
+					{
+						"id":"INIT_SERVER_RES"
+					},
+					{
 						"id":"START_SERVER_INIT_REQ"
 					},
 					{

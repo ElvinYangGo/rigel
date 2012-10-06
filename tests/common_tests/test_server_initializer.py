@@ -14,8 +14,9 @@ class ServerInitializerTest(unittest.TestCase):
 			'localhost:34511', 
 			self.server_name,
 			self.channel_pipeline,
-			Mock(),
-			Mock()
+			'a',
+			'b',
+			'c'
 			)
 		
 	def test_construction(self):

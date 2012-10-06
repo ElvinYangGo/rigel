@@ -17,7 +17,8 @@ class AuthServerInitializer(ServerInitializer):
 		pipeline,
 		redis_server_file_name, 
 		redis_partition_file_name,
-		gateway_address_file_name
+		gateway_address_file_name,
+		server_option_file_name
 		):
 		super(AuthServerInitializer, self).__init__(
 			pub_address,
@@ -25,7 +26,8 @@ class AuthServerInitializer(ServerInitializer):
 			server_name,
 			pipeline,
 			redis_server_file_name,
-			redis_partition_file_name
+			redis_partition_file_name,
+			server_option_file_name
 			)
 		self.gateway_address_file_name = gateway_address_file_name
 	
@@ -33,12 +35,10 @@ class AuthServerInitializer(ServerInitializer):
 		GlobalData.inst = AuthGlobalData()
 		super(AuthServerInitializer, self).init_global_data()
 		GlobalData.inst.server_manager = AuthServerManager()
-		GlobalData.inst.server_name = self.server_name
 		GlobalData.inst.gateway_address = GatewayAddress(self.gateway_address_file_name)
 	
 	def send_init_request(self):
-		message = protocol.server_message_pb2.StartServerInitReq()
+		message = protocol.server_message_pb2.InitServerReq()
 		message.name = GlobalData.inst.server_name
 		message.type = ServerType.AUTH_SERVER
-		self.rmq.send_message(message, ChannelName.SERVER_INIT, ServerProtocolID.P_START_SERVER_INIT_REQ)
-
+		self.rmq.send_message(message, ChannelName.SERVER_INIT, ServerProtocolID.P_INIT_SERVER_REQ)

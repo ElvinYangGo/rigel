@@ -15,7 +15,8 @@ class GameServerInitializer(ServerInitializer):
 		server_name,
 		pipeline,
 		redis_server_file_name,
-		redis_partition_file_name
+		redis_partition_file_name,
+		server_option_file_name
 		):
 		super(GameServerInitializer, self).__init__(
 			pub_address,
@@ -23,20 +24,19 @@ class GameServerInitializer(ServerInitializer):
 			server_name,
 			pipeline,
 			redis_server_file_name,
-			redis_partition_file_name
+			redis_partition_file_name,
+			server_option_file_name
 			)
 
 	def init_global_data(self):
 		GlobalData.inst = GameGlobalData()
 		super(GameServerInitializer, self).init_global_data()
 		GlobalData.inst.server_manager = ServerManager()
-		GlobalData.inst.server_name = self.server_name
 	
 	def send_init_request(self):
-		message = protocol.server_message_pb2.StartServerInitReq()
+		message = protocol.server_message_pb2.InitServerReq()
 		message.name = GlobalData.inst.server_name
 		message.type = ServerType.GAME_SERVER
 		self.rmq.send_message(
-			message, ChannelName.SERVER_INIT, ServerProtocolID.P_START_SERVER_INIT_REQ
+			message, ChannelName.SERVER_INIT, ServerProtocolID.P_INIT_SERVER_REQ
 			)
-

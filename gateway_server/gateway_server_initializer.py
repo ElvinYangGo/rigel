@@ -17,7 +17,8 @@ class GatewayServerInitializer(ServerInitializer):
 		server_name,
 		pipeline,
 		redis_server_file_name,
-		redis_partition_file_name
+		redis_partition_file_name,
+		server_option_file_name
 		):
 		super(GatewayServerInitializer, self).__init__(
 			pub_address,
@@ -25,14 +26,14 @@ class GatewayServerInitializer(ServerInitializer):
 			server_name,
 			pipeline,
 			redis_server_file_name,
-			redis_partition_file_name
+			redis_partition_file_name,
+			server_option_file_name
 			)
 	
 	def init_global_data(self):
 		GlobalData.inst = GatewayGlobalData()
 		super(GatewayServerInitializer, self).init_global_data()
 		GlobalData.inst.server_manager = ServerManager()
-		GlobalData.inst.server_name = self.server_name
 		GlobalData.inst.channel_manager = ChannelManager()
 	
 	def init_rmq(self):
@@ -40,10 +41,9 @@ class GatewayServerInitializer(ServerInitializer):
 		GlobalData.inst.client_rmq_pub = RMQPub(self.pub_address, GlobalData.inst.zmq_context, self.pipeline)
 
 	def send_init_request(self):
-		message = protocol.server_message_pb2.StartServerInitReq()
+		message = protocol.server_message_pb2.InitServerReq()
 		message.name = GlobalData.inst.server_name
 		message.type = ServerType.GATEWAY_SERVER
 		self.rmq.send_message(
-			message, ChannelName.SERVER_INIT, ServerProtocolID.P_START_SERVER_INIT_REQ
+			message, ChannelName.SERVER_INIT, ServerProtocolID.P_INIT_SERVER_REQ
 			)
-

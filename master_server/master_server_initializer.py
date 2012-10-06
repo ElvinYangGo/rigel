@@ -6,7 +6,7 @@ from mq_client.rmq_pub import RMQPub
 from common.channel_name import ChannelName
 from master_server.heart_beat_monitor import HeartBeatMonitor
 from common.global_data import GlobalData
-from common.server_option_config import ServerOptionConfig
+from common.server_status import ServerStatus
 
 class MasterServerInitializer(ServerInitializer):
 	def __init__(
@@ -25,23 +25,23 @@ class MasterServerInitializer(ServerInitializer):
 			server_name,
 			pipeline,
 			redis_server_file_name,
-			redis_partition_file_name
+			redis_partition_file_name,
+			server_option_file_name
 			)
-		self.server_option_file_name = server_option_file_name
 			
 	def init_global_data(self):
 		GlobalData.inst = MasterGlobalData()
 		super(MasterServerInitializer, self).init_global_data()
 		GlobalData.inst.server_manager = ServerManager()
-		GlobalData.inst.server_option_config = ServerOptionConfig(config_file_name=self.server_option_file_name)
+		GlobalData.inst.server_status = ServerStatus.SERVER_STATUS_RUNNING
 	
 	def init_rmq(self):	
 		self.rmq = RMQ(self.pub_address, self.sub_address, GlobalData.inst.zmq_context, self.pipeline)
-		self.rmq.subscribe(ChannelName.SERVER_INIT)
 		GlobalData.inst.rmq = self.rmq
 		self.rmq.start()
+		self.rmq.subscribe(ChannelName.SERVER_INIT)
 
-		#move to another function
+		#move to another function ?
 		self.rmq.subscribe(ChannelName.HEART_BEAT)
 
 		GlobalData.inst.heart_beat_rmq_pub = RMQPub(self.pub_address, GlobalData.inst.zmq_context, self.pipeline)

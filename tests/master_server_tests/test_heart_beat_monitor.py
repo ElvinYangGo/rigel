@@ -9,6 +9,8 @@ from common.global_data import GlobalData
 from master_server.server_manager import ServerManager
 from common.server_status import ServerStatus
 import master_server.heart_beat_monitor
+from common.channel_name import ChannelName
+from protocol.server_protocol_id import ServerProtocolID
 
 class HeartBeatMonitorTest(unittest.TestCase):
 	def setUp(self):
@@ -16,6 +18,8 @@ class HeartBeatMonitorTest(unittest.TestCase):
 		self.server = Server('aaa', ServerType.GAME_SERVER)
 		self.server.set_heart_beat_time(self.current_time)
 		self.heart_beat_monitor = HeartBeatMonitor(10000, 60000, 15000)
+		GlobalData.inst = GlobalData()
+		GlobalData.inst.server_manager = ServerManager()
 
 	def test_server_timeout(self):
 		self.assertFalse(self.heart_beat_monitor.server_timeout(self.current_time, self.server))
@@ -26,15 +30,21 @@ class HeartBeatMonitorTest(unittest.TestCase):
 		self.assertFalse(self.heart_beat_monitor.server_alive(self.current_time+16, self.server))
 
 	def test_broadcast_server_status(self):
-		server2 = Server('bbb', ServerType.GAME_SERVER)
-		changed_server_list = []
-		changed_server_list.append(self.server)
-		changed_server_list.append(server2)
-		GlobalData.inst = Mock()
-		self.heart_beat_monitor.broadcast_server_status(changed_server_list)
+		GlobalData.inst.server_manager.to_net = Mock()
+		GlobalData.inst.server_manager.to_net.return_value = Mock()
+		GlobalData.inst.rmq = Mock()
+		GlobalData.inst.rmq.send_message = Mock()
 
-	def test_get_changed_server_list(self):
-		GlobalData.inst.server_manager = ServerManager()
+		self.heart_beat_monitor.broadcast_server_status()
+
+		self.assertTrue(GlobalData.inst.server_manager.to_net.called)
+		GlobalData.inst.rmq.send_message.assert_called_with(
+			GlobalData.inst.server_manager.to_net.return_value,
+			ChannelName.SERVER_STATUS,
+			ServerProtocolID.P_SYNC_SERVER_STATUS_NOTICE
+			)
+
+	def test_change_server_status(self):
 		GlobalData.inst.server_manager.add_server('aaa', ServerType.GAME_SERVER)
 		GlobalData.inst.server_manager.add_server('bbb', ServerType.GAME_SERVER)
 		GlobalData.inst.server_manager.add_server('ccc', ServerType.GAME_SERVER)
@@ -46,21 +56,12 @@ class HeartBeatMonitorTest(unittest.TestCase):
 		server_b.set_heart_beat_time(90)
 		master_server.heart_beat_monitor.time = Mock()
 		master_server.heart_beat_monitor.time.time = Mock()
-		master_server.heart_beat_monitor.time.time.return_value = 100 
-		changed_server_list = self.heart_beat_monitor.get_changed_server_list()
-		self.assertEqual(len(changed_server_list), 2)
+		master_server.heart_beat_monitor.time.time.return_value = 100
 
-	def get_changed_server_list(self):
-		changed_server_list = []
-		current_time = time.time()
-		for server in GlobalData.inst.server_manager.get_all_servers().itervalues():
-			if server.running() and self.server_timeout(current_time, server):
-				server.set_status(ServerStatus.SERVER_STATUS_CLOSED)
-				changed_server_list.append(server)
-			if server.closed() and self.server_alive(current_time, server):
-				server.set_status(ServerStatus.SERVER_STATUS_RUNNING)
-				changed_server_list.append(server)
-		return changed_server_list
+		self.heart_beat_monitor.change_server_status()
+
+		self.assertEqual(server_a.get_status(), ServerStatus.SERVER_STATUS_CLOSED)
+		self.assertEqual(server_b.get_status(), ServerStatus.SERVER_STATUS_RUNNING)
 
 def get_tests():
 	return unittest.makeSuite(HeartBeatMonitorTest)

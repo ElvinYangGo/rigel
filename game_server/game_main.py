@@ -35,7 +35,8 @@ if __name__ == '__main__':
 		u'game_server',
 		rmq_pipeline,
 		'../config/redis_server.json',
-		'../config/redis_partition.json'
+		'../config/redis_partition.json',
+		'../config/server_option.json'
 		)
 	server_initializer.initialize()
 

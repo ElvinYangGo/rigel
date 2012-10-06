@@ -1,3 +1,4 @@
+import time
 from common.server_status import ServerStatus
 import protocol.server_data_pb2
 
@@ -8,8 +9,8 @@ class Server:
 		self.clear()
 
 	def clear(self):
-		self.status = ServerStatus.SERVER_STATUS_STARTING
-		self.heart_beat_time = 0
+		self.status = ServerStatus.SERVER_STATUS_RUNNING
+		self.heart_beat_time = time.time()
 		
 	def get_name(self):
 		return self.name

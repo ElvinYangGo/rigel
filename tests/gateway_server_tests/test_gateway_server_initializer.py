@@ -18,9 +18,10 @@ class GameServerInitializerTest(unittest.TestCase):
 			'localhost:34510',
 			'localhost:34511',
 			self.server_name,
-			Mock(),
-			Mock(),
-			Mock(),
+			'a',
+			'b',
+			'c',
+			'd'
 			)
 		
 	def test_init_global_data(self):
@@ -28,7 +29,6 @@ class GameServerInitializerTest(unittest.TestCase):
 		self.server_initializer.init_global_data()
 		self.assertEqual(len(GlobalData.inst.server_manager.servers), 0)
 		self.assertEqual(len(GlobalData.inst.channel_manager.channels), 0)
-		self.assertEqual(GlobalData.inst.server_name, self.server_name)
 		
 	def test_send_init_request(self):
 		self.server_initializer.rmq = Mock()
@@ -36,13 +36,13 @@ class GameServerInitializerTest(unittest.TestCase):
 		GlobalData.inst.server_name = self.server_name
 		self.server_initializer.send_init_request()
 		
-		message = protocol.server_message_pb2.StartServerInitReq()
+		message = protocol.server_message_pb2.InitServerReq()
 		message.name = self.server_name
 		message.type = ServerType.GATEWAY_SERVER
 		self.server_initializer.rmq.send_message.assert_called_with(
 			message,
 			ChannelName.SERVER_INIT,
-			ServerProtocolID.P_START_SERVER_INIT_REQ
+			ServerProtocolID.P_INIT_SERVER_REQ
 			)
 
 def get_tests():
