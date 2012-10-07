@@ -23,7 +23,7 @@ class ProtocolWrapperHandler(object):
 	def handle_downstream(self, channel_buffer, **kwargs):
 		if not kwargs.has_key('inner_message_id') or not kwargs.has_key('client_id'):
 			return channel_buffer
-		if 0x5000 <= kwargs['inner_message_id']:
+		if ServerProtocolID.SS_ID_START <= kwargs['inner_message_id']:
 			return channel_buffer
 		protocol_wrapper = protocol.server_message_pb2.ProtocolWrapper()
 		protocol_wrapper.protocol_id = kwargs['inner_message_id']

@@ -4,6 +4,7 @@ class ServerProtocolID:
 
 
 	#ss id_start:0x5001
+	SS_ID_START = 0x5001
 	P_INIT_SERVER_REQ = 0x5001
 	P_INIT_SERVER_RES = 0x5002
 	P_START_SERVER_INIT_REQ = 0x5003

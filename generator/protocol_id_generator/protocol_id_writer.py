@@ -30,9 +30,10 @@ class ProtocolIDWriter:
 		
 	def write_direction(self, direction_key, direction_value, f):
 		f.write('\t#{} id_start:{}\n'.format(direction_key, direction_value['id_start']))
+		f.write('\t{}_ID_START = {}\n'.format(direction_key.upper(), direction_value['id_start']))
 		id_index = int(direction_value['id_start'], 16)
 		for id_desc in direction_value['id_list']:
-			f.write('\tP_{} = {}\n'.format(id_desc['id'], hex(id_index)))
+			f.write('\tP_{} = {:#06x}\n'.format(id_desc['id'], id_index))
 			if id_desc.has_key('result'):
 				self.write_protocol_result(id_desc['result'], id_desc['id'], id_index, f)
 			id_index += 1
@@ -40,12 +41,12 @@ class ProtocolIDWriter:
 	def write_protocol_result(self, result_list, id_name, id_index, f):
 		result_index = 1
 		result_value = (id_index << 16) + result_index
-		f.write('\tR_{}_SUCCESS = {}\n'.format(id_name, hex(result_value)))
+		f.write('\tR_{}_SUCCESS = {:#010x}\n'.format(id_name, result_value))
 		result_index += 1
 		result_value = (id_index << 16) + result_index
-		f.write('\tR_{}_FAILURE = {}\n'.format(id_name, hex(result_value)))
+		f.write('\tR_{}_FAILURE = {:#010x}\n'.format(id_name, result_value))
 		result_index += 1
 		for result in result_list:
 			result_value = (id_index << 16) + result_index
-			f.write('\tR_{}_{} = {}\n'.format(id_name, result, hex(result_value)))
+			f.write('\tR_{}_{} = {:#010x}\n'.format(id_name, result, result_value))
 			result_index += 1
