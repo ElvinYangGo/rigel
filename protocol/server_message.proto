@@ -23,3 +23,8 @@ message ProtocolWrapper
 	optional ClientConnInfo client_conn_info = 2;
 	optional bytes inner_protocol = 3;
 }
+
+message PrepareAvatarNotice
+{
+	optional int32 account_id = 1;
+}

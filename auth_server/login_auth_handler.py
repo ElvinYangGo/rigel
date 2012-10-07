@@ -116,7 +116,7 @@ class LoginAuthHandler(object):
 		AuthGlobalData.inst.plain_class_accessor.expire_client_conn_info(
 			r,
 			account_id,
-			1000
+			100
 			)
 		
 	def fill_success_response(self, response, account_id, server_token, gateway_server):

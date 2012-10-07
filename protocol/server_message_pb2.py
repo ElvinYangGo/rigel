@@ -13,7 +13,7 @@ import auto_data_pb2
 DESCRIPTOR = descriptor.FileDescriptor(
   name='server_message.proto',
   package='',
-  serialized_pb='\n\x14server_message.proto\x1a\x11server_data.proto\x1a\x0f\x61uto_data.proto\"+\n\rInitServerReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\x05\",\n\x10SyncServerNotice\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server\"\x1f\n\x0fHeartBeatNotice\x12\x0c\n\x04name\x18\x01 \x01(\t\"i\n\x0fProtocolWrapper\x12\x13\n\x0bprotocol_id\x18\x01 \x01(\x05\x12)\n\x10\x63lient_conn_info\x18\x02 \x01(\x0b\x32\x0f.ClientConnInfo\x12\x16\n\x0einner_protocol\x18\x03 \x01(\x0c')
+  serialized_pb='\n\x14server_message.proto\x1a\x11server_data.proto\x1a\x0f\x61uto_data.proto\"+\n\rInitServerReq\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0c\n\x04type\x18\x02 \x01(\x05\",\n\x10SyncServerNotice\x12\x18\n\x07servers\x18\x01 \x03(\x0b\x32\x07.Server\"\x1f\n\x0fHeartBeatNotice\x12\x0c\n\x04name\x18\x01 \x01(\t\"i\n\x0fProtocolWrapper\x12\x13\n\x0bprotocol_id\x18\x01 \x01(\x05\x12)\n\x10\x63lient_conn_info\x18\x02 \x01(\x0b\x32\x0f.ClientConnInfo\x12\x16\n\x0einner_protocol\x18\x03 \x01(\x0c\")\n\x13PrepareAvatarNotice\x12\x12\n\naccount_id\x18\x01 \x01(\x05')
 
 
 
@@ -150,12 +150,41 @@ _PROTOCOLWRAPPER = descriptor.Descriptor(
   serialized_end=289,
 )
 
+
+_PREPAREAVATARNOTICE = descriptor.Descriptor(
+  name='PrepareAvatarNotice',
+  full_name='PrepareAvatarNotice',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  fields=[
+    descriptor.FieldDescriptor(
+      name='account_id', full_name='PrepareAvatarNotice.account_id', index=0,
+      number=1, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      options=None),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  options=None,
+  is_extendable=False,
+  extension_ranges=[],
+  serialized_start=291,
+  serialized_end=332,
+)
+
 _SYNCSERVERNOTICE.fields_by_name['servers'].message_type = server_data_pb2._SERVER
 _PROTOCOLWRAPPER.fields_by_name['client_conn_info'].message_type = auto_data_pb2._CLIENTCONNINFO
 DESCRIPTOR.message_types_by_name['InitServerReq'] = _INITSERVERREQ
 DESCRIPTOR.message_types_by_name['SyncServerNotice'] = _SYNCSERVERNOTICE
 DESCRIPTOR.message_types_by_name['HeartBeatNotice'] = _HEARTBEATNOTICE
 DESCRIPTOR.message_types_by_name['ProtocolWrapper'] = _PROTOCOLWRAPPER
+DESCRIPTOR.message_types_by_name['PrepareAvatarNotice'] = _PREPAREAVATARNOTICE
 
 class InitServerReq(message.Message):
   __metaclass__ = reflection.GeneratedProtocolMessageType
@@ -180,5 +209,11 @@ class ProtocolWrapper(message.Message):
   DESCRIPTOR = _PROTOCOLWRAPPER
   
   # @@protoc_insertion_point(class_scope:ProtocolWrapper)
+
+class PrepareAvatarNotice(message.Message):
+  __metaclass__ = reflection.GeneratedProtocolMessageType
+  DESCRIPTOR = _PREPAREAVATARNOTICE
+  
+  # @@protoc_insertion_point(class_scope:PrepareAvatarNotice)
 
 # @@protoc_insertion_point(module_scope)

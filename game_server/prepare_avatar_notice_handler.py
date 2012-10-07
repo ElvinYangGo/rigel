@@ -11,6 +11,6 @@ class PrepareAvatarNoticeHandler(object):
 			)
 
 	def handle_message(self, message_id, channel_buffer, **kwargs):
-		message = protocol.server_message_pb2.StartServerInitRes.FromString(
+		message = protocol.server_message_pb2.PrepareAvatarNotice.FromString(
 			channel_buffer.read_all_data()
 			)
