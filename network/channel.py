@@ -59,6 +59,9 @@ class Channel:
 
 	def write_to_twisted_protocol_not_safe(channel, data):
 		channel.twisted_protocol.transport.write(data)
+
+	def disconnect(self):
+		self.twisted_protocol.transport.loseConnection()
 		
 	def get_remote_ip(self):
 		return self.twisted_protocol.get_remote_ip()
