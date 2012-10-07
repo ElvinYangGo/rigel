@@ -1,13 +1,13 @@
 import unittest
 import tests.auxiliary
-from master_server.server_manager import ServerManager
+from master_server.master_server_manager import MasterServerManager
 from common.server_status import ServerStatus
 from common.server_type import ServerType
 from mock import Mock
 
 class ServerManagerTest(unittest.TestCase):
 	def setUp(self):
-		self.server_manager = ServerManager()
+		self.server_manager = MasterServerManager()
 		
 	def test_add_server(self):
 		self.server_manager.add_server('aaa', ServerType.GATEWAY_SERVER)
@@ -16,10 +16,10 @@ class ServerManagerTest(unittest.TestCase):
 		self.assertEqual(server.get_name(), 'aaa')
 		self.assertEqual(server.get_type(), ServerType.GATEWAY_SERVER)
 
-		ServerManager.ServerInMaster = Mock()
+		MasterServerManager.ServerInMaster = Mock()
 		server.set_status(ServerStatus.SERVER_STATUS_CLOSED)
 		self.server_manager.add_server('aaa', ServerType.GATEWAY_SERVER)
-		self.assertFalse(ServerManager.ServerInMaster.called)
+		self.assertFalse(MasterServerManager.ServerInMaster.called)
 		self.assertEqual(server.get_status(), ServerStatus.SERVER_STATUS_RUNNING)
 		
 	def test_to_net(self):

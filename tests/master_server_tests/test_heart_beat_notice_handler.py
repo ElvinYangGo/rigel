@@ -4,7 +4,7 @@ from master_server.heart_beat_notice_handler import HeartBeatNoticeHandler
 import protocol
 from network.channel_buffer import ChannelBuffer
 from common.global_data import GlobalData
-from master_server.server_manager import ServerManager
+from master_server.master_server_manager import MasterServerManager
 from common.server_type import ServerType
 from common.server_status import ServerStatus
 
@@ -18,7 +18,7 @@ class HeartBeatNoticeHandlerTest(unittest.TestCase):
 		channel_buffer = ChannelBuffer(message.SerializeToString())
 		
 		GlobalData.inst = GlobalData()
-		GlobalData.inst.server_manager = ServerManager()
+		GlobalData.inst.server_manager = MasterServerManager()
 		GlobalData.inst.server_manager.add_server('sa', ServerType.AUTH_SERVER)
 		GlobalData.inst.server_manager.get_server('sa').set_status(ServerStatus.SERVER_STATUS_CLOSED)
 		

@@ -6,7 +6,7 @@ from master_server.server_in_master import ServerInMaster
 from common.server_type import ServerType
 import time
 from common.global_data import GlobalData
-from master_server.server_manager import ServerManager
+from master_server.master_server_manager import MasterServerManager
 from common.server_status import ServerStatus
 import master_server.heart_beat_monitor
 from common.channel_name import ChannelName
@@ -19,7 +19,7 @@ class HeartBeatMonitorTest(unittest.TestCase):
 		self.server.set_heart_beat_time(self.current_time)
 		self.heart_beat_monitor = HeartBeatMonitor(10000, 60000, 15000)
 		GlobalData.inst = GlobalData()
-		GlobalData.inst.server_manager = ServerManager()
+		GlobalData.inst.server_manager = MasterServerManager()
 
 	def test_server_timeout(self):
 		self.assertFalse(self.heart_beat_monitor.server_timeout(self.current_time, self.server))

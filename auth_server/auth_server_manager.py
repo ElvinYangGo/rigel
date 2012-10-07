@@ -1,7 +1,9 @@
 from common.server_type import ServerType
+from common.server_manager import ServerManager
+from common.server_status import ServerStatus
 from auth_server.server_dispatcher import ServerDispatcher
 
-class AuthServerManager:
+class AuthServerManager(ServerManager):
 	def __init__(self):
 		self.dispatchers = {}
 		self.dispatchers[ServerType.GAME_SERVER] = ServerDispatcher(ServerType.GAME_SERVER)
@@ -13,10 +15,10 @@ class AuthServerManager:
 			return dispatcher.contain_server(name)
 		return False
 
-	def add_server(self, server):
-		dispatcher = self.dispatchers.get(server.get_type())
+	def add_server(self, name, server_type, status=ServerStatus.SERVER_STATUS_RUNNING):
+		dispatcher = self.dispatchers.get(server_type)
 		if dispatcher:
-			dispatcher.add_server(server)
+			dispatcher.add_server(name, server_type, status)
 		
 	def remove_server(self, server_type, name):
 		dispatcher = self.dispatchers.get(server_type)

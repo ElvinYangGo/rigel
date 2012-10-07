@@ -6,7 +6,6 @@ from common.server_type import ServerType
 from common.server_status import ServerStatus
 from network.channel_buffer import ChannelBuffer
 from common.server_manager import ServerManager
-from common.server import Server
 from mock import Mock
 from game_server.sync_server_status_notice_handler import SyncServerStatusNoticeHandler
 from common.global_data import GlobalData
@@ -37,10 +36,9 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 		self.assertEqual(GlobalData.inst.server_manager.servers.get('sb').get_status(), ServerStatus.SERVER_STATUS_RUNNING)
 
 	def test_handle_closed_server(self):
-		server = Server('sa', ServerType.GATEWAY_SERVER, ServerStatus.SERVER_STATUS_RUNNING)
 		GlobalData.inst = GlobalData()
 		GlobalData.inst.server_manager = ServerManager()
-		GlobalData.inst.server_manager.add_server(server)
+		GlobalData.inst.server_manager.add_server('sa', ServerType.GATEWAY_SERVER, ServerStatus.SERVER_STATUS_RUNNING)
 		
 		server_net = protocol.server_data_pb2.Server()
 		server_net.name = 'sa'

@@ -1,6 +1,6 @@
 from master_server.master_global_data import MasterGlobalData
 from common.server_initializer import ServerInitializer
-from master_server.server_manager import ServerManager
+from master_server.master_server_manager import MasterServerManager
 from mq_client.rmq import RMQ
 from mq_client.rmq_pub import RMQPub
 from common.channel_name import ChannelName
@@ -32,7 +32,7 @@ class MasterServerInitializer(ServerInitializer):
 	def init_global_data(self):
 		GlobalData.inst = MasterGlobalData()
 		super(MasterServerInitializer, self).init_global_data()
-		GlobalData.inst.server_manager = ServerManager()
+		GlobalData.inst.server_manager = MasterServerManager()
 		GlobalData.inst.server_status = ServerStatus.SERVER_STATUS_RUNNING
 	
 	def init_rmq(self):	

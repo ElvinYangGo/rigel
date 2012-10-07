@@ -8,7 +8,6 @@ from common.server_status import ServerStatus
 from network.channel_buffer import ChannelBuffer
 from common.global_data import GlobalData
 from auth_server.auth_server_manager import AuthServerManager
-from common.server import Server
 from mock import Mock
 
 class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
@@ -37,10 +36,9 @@ class SyncServerStatusNoticeHandlerTest(unittest.TestCase):
 		self.assertEqual(GlobalData.inst.server_manager.dispatchers[ServerType.GATEWAY_SERVER].servers[0].get_status(), ServerStatus.SERVER_STATUS_RUNNING)
 
 	def test_handle_closed_server(self):
-		server = Server('sa', ServerType.GATEWAY_SERVER, ServerStatus.SERVER_STATUS_RUNNING)
 		GlobalData.inst = Mock()
 		GlobalData.inst.server_manager = AuthServerManager()
-		GlobalData.inst.server_manager.add_server(server)
+		GlobalData.inst.server_manager.add_server('sa', ServerType.GATEWAY_SERVER, ServerStatus.SERVER_STATUS_RUNNING)
 		
 		server_net = protocol.server_data_pb2.Server()
 		server_net.name = 'sa'

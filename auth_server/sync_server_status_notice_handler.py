@@ -1,4 +1,3 @@
-from common.server import Server
 import protocol.server_message_pb2
 from common.server_type import ServerType
 from common.server_status import ServerStatus
@@ -26,8 +25,7 @@ class SyncServerStatusNoticeHandler:
 	def handle_running_server(self, server_net):
 		if server_net.type == ServerType.GATEWAY_SERVER or server_net.type == ServerType.GAME_SERVER:
 			print '%s running' % (server_net.name)
-			server = Server(server_net.name, server_net.type, server_net.status)
-			GlobalData.inst.server_manager.add_server(server)
+			GlobalData.inst.server_manager.add_server(server_net.name, server_net.type, server_net.status)
 	
 	def handle_closed_server(self, server_net):
 		if server_net.type == ServerType.GATEWAY_SERVER or server_net.type == ServerType.GAME_SERVER:

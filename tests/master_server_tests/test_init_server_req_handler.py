@@ -6,7 +6,7 @@ from common.server_type import ServerType
 from network.channel_buffer import ChannelBuffer
 from mock import Mock
 from common.global_data import GlobalData
-from master_server.server_manager import ServerManager
+from master_server.master_server_manager import MasterServerManager
 from protocol.server_protocol_id import ServerProtocolID
 from common.channel_name import ChannelName
 from common.server_status import ServerStatus
@@ -16,7 +16,7 @@ class InitServerReqHandlerTest(unittest.TestCase):
 		self.handler = InitServerReqHandler()
 
 		GlobalData.inst = GlobalData()
-		GlobalData.inst.server_manager = ServerManager()
+		GlobalData.inst.server_manager = MasterServerManager()
 		GlobalData.inst.server_manager.add_server('sa', ServerType.GATEWAY_SERVER)
 		GlobalData.inst.server_manager.add_server('sb', ServerType.AUTH_SERVER)
 		GlobalData.inst.rmq = Mock()
