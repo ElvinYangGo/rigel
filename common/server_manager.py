@@ -9,6 +9,11 @@ class ServerManager(object):
 		server = Server(name, server_type, status)
 		self.servers[server.get_name()] = server
 		
-	def remove_server(self, server_type, server_name):
-		if self.servers.has_key(server_name):
-			self.servers.pop(server_name)
+	def remove_server(self, server_type, name):
+		if self.servers.has_key(name):
+			self.servers.pop(name)
+
+	def server_running(self, name):
+		if not self.servers.has_key(name):
+			return False
+		return self.servers[name].running()

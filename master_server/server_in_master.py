@@ -12,18 +12,6 @@ class ServerInMaster(Server):
 		self.status = ServerStatus.SERVER_STATUS_RUNNING
 		self.heart_beat_time = time.time()
 		
-	def starting(self):
-		return self.compare_status(ServerStatus.SERVER_STATUS_STARTING)
-	
-	def running(self):
-		return self.compare_status(ServerStatus.SERVER_STATUS_RUNNING)
-	
-	def closed(self):
-		return self.compare_status(ServerStatus.SERVER_STATUS_CLOSED)
-	
-	def compare_status(self, status):
-		return True if self.status == status else False
-
 	def set_status(self, status):
 		self.status = status
 		

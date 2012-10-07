@@ -8,19 +8,7 @@ from protocol.client_protocol_id import ClientProtocolID
 class LoginGatewayHandlerTest(unittest.TestCase):
 	def setUp(self):
 		self.login_gateway_handler = LoginGatewayHandler()
-	"""
-		r = GatewayGlobalData.inst.redis_cluster.get_redis(request.account_id)
-		client_connection_info = GatewayGlobalData.inst.plain_class_accessor.get_client_connection_info(
-			r,
-			request.account_id
-			)
-		if client_connection_info is None:
-			return False, ClientProtocolID.R_LOGIN_GATEWAY_RES_TOKEN_EXPIRED
 
-		if client_connection_info.get_token() != request.token:
-			return False, ClientProtocolID.R_LOGIN_GATEWAY_RES_TOKEN_INVALID
-
-		return True"""
 	def test_valid_token(self):
 		GatewayGlobalData.inst = Mock()
 		GatewayGlobalData.inst.redis_cluster = Mock()

@@ -36,6 +36,16 @@ class LoginGatewayHandler:
 				)
 			return
 
+		#check if game server running
+		if not GatewayGlobalData.inst.server_manager.server_running(client_conn_info.get_game_server_name()):
+			send_result(
+				channel,
+				response,
+				ClientProtocolID.P_LOGIN_GATEWAY_RES,
+				ClientProtocolID.R_LOGIN_GATEWAY_RES_GAME_SERVER_CLOSED
+				)
+			return
+
 		#login ok, add channel to channel manager, send result to client
 		channel_manager = channel.get_channel_manager()
 		channel_manager.insert(request.account_id, channel)
