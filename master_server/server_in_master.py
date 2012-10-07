@@ -1,26 +1,17 @@
 import time
 from common.server_status import ServerStatus
+from common.server import Server
 import protocol.server_data_pb2
 
-class Server:
+class ServerInMaster(Server):
 	def __init__(self, name, type):
-		self.name = name
-		self.type = type
+		super(ServerInMaster, self).__init__(name, type, ServerStatus.SERVER_STATUS_RUNNING)
 		self.clear()
 
 	def clear(self):
 		self.status = ServerStatus.SERVER_STATUS_RUNNING
 		self.heart_beat_time = time.time()
 		
-	def get_name(self):
-		return self.name
-	
-	def get_type(self):
-		return self.type
-	
-	def get_status(self):
-		return self.status
-	
 	def starting(self):
 		return self.compare_status(ServerStatus.SERVER_STATUS_STARTING)
 	

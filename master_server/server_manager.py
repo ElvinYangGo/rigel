@@ -1,4 +1,4 @@
-from master_server.server import Server
+from master_server.server_in_master import ServerInMaster
 import protocol.server_message_pb2
 
 class ServerManager:
@@ -9,7 +9,7 @@ class ServerManager:
 		if self.servers.has_key(server_name):
 			self.servers[server_name].clear()
 		else:
-			server = Server(server_name, type)
+			server = ServerInMaster(server_name, type)
 			self.servers[server_name] = server
 		
 	def get_server(self, server_name):

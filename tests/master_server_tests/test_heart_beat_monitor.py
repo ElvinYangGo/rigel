@@ -2,7 +2,7 @@ import unittest
 import tests.auxiliary
 from mock import Mock
 from master_server.heart_beat_monitor import HeartBeatMonitor
-from master_server.server import Server
+from master_server.server_in_master import ServerInMaster
 from common.server_type import ServerType
 import time
 from common.global_data import GlobalData
@@ -15,7 +15,7 @@ from protocol.server_protocol_id import ServerProtocolID
 class HeartBeatMonitorTest(unittest.TestCase):
 	def setUp(self):
 		self.current_time = time.time()
-		self.server = Server('aaa', ServerType.GAME_SERVER)
+		self.server = ServerInMaster('aaa', ServerType.GAME_SERVER)
 		self.server.set_heart_beat_time(self.current_time)
 		self.heart_beat_monitor = HeartBeatMonitor(10000, 60000, 15000)
 		GlobalData.inst = GlobalData()

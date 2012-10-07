@@ -1,8 +1,6 @@
 import unittest
 import tests.auxiliary
 from master_server.server_manager import ServerManager
-from master_server.server import Server
-import protocol.server_message_pb2
 from common.server_status import ServerStatus
 from common.server_type import ServerType
 from mock import Mock
@@ -18,10 +16,10 @@ class ServerManagerTest(unittest.TestCase):
 		self.assertEqual(server.get_name(), 'aaa')
 		self.assertEqual(server.get_type(), ServerType.GATEWAY_SERVER)
 
-		ServerManager.Server = Mock()
+		ServerManager.ServerInMaster = Mock()
 		server.set_status(ServerStatus.SERVER_STATUS_CLOSED)
 		self.server_manager.add_server('aaa', ServerType.GATEWAY_SERVER)
-		self.assertFalse(ServerManager.Server.called)
+		self.assertFalse(ServerManager.ServerInMaster.called)
 		self.assertEqual(server.get_status(), ServerStatus.SERVER_STATUS_RUNNING)
 		
 	def test_to_net(self):

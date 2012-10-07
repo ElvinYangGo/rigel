@@ -1,13 +1,13 @@
 import unittest
 import tests.auxiliary
-from master_server.server import Server
+from master_server.server_in_master import ServerInMaster
 from common.server_status import ServerStatus
 from common.server_type import ServerType
 import protocol.server_data_pb2
 
-class ServerTest(unittest.TestCase):
+class ServerInMasterTest(unittest.TestCase):
 	def setUp(self):
-		self.server = Server('aaa', ServerType.AUTH_SERVER)
+		self.server = ServerInMaster('aaa', ServerType.AUTH_SERVER)
 	
 	def test_construction(self):
 		self.assertEqual(self.server.get_type(), ServerType.AUTH_SERVER)
@@ -29,7 +29,7 @@ class ServerTest(unittest.TestCase):
 		self.assertEqual(message.status, self.server.status)
 
 def get_tests():
-	return unittest.makeSuite(ServerTest)
+	return unittest.makeSuite(ServerInMasterTest)
 
 if '__main__' == __name__:
 	unittest.main()
