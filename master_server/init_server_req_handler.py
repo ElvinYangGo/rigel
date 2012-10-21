@@ -3,7 +3,7 @@ from protocol.server_protocol_id import ServerProtocolID
 from common.global_data import GlobalData
 from common.channel_name import ChannelName
 
-class InitServerReqHandler:
+class InitServerReqHandler(object):
 	@staticmethod
 	def register_server_handler(handler_dispatcher):
 		handler_dispatcher.append_handler(

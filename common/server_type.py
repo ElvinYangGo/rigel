@@ -1,4 +1,4 @@
-class ServerType:
+class ServerType(object):
 	MASTER_SERVER = 1
 	AUTH_SERVER = 2
 	GATEWAY_SERVER = 3

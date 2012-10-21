@@ -2,7 +2,7 @@ from protocol.client_protocol_id import ClientProtocolID
 import protocol.client_message_pb2
 import client_sample.msg_sender
 
-class CreateAvatarHandler:
+class CreateAvatarHandler(object):
 	@staticmethod
 	def register_client_handler(handler_dispatcher):
 		handler_dispatcher.append_handler(

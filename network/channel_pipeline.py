@@ -1,6 +1,6 @@
 from network.channel import Channel
 
-class ChannelPipeline:
+class ChannelPipeline(object):
 	def __init__(self, handlers=None):
 		if handlers:
 			self.handlers = handlers

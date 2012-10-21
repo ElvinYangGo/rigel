@@ -1,4 +1,4 @@
-class ServerStatus:
+class ServerStatus(object):
 	SERVER_STATUS_STARTING = 1
 	SERVER_STATUS_RUNNING = 2
 	SERVER_STATUS_CLOSED = 3

@@ -5,7 +5,7 @@ from protocol.server_protocol_id import ServerProtocolID
 from gateway_server.gateway_global_data import GatewayGlobalData
 from common.util import send_result
 
-class LoginGatewayHandler:
+class LoginGatewayHandler(object):
 	@staticmethod
 	def register_client_handler(handler_dispatcher):
 		handler_dispatcher.append_handler(

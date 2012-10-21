@@ -1,6 +1,6 @@
 import struct
 
-class ChannelBuffer:
+class ChannelBuffer(object):
 	def __init__(self, data=None):
 		if data:
 			self.buffer = data

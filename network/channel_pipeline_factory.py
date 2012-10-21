@@ -1,7 +1,7 @@
 import copy
 from network.channel_pipeline import ChannelPipeline
 
-class ChannelPipelineFactory:
+class ChannelPipelineFactory(object):
 	def __init__(self):
 		self.handlers = []
 		

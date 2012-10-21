@@ -3,7 +3,7 @@ from protocol.server_protocol_id import ServerProtocolID
 from protocol.client_protocol_id import ClientProtocolID
 from gateway_server.gateway_global_data import GatewayGlobalData
 
-class ClientMessageRelay:
+class ClientMessageRelay(object):
 	def handle_upstream(self, channel_buffer, **kwargs):
 		channel = kwargs['channel']
 		message_id = channel_buffer.get_int()

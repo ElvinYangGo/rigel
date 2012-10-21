@@ -1,7 +1,7 @@
 import struct
 from network.channel_buffer import ChannelBuffer
 
-class BufferHeadCodec:
+class BufferHeadCodec(object):
 	MESSAGE_ID_LENGTH = struct.calcsize('!i')
 
 	def handle_upstream(self, channel_buffer, **kwargs):

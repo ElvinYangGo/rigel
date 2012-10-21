@@ -1,7 +1,7 @@
 from twisted.internet import reactor
 from network.channel_buffer import ChannelBuffer
 
-class Channel:
+class Channel(object):
 	def __init__(self):
 		self.channel_buffer = ChannelBuffer()
 		self.client_conn_info = None

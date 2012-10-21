@@ -1,6 +1,6 @@
 from network.channel import Channel
 
-class ChannelFactory:
+class ChannelFactory(object):
 	def __init__(self, channel_pipeline_factory, channel_manager):
 		self.channel_pipeline_factory = channel_pipeline_factory
 		self.channel_manager = channel_manager

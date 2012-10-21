@@ -2,7 +2,7 @@ import protocol.server_message_pb2
 from common.server_status import ServerStatus
 from protocol.server_protocol_id import ServerProtocolID
 
-class SyncServerStatusNoticeHandler:
+class SyncServerStatusNoticeHandler(object):
 	@staticmethod
 	def register_server_handler(handler_dispatcher):
 		handler_dispatcher.append_handler(

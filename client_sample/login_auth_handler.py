@@ -3,7 +3,7 @@ import protocol.client_message_pb2
 from client_sample.client_global_data import ClientGlobalData
 import client_sample.msg_sender
 
-class LoginAuthHandler:
+class LoginAuthHandler(object):
 	@staticmethod
 	def register_client_handler(handler_dispatcher):
 		handler_dispatcher.append_handler(

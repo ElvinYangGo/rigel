@@ -4,7 +4,7 @@ from common.server_status import ServerStatus
 from common.global_data import GlobalData
 from protocol.server_protocol_id import ServerProtocolID
 
-class HeartBeatNoticeHandler:
+class HeartBeatNoticeHandler(object):
 	@staticmethod
 	def register_server_handler(handler_dispatcher):
 		handler_dispatcher.append_handler(
