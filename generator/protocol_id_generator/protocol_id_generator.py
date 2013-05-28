@@ -1,17 +1,31 @@
-from generator.protocol_id_generator.protocol_id_writer import ProtocolIDWriter
+from generator.protocol_id_generator.py_protocol_id_writer import PyProtocolIDWriter
+from generator.protocol_id_generator.cpp_protocol_id_writer import CppProtocolIDWriter
 
 if __name__ == '__main__':
-	client_protocol_id_writer = ProtocolIDWriter(
+	py_client_protocol_id_writer = PyProtocolIDWriter(
 			'client_protocol_id.json',
 			'../../protocol/client_protocol_id.py',
-			'ClientProtocolID'
+			'ClientProtocolID',
+			'',
+			''
 			)
-	client_protocol_id_writer.write()
+	py_client_protocol_id_writer.write()
+	cpp_client_protocol_id_writer = CppProtocolIDWriter(
+			'client_protocol_id.json',
+			'../../protocol/ClientProtocolId.h',
+			'ClientProtocolId',
+			'static const int ',
+			';',
+			'__CLIENT_PROTOCOL_ID_H__'
+			)
+	cpp_client_protocol_id_writer.write()
 
-	server_protocol_id_writer = ProtocolIDWriter(
+	server_protocol_id_writer = PyProtocolIDWriter(
 			'server_protocol_id.json',
 			'../../protocol/server_protocol_id.py',
-			'ServerProtocolID'
+			'ServerProtocolID',
+			'',
+			''
 			)
 	server_protocol_id_writer.write()
 
