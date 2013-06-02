@@ -56,7 +56,7 @@ class PlainMapTableWriter(PlainClassWriter):
 
 	def write_to_net_body(self, f):
 		f.write(
-			'\t\tproto = protocol.auto_data.{}()\n'.format(
+			'\t\tproto = protocol.auto_data_pb2.{}()\n'.format(
 				self.get_class_name()
 				)
 			)
@@ -88,7 +88,7 @@ class User(object):
 		self.user_name = user_name
 
 	def to_net(self):
-		proto = protocol.auto_data.User()
+		proto = protocol.auto_data_pb2.User()
 		proto.user_id = self.user_id
 		proto.user_name = self.user_name
 		return proto
