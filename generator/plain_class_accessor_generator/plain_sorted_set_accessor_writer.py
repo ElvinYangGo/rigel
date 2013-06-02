@@ -51,9 +51,9 @@ class PlainSortedSetAccessorWriter(object):
 				)
 			)
 		if self.table_desc['data_type'] == 'string':
-			format_string = '\t\tself.redis_accessor.{}(redis, str(id_int), member, score)\n\n'
+			format_string = '\t\tself.redis_accessor.{}(redis, str(id_int), member)\n\n'
 		elif self.table_desc['data_type'] == 'int':
-			format_string = '\t\tself.redis_accessor.{}(redis, str(id_int), str(member), score)\n\n'
+			format_string = '\t\tself.redis_accessor.{}(redis, str(id_int), str(member))\n\n'
 		self.f.write(
 			format_string.format(
 				self.redis_accessor_name.get_sorted_set_adder_function_name(self.table_desc['table_name'])
